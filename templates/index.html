@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.lineicons.com/5.1/line/lineicons.css" />
+    <link rel="stylesheet" href="https://cdn.lineicons.com/5.1/solid/lineicons-solid.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'css/styleindex.css' %}">
+</head>
+<body>
+    <div class="d-flex">
+        <!-- sidebar -->
+        <aside id="sidebar">
+            <div class="sidebar-logo">
+                <a href="">Traffic APP</a>
+            </div>
+
+            <!-- sidebar - navigation -->
+
+            <!-- FIRST PORTION -->
+             <ul class="sidebar-nav p-0">
+                <li class="sidebar-header">
+                    TRAFFIC
+                </li>
+                <li class="sidevbar-items">
+                    <a href="" class="sidebar-link">
+                        <i class="lni lni-home-2"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+
+                <li class="sidevbar-items">
+                    <a href="" class="sidebar-link">
+                        <i class="lni lni-map-marker-1"></i>
+                        <span>City Map</span>
+                    </a>
+                </li>
+
+                <li class="sidevbar-items">
+                    <a href="" class="sidebar-link">
+                        <i class="lni lni-location-arrow-right"></i>
+                        <span>Route Planner</span>
+                        
+                    </a>
+                </li>
+
+                <li class="sidevbar-items">
+                    <a href="" class="sidebar-link">
+                        <i class="lni lni-bar-chart-4"></i>
+                        <span>Traffic Forecast</span>
+                    </a>
+                </li>
+
+                <!-- SECOND PORTION -->
+                <li class="sidebar-header">
+                    COMMUNITY
+                </li>
+
+                <li class="sidevbar-items">
+                    <a href="" class="sidebar-link">
+                        <i class="lni lni-question-mark-circle"></i>
+                        <span>Report Issue</span>
+                    </a>
+                </li>
+                
+                <li class="sidevbar-items">
+                    <a href="" class="sidebar-link">
+                        <i class="lni lni-message-3-text"></i>
+                        <span>AI Assistant</span>
+                    </a>
+                </li>
+
+                <!-- Third PORTION -->
+                <li class="sidebar-header">
+                    ACCOUNT
+                </li>
+
+                <li class="sidevbar-items">
+                    <a href="" class="sidebar-link">
+                        <i class="lni lni-target-user"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+
+
+             </ul>
+
+             <div class="sidebar-footer">
+                <a href="" class="sidebar-link">
+                    <i class="lni lni-gears-3"></i>
+                    <span>Settings</span>
+                </a>
+             </div>
+        </aside>
+        <!-- Sidebar Ends -->
+
+
+        <!-- Main Dshboard -->
+        <div class="main">
+            <nav class="navbar navbar-expand border-bottom">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-menu-hamburger-1"></i>
+                </button>
+            </nav>
+
+            <main class="p-3">
+                <div class="container-fluid">
+                    <div class="mb-3 text-center">
+                        <h1>Traffic App</h1>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    <script src="{% static 'js/script_index.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+   
+</html>
