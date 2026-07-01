@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %} -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,108 +13,22 @@
     <link rel="stylesheet" href="{% static 'css/styleindex.css' %}">
 </head>
 <body>
-    <div class="d-flex">
-        <!-- sidebar -->
-        <aside id="sidebar">
-            <div class="sidebar-logo">
-                <a href="">Traffic APP</a>
+
+    <div class="container-fluid p-0 bg-warning">
+        <div class="row m-0">
+            <!-- sidebar start -->
+
+            {% include 'sidebar.html' %}
+
+            <!-- sidebar end -->
+
+            <div class="col-md-1 bg-warning">
+                <p>HEllo</p>
             </div>
 
-            <!-- sidebar - navigation -->
-
-            <!-- FIRST PORTION -->
-             <ul class="sidebar-nav p-0">
-                <li class="sidebar-header">
-                    TRAFFIC
-                </li>
-                <li class="sidevbar-items">
-                    <a href="" class="sidebar-link">
-                        <i class="lni lni-home-2"></i>
-                        <span>Home</span>
-                    </a>
-                </li>
-
-                <li class="sidevbar-items">
-                    <a href="" class="sidebar-link">
-                        <i class="lni lni-map-marker-1"></i>
-                        <span>City Map</span>
-                    </a>
-                </li>
-
-                <li class="sidevbar-items">
-                    <a href="" class="sidebar-link">
-                        <i class="lni lni-location-arrow-right"></i>
-                        <span>Route Planner</span>
-                        
-                    </a>
-                </li>
-
-                <li class="sidevbar-items">
-                    <a href="" class="sidebar-link">
-                        <i class="lni lni-bar-chart-4"></i>
-                        <span>Traffic Forecast</span>
-                    </a>
-                </li>
-
-                <!-- SECOND PORTION -->
-                <li class="sidebar-header">
-                    COMMUNITY
-                </li>
-
-                <li class="sidevbar-items">
-                    <a href="" class="sidebar-link">
-                        <i class="lni lni-question-mark-circle"></i>
-                        <span>Report Issue</span>
-                    </a>
-                </li>
-                
-                <li class="sidevbar-items">
-                    <a href="" class="sidebar-link">
-                        <i class="lni lni-message-3-text"></i>
-                        <span>AI Assistant</span>
-                    </a>
-                </li>
-
-                <!-- Third PORTION -->
-                <li class="sidebar-header">
-                    ACCOUNT
-                </li>
-
-                <li class="sidevbar-items">
-                    <a href="" class="sidebar-link">
-                        <i class="lni lni-target-user"></i>
-                        <span>My Profile</span>
-                    </a>
-                </li>
-
-
-             </ul>
-
-             <div class="sidebar-footer">
-                <a href="" class="sidebar-link">
-                    <i class="lni lni-gears-3"></i>
-                    <span>Settings</span>
-                </a>
-             </div>
-        </aside>
-        <!-- Sidebar Ends -->
-
-
-        <!-- Main Dshboard -->
-        <div class="main">
-            <nav class="navbar navbar-expand border-bottom">
-                <button class="toggle-btn" type="button">
-                    <i class="lni lni-menu-hamburger-1"></i>
-                </button>
-            </nav>
-
-            <main class="p-3">
-                <div class="container-fluid">
-                    <div class="mb-3 text-center">
-                        <h1>Traffic App</h1>
-                    </div>
-                </div>
-            </main>
+            <div class="col-md-1 bg-danger">
+                <p>This</p>
+            </div>
         </div>
     </div>
 
