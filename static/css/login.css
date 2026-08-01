@@ -1,0 +1,128 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family:
+    Segoe UI,
+    Arial,
+    sans-serif;
+  background: #0b1118;
+  color: #eef3fb;
+}
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: #121c2b;
+  border-bottom: 1px solid #23344f;
+}
+.topbar h1 {
+  font-size: 18px;
+}
+.topbar p {
+  font-size: 13px;
+  color: #98aac4;
+}
+.status {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: #aabbd3;
+}
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 69px);
+}
+.card {
+  width: 430px;
+  background: #171e28;
+  border: 1px solid #2b3d56;
+  border-radius: 10px;
+  padding: 32px;
+}
+.logo {
+  text-align: center;
+  font-size: 38px;
+}
+h2 {
+  text-align: center;
+  margin-top: 10px;
+}
+.subtitle {
+  text-align: center;
+  color: #9db0c8;
+  margin: 8px 0 20px;
+}
+.tabs {
+  display: flex;
+  background: #0f141d;
+  padding: 4px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+.tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: #b6c5d8;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.active {
+  background: #2c7db8;
+  color: #fff;
+}
+label {
+  display: block;
+  margin: 12px 0 6px;
+}
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  background: #0f141d;
+  border: 1px solid #2b3d56;
+  border-radius: 6px;
+  color: #fff;
+}
+.options {
+  display: flex;
+  justify-content: space-between;
+  margin: 14px 0;
+  font-size: 13px;
+}
+.options a {
+  color: #4da3ff;
+  text-decoration: none;
+}
+.primary {
+  width: 100%;
+  padding: 13px;
+  background: #2c7db8;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.primary:hover {
+  background: #3790d1;
+}
+hr {
+  margin: 24px 0;
+  border: none;
+  border-top: 1px solid #2b3d56;
+}
+.info div {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+.info strong {
+  color: #41d96d;
+}
