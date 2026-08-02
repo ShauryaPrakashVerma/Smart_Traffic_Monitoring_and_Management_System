@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- BOOTSTRAP -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+
+    <!-- BOXICONS -->
+    <!-- <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet"> -->
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- css file -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    {% block styles %}{% endblock %}
+  </head>
+  <body class="d-flex flex-column vh-100 overflow-hidden">
+    <div class="container-fluid p-0 vh-100 d-flex flex-column">
+      <!-- TOP NAV BAR -->
+      <nav class="navbar navbar-light bg-dark">
+        <div class="container-fluid justify-content-center">
+          <span class="navbar-brand mb-1 h1 text-light">SMART TRAFFIC MONITORING APP</span>
+        </div>
+      </nav>
+
+      <!-- Main App Area (Fills remaining height) -->
+      <div class="row g-0 flex-grow-1 overflow-hidden">
+
+
+        <!-- left sidebar -->
+        <div class="col-2 bg p-0 d-flex flex-column h-100">
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_dashboard.dashboard')}}">
+              <small>Dashboard</small>
+            </a>
+          </div>
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_livemap.live_map')}}">
+              <small>Live Map</small>
+            </a>
+          </div>
+
+          <div class="row p-2 mx-0">
+            <a href="{{ url_for('controller_notifications.notifications')}}">
+              <small>Notifications</small>
+            </a>
+          </div>
+
+
+          <small>Monitoring</small>
+
+
+          <div class="row p-2 mx-0">
+            <a href="{{ url_for('controller_camerafeeds.camera_feeds')}}">
+              <small>Camera Feeds</small>
+            </a>
+          </div>
+
+          <div class="row p-2 mx-0">
+            <a href="{{ url_for('controller_congestionmonitor.congestion_monitor')}}">
+              <small>Congestion Monitor</small>
+            </a>
+          </div>
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_vehicledetection.vehicle_detection')}}">
+              <small>Vehicle Detection</small>
+            </a>
+          </div>
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_classification.classification')}}">
+              <small>Classification</small>
+            </a>
+          </div>
+
+          <small>Traffic control</small>
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_signalcontrol.signal_control')}}">
+              <small>Signal Control</small>
+            </a>
+          </div>
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_emergencycorridor.emergency_corridor')}}">
+              <small>Emergency Corridor</small>
+            </a>
+          </div>
+
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_junctionmanagement.junction_management')}}">
+              <small>Junction Management</small>
+            </a>
+          </div>
+
+          <small>Analytics</small>
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_peakhouranalysis.peak_hour_analysis')}}">
+              <small>Peak Hour Analysis</small>
+            </a>
+          </div>
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_historicalrecords.historical_records')}}">
+              <small>Historical Records</small>
+            </a>
+          </div>
+
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_reports.reports')}}">
+              <small>Reports</small>
+            </a>
+          </div>
+
+          <small>Advanced</small>
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_digitaltwin.digital_twin')}}">
+              <small>Digital Twin</small>
+            </a>
+          </div>
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_aiprediction.ai_prediction')}}">
+              <small>AI Prediction</small>
+            </a>
+          </div>
+
+
+          <div class="row p-2 mx-0">
+            <a href="{{url_for('controller_scenariosimulator.scenario_simulator')}}">
+              <small>Scenario Simulator</small>
+            </a>
+          </div>
+
+
+
+          <!-- logout -->
+          <div class="row p-2 mx-0 mt-auto">
+            <small>Logout</small>
+          </div>
+        </div>
+
+        <!-- SCROLLABLE MAIN CONTENT -->
+        <div class="col-10 p-4 h-100 overflow-auto">
+          {% block content %} {% endblock %}
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

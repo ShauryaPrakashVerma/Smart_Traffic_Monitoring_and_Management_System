@@ -32,25 +32,34 @@
             Public Viewer
           </button>
         </div>
-        <form>
-          <label id="userLabel">Employee ID</label
-          ><input id="userInput" type="text" placeholder="e.g EMP-2047" /><label
-            >Password</label
-          ><input type="password" placeholder="••••••••" />
+
+
+        <form action="{{ url_for('login')}}" method="POST">
+          <input type="hidden" id="role" name="role" value="controller">
+          <label id="userLabel">Employee ID</label>
+          <input id="userInput" type="text" placeholder="e.g EMP-2047" name="employee_id"/>
+          <label>Password</label>
+            <input type="password" placeholder="••••••••" name="password"/>
           <div class="options">
-            <label><input type="checkbox" /> Remember me</label
-            ><a href="#">Forgot Password?</a>
+            <label><input type="checkbox" /> Remember me</label>
+            <a href="#">Forgot Password?</a>
           </div>
-          <button class="primary" id="loginBtn">Sign In — Controller</button>
+          <button type="submit" class="primary" id="loginBtn">Sign In — Controller</button>
         </form>
+
+
         <hr />
+
         <div class="info">
           <div><span>System Status</span><strong>ONLINE</strong></div>
           <div><span>Intersections</span><strong>9 Active</strong></div>
           <div><span>Cameras</span><strong>6 / 6 Online</strong></div>
           <div><span>YOLO Detection</span><strong>Enabled v8.1</strong></div>
         </div>
+
+
       </div>
+
     </main>
     <script src="{{ url_for('static', filename='js/login.js') }}"></script>
   </body>
