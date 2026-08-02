@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -27,7 +28,7 @@
     <!-- css file -->
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
+      href="{{ url_for('static', filename='css/homepage.css') }}"
     />
     {% block styles %}{% endblock %}
   </head>
@@ -44,22 +45,24 @@
       <div class="row g-0 flex-grow-1 overflow-hidden">
 
 
-        <!-- left sidebar -->
         <div class="col-2 bg p-0 d-flex flex-column h-100">
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_dashboard.dashboard')}}">
+        {% if session.get('role') == "controller" %}
+          <!-- left sidebar -->
+        
+          <div class="row mx-0">
+            <a href="{{url_for('controller_dashboard.dashboard')}} " class="sidebar-link {% if request.endpoint == 'controller_dashboard.dashboard' %} active {% endif %}">
               <small>Dashboard</small>
             </a>
           </div>
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_livemap.live_map')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_livemap.live_map')}}" class="sidebar-link {% if request.endpoint == 'controller_livemap.live_map' %} active {% endif %}">
               <small>Live Map</small>
             </a>
           </div>
 
-          <div class="row p-2 mx-0">
-            <a href="{{ url_for('controller_notifications.notifications')}}">
+          <div class="row mx-0">
+            <a href="{{ url_for('controller_notifications.notifications')}}" class="sidebar-link {% if request.endpoint == 'controller_notifications.notifications' %} active {% endif %}">
               <small>Notifications</small>
             </a>
           </div>
@@ -68,100 +71,155 @@
           <small>Monitoring</small>
 
 
-          <div class="row p-2 mx-0">
-            <a href="{{ url_for('controller_camerafeeds.camera_feeds')}}">
+          <div class="row mx-0">
+            <a href="{{ url_for('controller_camerafeeds.camera_feeds')}}" class="sidebar-link  {% if request.endpoint == 'controller_camerafeeds.camera_feeds' %} active {% endif %}">
               <small>Camera Feeds</small>
             </a>
           </div>
 
-          <div class="row p-2 mx-0">
-            <a href="{{ url_for('controller_congestionmonitor.congestion_monitor')}}">
+          <div class="row mx-0">
+            <a href="{{ url_for('controller_congestionmonitor.congestion_monitor')}}" class="sidebar-link {% if request.endpoint == 'controller_congestionmonitor.congestion_monitor' %} active {% endif %}">
               <small>Congestion Monitor</small>
             </a>
           </div>
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_vehicledetection.vehicle_detection')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_vehicledetection.vehicle_detection')}}" class="sidebar-link {% if request.endpoint == 'controller_vehicledetection.vehicle_detection' %} active {% endif %}">
               <small>Vehicle Detection</small>
             </a>
           </div>
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_classification.classification')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_classification.classification')}}" class="sidebar-link {% if request.endpoint == 'controller_classification.classification' %} active {% endif %}">
               <small>Classification</small>
             </a>
           </div>
 
           <small>Traffic control</small>
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_signalcontrol.signal_control')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_signalcontrol.signal_control')}}" class="sidebar-link {% if request.endpoint == 'controller_signalcontrol.signal_control' %} active {% endif %}">
               <small>Signal Control</small>
             </a>
           </div>
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_emergencycorridor.emergency_corridor')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_emergencycorridor.emergency_corridor')}}" class="sidebar-link {% if request.endpoint == 'controller_emergencycorridor.emergency_corridor' %} active {% endif %}">
               <small>Emergency Corridor</small>
             </a>
           </div>
 
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_junctionmanagement.junction_management')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_junctionmanagement.junction_management')}}" class="sidebar-link  {% if request.endpoint == 'controller_junctionmanagement.junction_management' %} active {% endif %}">
               <small>Junction Management</small>
             </a>
           </div>
 
           <small>Analytics</small>
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_peakhouranalysis.peak_hour_analysis')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_peakhouranalysis.peak_hour_analysis')}}" class="sidebar-link {% if request.endpoint == 'controller_peakhouranalysis.peak_hour_analysis' %} active {% endif %}">
               <small>Peak Hour Analysis</small>
             </a>
           </div>
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_historicalrecords.historical_records')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_historicalrecords.historical_records')}}" class="sidebar-link {% if request.endpoint == 'controller_historicalrecords.historical_records' %} active {% endif %}" >
               <small>Historical Records</small>
             </a>
           </div>
 
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_reports.reports')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_reports.reports')}}" class="sidebar-link {% if request.endpoint == 'controller_reports.reports' %} active {% endif %}">
               <small>Reports</small>
             </a>
           </div>
 
           <small>Advanced</small>
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_digitaltwin.digital_twin')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_digitaltwin.digital_twin')}}" class="sidebar-link {% if request.endpoint == 'controller_digitaltwin.digital_twin' %} active {% endif %}">
               <small>Digital Twin</small>
             </a>
           </div>
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_aiprediction.ai_prediction')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_aiprediction.ai_prediction')}}" class="sidebar-link {% if request.endpoint == 'controller_aiprediction.ai_prediction' %} active {% endif %}">
               <small>AI Prediction</small>
             </a>
           </div>
 
 
-          <div class="row p-2 mx-0">
-            <a href="{{url_for('controller_scenariosimulator.scenario_simulator')}}">
+          <div class="row mx-0">
+            <a href="{{url_for('controller_scenariosimulator.scenario_simulator')}}" class="sidebar-link {% if request.endpoint == 'controller_scenariosimulator.scenario_simulator' %} active {% endif %}">
               <small>Scenario Simulator</small>
             </a>
           </div>
 
 
+          {% else %}
+
+        
+          <div class="row mx-0">
+            <a href="{{url_for('public_livetrafficmap.live_traffic_map')}}" class="sidebar-link {% if request.endpoint == 'public_livetrafficmap.live_traffic_map' %} active {% endif %}">
+              <small>Live Traffic Map</small>
+            </a>
+          </div>
+
+          <div class="row mx-0">
+            <a href="{{url_for('public_planjourney.plan_journey')}}" class="sidebar-link {% if request.endpoint == 'public_planjourney.plan_journey' %} active {% endif %}">
+              <small>Plan Journey</small>
+            </a>
+          </div>
+
+          <div class="row mx-0">
+            <a href="{{ url_for('public_raisecomplaint.raise_complaint')}}" class="sidebar-link {% if request.endpoint == 'public_raisecomplaint.raise_complaint' %} active {% endif %}">
+              <small>Raise Complaint</small>
+            </a>
+          </div>
+
+          <div class="row mx-0">
+            <a href="{{ url_for('public_alertme.alert_me')}}" class="sidebar-link {% if request.endpoint == 'public_alertme.alert_me' %} active {% endif %}">
+              <small>Alert Me</small>
+            </a>
+          </div>
+
+          <div class="row mx-0">
+            <a href="{{ url_for('public_savedroutes.saved_routes')}}" class="sidebar-link {% if request.endpoint == 'public_savedroutes.saved_routes' %} active {% endif %}">
+              <small>Saved Routes</small>
+            </a>
+          </div>
+
+          <div class="row mx-0">
+            <a href="{{url_for('public_livestats.live_stats')}}" class="sidebar-link {% if request.endpoint == 'public_livestats.live_stats' %} active {% endif %}">
+              <small>Live Stats</small>
+            </a>
+          </div>
+
+          <div class="row mx-0">
+            <a href="{{url_for('public_helpandinfo.help_and_info')}}" class="sidebar-link {% if request.endpoint == 'public_helpandinfo.help_and_info' %} active {% endif %}">
+              <small>Help & Info</small>
+            </a>
+          </div>
+
+          {% endif %}
 
           <!-- logout -->
-          <div class="row p-2 mx-0 mt-auto">
+          <!-- <div class="row p-2 mx-0 mt-auto">
             <small>Logout</small>
+          </div> -->
+
+          <div class="logout">
+              <a class="sidebar-link" href="{{ url_for('auth.logout') }}">
+                  Logout
+              </a>
           </div>
+
         </div>
+
+        
 
         <!-- SCROLLABLE MAIN CONTENT -->
         <div class="col-10 p-4 h-100 overflow-auto">

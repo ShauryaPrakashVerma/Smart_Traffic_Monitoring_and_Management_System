@@ -19,11 +19,11 @@ from .digital_twin import digital_twin_bp
 from .ai_prediction import ai_prediction_bp
 from .scenario_simulator import scenario_simulator_bp
 
-from .settings import settings_bp
+from ..settings import settings_bp
 
 
 
-def register_blueprints(app):
+def register_controller_blueprints(app):
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(live_map_bp)
     app.register_blueprint(notifications_bp)
