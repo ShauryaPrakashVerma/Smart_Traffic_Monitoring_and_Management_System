@@ -1,0 +1,362 @@
+/* =====================================================
+   REPORTS PAGE
+===================================================== */
+
+.reports-container{
+    padding:8px;
+}
+
+/* --------------------------------------- */
+/* PAGE HEADER */
+/* --------------------------------------- */
+
+.page-header{
+    margin-bottom:28px;
+}
+
+.page-header h2{
+    font-size:2rem;
+    font-weight:700;
+    color:#18202b;
+    margin-bottom:4px;
+}
+
+.page-header p{
+    color:#8c96a8;
+    font-size:.95rem;
+    margin:0;
+}
+
+
+/* --------------------------------------- */
+/* CARD */
+/* --------------------------------------- */
+
+.report-card{
+    background:#ffffff;
+    border:1px solid #dfe5ec;
+    border-radius:10px;
+    padding:22px;
+    height:100%;
+}
+
+
+/* --------------------------------------- */
+/* SECTION TITLE */
+/* --------------------------------------- */
+
+.section-title{
+    font-size:.72rem;
+    font-weight:700;
+    color:#9aa3b2;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:20px;
+}
+
+
+/* --------------------------------------- */
+/* REPORT TABS */
+/* --------------------------------------- */
+
+.report-tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.report-tab{
+
+    background:#ffffff;
+
+    border:1px solid #d6dce5;
+
+    color:#455066;
+
+    border-radius:6px;
+
+    padding:8px 18px;
+
+    font-size:.87rem;
+
+    font-weight:500;
+
+    cursor:pointer;
+
+    transition:.18s;
+}
+
+.report-tab:hover{
+
+    background:#f3f5f8;
+
+}
+
+.report-tab.active{
+
+    background:#171d2d;
+
+    color:#ffffff;
+
+    border-color:#171d2d;
+
+}
+
+
+/* --------------------------------------- */
+/* CHECKBOXES */
+/* --------------------------------------- */
+
+.form-check{
+
+    margin-bottom:15px;
+
+}
+
+.form-check-input{
+
+    width:17px;
+    height:17px;
+
+    cursor:pointer;
+
+}
+
+.form-check-input:checked{
+
+    background:#171d2d;
+    border-color:#171d2d;
+
+}
+
+.form-check-label{
+
+    color:#374151;
+
+    font-size:.94rem;
+
+    margin-left:5px;
+
+}
+
+
+/* --------------------------------------- */
+/* GENERATE BUTTON */
+/* --------------------------------------- */
+
+.generate-btn{
+
+    background:#171d2d;
+
+    color:white;
+
+    border:none;
+
+    border-radius:6px;
+
+    padding:11px 22px;
+
+    font-size:.92rem;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+.generate-btn:hover{
+
+    background:#2b3248;
+
+}
+
+
+/* --------------------------------------- */
+/* RECENT REPORTS */
+/* --------------------------------------- */
+
+.recent-report{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 0;
+
+    border-bottom:1px solid #eceff3;
+
+}
+
+.recent-report:last-child{
+
+    border-bottom:none;
+
+}
+
+.recent-report h6{
+
+    margin:0;
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    color:#1f2937;
+
+}
+
+.recent-report small{
+
+    color:#9ca3af;
+
+    font-size:.82rem;
+
+}
+
+
+/* --------------------------------------- */
+/* ACTIONS */
+/* --------------------------------------- */
+
+.report-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+
+/* --------------------------------------- */
+/* BADGE */
+/* --------------------------------------- */
+
+.badge-tag{
+
+    background:#171d2d;
+
+    color:#ffffff;
+
+    font-size:.66rem;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+    border-radius:4px;
+
+    padding:6px 10px;
+
+    min-width:58px;
+
+    text-align:center;
+
+}
+
+
+/* --------------------------------------- */
+/* PDF BUTTON */
+/* --------------------------------------- */
+
+.pdf-btn{
+    background:#ffffff;
+    border:1px solid #d5dce5;
+    border-radius:6px;
+    padding:7px 16px;
+    font-size:.82rem;
+    font-weight:600;
+    color:#293041;
+    transition:.2s;
+}
+
+.pdf-btn:hover{
+
+    background:#f4f6f9;
+
+    border-color:#bcc6d4;
+
+}
+
+
+/* --------------------------------------- */
+/* BUTTON ACTIVE */
+/* --------------------------------------- */
+
+.generate-btn:active,
+.report-tab:active,
+.pdf-btn:active{
+
+    transform:scale(.98);
+
+}
+
+
+/* --------------------------------------- */
+/* RESPONSIVE */
+/* --------------------------------------- */
+
+@media (max-width:992px){
+
+    .report-card{
+
+        margin-bottom:22px;
+
+    }
+
+}
+
+
+@media (max-width:768px){
+
+    .report-tabs{
+
+        gap:6px;
+
+    }
+
+    .report-tab{
+
+        flex:1 1 45%;
+
+    }
+
+    .recent-report{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:12px;
+
+    }
+
+    .report-actions{
+
+        width:100%;
+
+        justify-content:space-between;
+
+    }
+
+}
+
+
+@media (max-width:576px){
+
+    .page-header h2{
+
+        font-size:1.6rem;
+
+    }
+
+    .report-tab{
+
+        flex:1 1 100%;
+
+    }
+
+}

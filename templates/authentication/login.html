@@ -34,7 +34,7 @@
         </div>
 
 
-        <form action="{{ url_for('login')}}" method="POST">
+        <form action="{{ url_for('auth.login')}}" method="POST">
           <input type="hidden" id="role" name="role" value="controller">
           <label id="userLabel">Employee ID</label>
           <input id="userInput" type="text" placeholder="e.g EMP-2047" name="employee_id"/>

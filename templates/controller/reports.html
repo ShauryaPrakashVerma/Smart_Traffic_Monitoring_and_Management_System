@@ -1,11 +1,315 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %}
+
+{% block styles %}
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/controller/reports.css') }}">
+{% endblock %}
+
 
 {% block content %}
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Reports</p>
-    <a href="" class="btn btn-logout"></a>
+<div class="reports-container">
+
+    <div class="page-header">
+        <h2>Reports</h2>
+        <p>Generate and download traffic analysis reports</p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Left Panel -->
+        <div class="col-lg-6">
+
+            <div class="report-card">
+
+                <h6 class="section-title">
+                    Generate New Report
+                </h6>
+
+                <!-- Report Type -->
+
+                <div class="report-tabs">
+
+                    <button class="report-tab active">
+                        Daily
+                    </button>
+
+                    <button class="report-tab">
+                        Weekly
+                    </button>
+
+                    <button class="report-tab">
+                        Monthly
+                    </button>
+
+                    <button class="report-tab">
+                        Incident
+                    </button>
+
+                    <button class="report-tab">
+                        Custom
+                    </button>
+
+                </div>
+
+
+                <!-- Report Options -->
+
+                <div class="row mt-4">
+
+                    <div class="col-md-6">
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   checked>
+
+                            <label class="form-check-label">
+                                Vehicle Count Summary
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   checked>
+
+                            <label class="form-check-label">
+                                Signal Performance
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   checked>
+
+                            <label class="form-check-label">
+                                Congestion Heatmap
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   checked>
+
+                            <label class="form-check-label">
+                                Classification Breakdown
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   checked>
+
+                            <label class="form-check-label">
+                                Incident Log
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   checked>
+
+                            <label class="form-check-label">
+                                YOLO Detection Statistics
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   checked>
+
+                            <label class="form-check-label">
+                                Speed Analytics
+                            </label>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   checked>
+
+                            <label class="form-check-label">
+                                Zone Comparison
+                            </label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <button class="generate-btn mt-4">
+                    Generate Report
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Right Panel -->
+
+        <div class="col-lg-6">
+
+            <div class="report-card">
+
+                <h6 class="section-title">
+                    Recent Reports
+                </h6>
+
+                <div class="recent-report">
+
+                    <div>
+
+                        <h6>Daily Report — Aug 02</h6>
+
+                        <small>
+                            Aug 02, 17:00 • 2.4 MB
+                        </small>
+
+                    </div>
+
+                    <div class="report-actions">
+
+                        <span class="badge-tag">
+                            DAILY
+                        </span>
+
+                        <button class="pdf-btn">
+                            PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="recent-report">
+
+                    <div>
+
+                        <h6>Weekly Report — W30</h6>
+
+                        <small>
+                            Jul 28, 08:00 • 8.1 MB
+                        </small>
+
+                    </div>
+
+                    <div class="report-actions">
+
+                        <span class="badge-tag">
+                            WEEKLY
+                        </span>
+
+                        <button class="pdf-btn">
+                            PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="recent-report">
+
+                    <div>
+
+                        <h6>Incident Log — Aug 01</h6>
+
+                        <small>
+                            Aug 01, 23:59 • 1.1 MB
+                        </small>
+
+                    </div>
+
+                    <div class="report-actions">
+
+                        <span class="badge-tag">
+                            INCIDENT
+                        </span>
+
+                        <button class="pdf-btn">
+                            PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="recent-report">
+
+                    <div>
+
+                        <h6>Daily Report — Aug 01</h6>
+
+                        <small>
+                            Aug 01, 17:00 • 2.2 MB
+                        </small>
+
+                    </div>
+
+                    <div class="report-actions">
+
+                        <span class="badge-tag">
+                            DAILY
+                        </span>
+
+                        <button class="pdf-btn">
+                            PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="recent-report">
+
+                    <div>
+
+                        <h6>Monthly Report — Jul</h6>
+
+                        <small>
+                            Jul 31, 23:59 • 18.7 MB
+                        </small>
+
+                    </div>
+
+                    <div class="report-actions">
+
+                        <span class="badge-tag">
+                            MONTHLY
+                        </span>
+
+                        <button class="pdf-btn">
+                            PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/controller/reports.js') }}"></script>
 {% endblock %}

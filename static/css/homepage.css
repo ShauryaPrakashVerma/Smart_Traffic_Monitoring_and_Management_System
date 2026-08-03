@@ -2,111 +2,104 @@
    SIDEBAR
 ========================== */
 
-.bg{
-    background:#ffffff;
-    border-right:1px solid #e5e7eb;
-    overflow-y:auto;
+.bg {
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  overflow-y: auto;
 }
 
-.bg::-webkit-scrollbar{
-    width:5px;
+.bg::-webkit-scrollbar {
+  width: 5px;
 }
 
-.bg::-webkit-scrollbar-thumb{
-    background:#d1d5db;
+.bg::-webkit-scrollbar-thumb {
+  background: #d1d5db;
 }
-
 
 /* Section Heading */
 
-.bg > small{
-    display:block;
-    margin:20px 16px 8px;
-    font-size:.72rem;
-    font-weight:700;
-    color:#9ca3af;
-    text-transform:uppercase;
-    letter-spacing:1px;
+.bg > small {
+  display: block;
+  margin: 20px 16px 8px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
-
 
 /* Sidebar Link */
 
-.sidebar-link{
-    display:flex;
-    align-items:center;
+.sidebar-link {
+  display: flex;
+  align-items: center;
 
-    width:100%;
+  width: 100%;
 
-    padding:12px 18px;
+  padding: 12px 18px;
 
-    color:#6b7280;
-    text-decoration:none;
+  color: #3b3a3a;
+  text-decoration: none;
 
-    font-size:.92rem;
-    font-weight:500;
+  font-size: 0.92rem;
+  font-weight: 500;
 
-    transition:.18s ease;
+  /* transition: 0.18s ease; */
 }
-
 
 /* Hover */
 
-.sidebar-link:hover{
-    background:#f3f4f6;
-    color:#111827;
+.sidebar-link:hover {
+  background: #f3f4f6;
+  color: #111827;
 }
-
 
 /* Active */
 
-.sidebar-link.active{
-    background:#151b2c;
-    color:white;
-    font-weight:600;
+.sidebar-link.active {
+  background: #151b2c;
+  color: white;
+  font-weight: 600;
 }
-
 
 /* Remove Bootstrap row spacing */
 
-.bg .row{
-    margin:0;
+.bg .row {
+  margin: 0;
 }
 
-.bg .row a{
-    padding-left:18px;
+.bg .row a {
+  padding-left: 18px;
 }
-
 
 /* Logout */
 
-.logout{
-    margin-top:auto;
-    border-top:1px solid #e5e7eb;
+.logout {
+  margin-top: auto;
+  border-top: 1px solid #e5e7eb;
 }
 
-.logout a{
-    color:#6b7280;
+.logout a {
+  color: #6b7280;
 }
 
-.logout a:hover{
-    background:#f3f4f6;
+.logout a:hover {
+  background: #f3f4f6;
 }
-
 
 /* ==========================
    TOP NAVBAR
 ========================== */
 
-.navbar{
-    height:58px;
-    background:#151b2c !important;
-    border-bottom:1px solid #2d3648;
+.navbar {
+  height: 58px;
+  background: #151b2c !important;
+  border-bottom: 1px solid #2d3648;
 }
 
-.navbar-brand{
-    color:white !important;
-    font-size:1rem;
-    font-weight:600;
-    letter-spacing:.4px;
+.navbar-brand {
+  color: white !important;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
 }
