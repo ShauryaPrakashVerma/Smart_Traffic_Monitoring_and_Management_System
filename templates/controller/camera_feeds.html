@@ -18,10 +18,14 @@
   </div>
 
   <div class="camera-grid">
+    <!-- #1 -->
     <div class="camera-card">
       <div class="video-container">
         <video muted autoplay loop>
-          <source src="videos/cam1.mp4" type="video/mp4" />
+          <source
+            src="{{ url_for('static', filename='videos/09152008flight2tape1_5.mp4') }}"
+            type="video/mp4"
+          />
         </video>
 
         <div class="overlay">
@@ -37,10 +41,14 @@
       </div>
     </div>
 
+    <!-- #2 -->
     <div class="camera-card">
       <div class="video-container">
         <video muted autoplay loop>
-          <source src="videos/cam2.mp4" type="video/mp4" />
+          <source
+            src="{{ url_for('static', filename='videos/09152008flight2tape1_1.mp4') }}"
+            type="video/mp4"
+          />
         </video>
 
         <div class="overlay">
@@ -56,10 +64,14 @@
       </div>
     </div>
 
+    <!-- #3 -->
     <div class="camera-card">
       <div class="video-container">
         <video muted autoplay loop>
-          <source src="videos/cam3.mp4" type="video/mp4" />
+          <source
+            src="{{ url_for('static', filename='videos/09162008flight1tape1_1.mp4') }}"
+            type="video/mp4"
+          />
         </video>
 
         <div class="overlay">
@@ -75,10 +87,14 @@
       </div>
     </div>
 
+    <!-- #4 -->
     <div class="camera-card">
       <div class="video-container">
         <video muted autoplay loop>
-          <source src="videos/cam4.mp4" type="video/mp4" />
+          <source
+            src="{{ url_for('static', filename='videos/09162008flight1tape1_1.mp4') }}"
+            type="video/mp4"
+          />
         </video>
 
         <div class="overlay">
@@ -94,10 +110,14 @@
       </div>
     </div>
 
+    <!-- #5 -->
     <div class="camera-card">
       <div class="video-container">
         <video muted autoplay loop>
-          <source src="videos/cam5.mp4" type="video/mp4" />
+          <source
+            src="{{ url_for('static', filename='videos/09152008flight2tape1_5.mp4') }}"
+            type="video/mp4"
+          />
         </video>
 
         <div class="overlay">
@@ -113,10 +133,14 @@
       </div>
     </div>
 
+    <!-- #6 -->
     <div class="camera-card">
       <div class="video-container">
         <video muted autoplay loop>
-          <source src="videos/cam6.mp4" type="video/mp4" />
+          <source
+            src="{{ url_for('static', filename='videos/09152008flight2tape1_1.mp4') }}"
+            type="video/mp4"
+          />
         </video>
 
         <div class="overlay">
@@ -140,8 +164,15 @@
   <video id="zoomVideo" controls autoplay></video>
 </div>
 
-{% endblock %} {% block scripts %}
-<script src="{{ url_for('static', filename='js/controller/camera_feeds.js') }}"></script>
-{% endblock %}
 
-<!-- <script src="script.js"></script> -->
+
+<script src="{{ url_for('static', filename='js/controller/camera_feeds.js') }}"></script>
+
+
+{% endblock %} 
+
+
+
+<!-- {% block scripts %}
+<script src="{{ url_for('static', filename='js/controller/camera_feeds.js') }}"></script>
+{% endblock %} -->

@@ -2,27 +2,27 @@ const modal = document.getElementById("modal");
 const zoomVideo = document.getElementById("zoomVideo");
 const close = document.getElementById("close");
 
-document.querySelectorAll(".video-container").forEach((container) => {
-  container.addEventListener("click", () => {
-    const video = container.querySelector("video");
+if (modal && zoomVideo && close) {
 
-    zoomVideo.src = video.currentSrc;
+    document.querySelectorAll(".video-container").forEach(container => {
 
-    modal.style.display = "flex";
+        container.addEventListener("click", () => {
 
-    zoomVideo.play();
-  });
-});
+            const video = container.querySelector("video");
 
-close.onclick = () => {
-  modal.style.display = "none";
+            zoomVideo.src = video.currentSrc;
 
-  zoomVideo.pause();
-};
+            modal.style.display = "flex";
 
-modal.onclick = (e) => {
-  if (e.target === modal) {
-    modal.style.display = "none";
-    zoomVideo.pause();
-  }
-};
+            zoomVideo.play();
+
+        });
+
+    });
+
+    close.onclick = () => {
+        modal.style.display = "none";
+        zoomVideo.pause();
+    };
+
+}

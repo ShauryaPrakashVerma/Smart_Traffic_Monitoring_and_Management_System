@@ -1,11 +1,293 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %}
+
+{% block styles %}
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/controller/dashboard.css') }}">
+{% endblock %}
 
 {% block content %}
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the dashboard</p>
-    <a href="" class="btn btn-logout"></a>
+<div class="dashboard-page">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h2>Traffic Operations Dashboard</h2>
+
+            <p>
+                AI Powered Smart Traffic Monitoring & Management System
+            </p>
+
+        </div>
+
+        <div class="header-buttons">
+
+            <button class="btn-outline">
+                Digital Twin
+            </button>
+
+            <button class="btn-danger">
+                Emergency
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= TOP STATS ================= -->
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card green">
+
+            <span>Total Vehicles</span>
+
+            <h2 id="vehicleCount">2847</h2>
+
+            <small>↑ 8% from last hour</small>
+
+        </div>
+
+
+        <div class="stat-card blue">
+
+            <span>Average Speed</span>
+
+            <h2 id="avgSpeed">31 km/h</h2>
+
+            <small>Network Average</small>
+
+        </div>
+
+
+        <div class="stat-card red">
+
+            <span>Congestion Level</span>
+
+            <h2 id="congestionLevel">HIGH</h2>
+
+            <small>B2 Corridor Critical</small>
+
+        </div>
+
+
+        <div class="stat-card orange">
+
+            <span>Active Incidents</span>
+
+            <h2 id="incidentCount">3</h2>
+
+            <small>2 Acknowledged</small>
+
+        </div>
+
+
+
+        <div class="stat-card purple">
+
+            <span>Emergency Vehicles</span>
+
+            <h2>2</h2>
+
+            <small>EV-07 & EV-12</small>
+
+        </div>
+
+
+        <div class="stat-card green">
+
+            <span>YOLO Accuracy</span>
+
+            <h2>97.4%</h2>
+
+            <small>24 Hour Average</small>
+
+        </div>
+
+
+        <div class="stat-card green">
+
+            <span>Signals Online</span>
+
+            <h2>9 / 9</h2>
+
+            <small>Operational</small>
+
+        </div>
+
+
+        <div class="stat-card dark">
+
+            <span>Camera Status</span>
+
+            <h2>6 / 6</h2>
+
+            <small>All Live</small>
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <!-- ================= MAIN GRID ================= -->
+
+    <div class="dashboard-grid">
+
+
+
+
+        <!-- LEFT SIDE -->
+
+        <div class="network-panel">
+
+            <div class="panel-header">
+
+                <h3>City Road Network</h3>
+
+                <span class="live-badge">
+                    LIVE
+                </span>
+
+            </div>
+
+
+            <!-- SVG MAP WILL COME IN PART 2 -->
+
+            <div id="city-map">
+
+              <div class="network-panel">
+
+                  <div class="panel-header">
+
+                      <h3>City Road Network</h3>
+
+                      <span class="live-badge">
+                          LIVE
+                      </span>
+
+                  </div>
+
+                  <div id="map"></div>
+
+              </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="alerts-panel">
+
+            <div class="panel-header">
+
+                <h3>Live Alerts</h3>
+
+                <span class="active-count">
+
+                    3 Active
+
+                </span>
+
+            </div>
+
+
+
+
+            <div id="alertsContainer">
+
+                <div class="alert-card critical">
+
+                    <div>
+
+                        <h4>Multi Vehicle Collision</h4>
+
+                        <p>B2 / 2nd Street</p>
+
+                    </div>
+
+                    <span>ACTIVE</span>
+
+                </div>
+
+
+
+                <div class="alert-card warning">
+
+                    <div>
+
+                        <h4>Emergency Vehicle Route</h4>
+
+                        <p>A3 → B3 Corridor</p>
+
+                    </div>
+
+                    <span>ACKNOWLEDGED</span>
+
+                </div>
+
+
+
+                <div class="alert-card danger">
+
+                    <div>
+
+                        <h4>Severe Congestion</h4>
+
+                        <p>B2 Junction</p>
+
+                    </div>
+
+                    <span>ACTIVE</span>
+
+                </div>
+
+
+
+                <div class="alert-card resolved">
+
+                    <div>
+
+                        <h4>Congestion Cleared</h4>
+
+                        <p>C2 Intersection</p>
+
+                    </div>
+
+                    <span>RESOLVED</span>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
 </div>
 
+<script src="{{ url_for('static', filename='js/controller/dashboard.js') }}"></script>
+
+
 {% endblock %}
+
+
+<!-- {% block scripts %}
+{% endblock %} -->

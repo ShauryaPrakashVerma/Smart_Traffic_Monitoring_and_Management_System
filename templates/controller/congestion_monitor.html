@@ -1,11 +1,105 @@
-{% extends 'homepage.html' %}
+{% extends 'homepage.html' %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/congestion_monitor.css') }}"
+/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %} {% block content %}
+<div class="cm-container">
+  <div class="cm-header">
+    <div>
+      <h2>Congestion Monitor</h2>
+      <p>Real-time and historical congestion index by zone</p>
+    </div>
+    <button class="export-btn">Export Data</button>
+  </div>
 
-{% block content %}
+  <div class="summary-grid">
+    {% for c in [ ('B2 Junction','98%','Standstill · 89 veh','red'), ('A3
+    Interchange','87%','Heavy · 67 veh','orange'), ('B3 Ramp','74%','Heavy · 55
+    veh','orange'), ('A2 High St','52%','Moderate · 34 veh','gold'), ('C2
+    Central','38%','Moderate · 31 veh','gold'), ('C3 Outbound','14%','Free · 14
+    veh','green')] %}
+    <div class="card {{c[3]}}">
+      <h5>{{c[0]}}</h5>
+      <h1>{{c[1]}}</h1>
+      <p>{{c[2]}}</p>
+    </div>
+    {% endfor %}
+  </div>
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Congestion Monitor</p>
-    <a href="" class="btn btn-logout"></a>
+  <div class="charts">
+    <div class="panel">
+      <h4>Congestion Index — Top Zones (Today)</h4>
+      <canvas id="lineChart"></canvas>
+    </div>
+    <div class="panel">
+      <h4>Current Zone Density</h4>
+      <canvas id="barChart"></canvas>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h4>Congestion Event Log</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>TIME</th>
+          <th>ZONE</th>
+          <th>INDEX</th>
+          <th>VEHICLES</th>
+          <th>AVG SPEED</th>
+          <th>DURATION</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>17:42</td>
+          <td>B2</td>
+          <td>98%</td>
+          <td>89</td>
+          <td>8 km/h</td>
+          <td>52 min</td>
+          <td><span class="badge active">ACTIVE</span></td>
+        </tr>
+        <tr>
+          <td>17:15</td>
+          <td>A3</td>
+          <td>87%</td>
+          <td>67</td>
+          <td>24 km/h</td>
+          <td>37 min</td>
+          <td><span class="badge active">ACTIVE</span></td>
+        </tr>
+        <tr>
+          <td>16:10</td>
+          <td>A2</td>
+          <td>68%</td>
+          <td>52</td>
+          <td>28 km/h</td>
+          <td>35 min</td>
+          <td><span class="badge clearing">CLEARING</span></td>
+        </tr>
+        <tr>
+          <td>15:30</td>
+          <td>C2</td>
+          <td>45%</td>
+          <td>38</td>
+          <td>35 km/h</td>
+          <td>22 min</td>
+          <td><span class="badge resolved">RESOLVED</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
+
+<script src="{{ url_for('static', filename='js/controller/congestion_monitor.js') }}"></script>
+
 {% endblock %}
+
+
+<!-- {% block scripts %}
+{% endblock %} -->
