@@ -1,11 +1,147 @@
-{% extends 'homepage.html' %}
+{% extends 'homepage.html' %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/camera_feeds.css') }}"
+/>
+{% endblock %} {% block content %}
 
-{% block content %}
+<div class="container">
+  <div class="top">
+    <div>
+      <h2>Camera Feeds</h2>
+      <p>6 live cameras · YOLO v8 Object Detection Active</p>
+    </div>
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Camera feeds</p>
-    <a href="" class="btn btn-logout"></a>
+    <div class="status">
+      <span>ALL ONLINE</span>
+    </div>
+  </div>
+
+  <div class="camera-grid">
+    <div class="camera-card">
+      <div class="video-container">
+        <video muted autoplay loop>
+          <source src="videos/cam1.mp4" type="video/mp4" />
+        </video>
+
+        <div class="overlay">
+          <div class="left">● REC — CAM-01</div>
+
+          <div class="right">YOLO</div>
+        </div>
+      </div>
+
+      <div class="info">
+        <h3>A2 — North Approach</h3>
+        <p>Zone A2 · 34 Vehicles</p>
+      </div>
+    </div>
+
+    <div class="camera-card">
+      <div class="video-container">
+        <video muted autoplay loop>
+          <source src="videos/cam2.mp4" type="video/mp4" />
+        </video>
+
+        <div class="overlay">
+          <div class="left">● REC — CAM-02</div>
+
+          <div class="right">YOLO</div>
+        </div>
+      </div>
+
+      <div class="info">
+        <h3>A3 — Interchange</h3>
+        <p>Zone A3 · 67 Vehicles</p>
+      </div>
+    </div>
+
+    <div class="camera-card">
+      <div class="video-container">
+        <video muted autoplay loop>
+          <source src="videos/cam3.mp4" type="video/mp4" />
+        </video>
+
+        <div class="overlay">
+          <div class="left">● REC — CAM-03</div>
+
+          <div class="right">YOLO</div>
+        </div>
+      </div>
+
+      <div class="info">
+        <h3>B2 — Junction Centre</h3>
+        <p>Zone B2 · 89 Vehicles</p>
+      </div>
+    </div>
+
+    <div class="camera-card">
+      <div class="video-container">
+        <video muted autoplay loop>
+          <source src="videos/cam4.mp4" type="video/mp4" />
+        </video>
+
+        <div class="overlay">
+          <div class="left">● REC — CAM-04</div>
+
+          <div class="right">YOLO</div>
+        </div>
+      </div>
+
+      <div class="info">
+        <h3>B3 — On Ramp</h3>
+        <p>Zone B3 · 55 Vehicles</p>
+      </div>
+    </div>
+
+    <div class="camera-card">
+      <div class="video-container">
+        <video muted autoplay loop>
+          <source src="videos/cam5.mp4" type="video/mp4" />
+        </video>
+
+        <div class="overlay">
+          <div class="left">● REC — CAM-05</div>
+
+          <div class="right">YOLO</div>
+        </div>
+      </div>
+
+      <div class="info">
+        <h3>C1 — Entry Gate</h3>
+        <p>Zone C1 · 9 Vehicles</p>
+      </div>
+    </div>
+
+    <div class="camera-card">
+      <div class="video-container">
+        <video muted autoplay loop>
+          <source src="videos/cam6.mp4" type="video/mp4" />
+        </video>
+
+        <div class="overlay">
+          <div class="left">● REC — CAM-06</div>
+
+          <div class="right">YOLO</div>
+        </div>
+      </div>
+
+      <div class="info">
+        <h3>C2 — Central</h3>
+        <p>Zone C2 · 31 Vehicles</p>
+      </div>
+    </div>
+  </div>
 </div>
 
+<div id="modal">
+  <span id="close">&times;</span>
+
+  <video id="zoomVideo" controls autoplay></video>
+</div>
+
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename='js/controller/camera_feeds.js') }}"></script>
 {% endblock %}
+
+<!-- <script src="script.js"></script> -->
