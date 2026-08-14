@@ -1,11 +1,125 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %} {% block styles %}
 
-{% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/peak_hour_analysis.css') }}"
+/>
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the peak_hour_analysis</p>
-    <a href="" class="btn btn-logout"></a>
+{% endblock %} {% block content %}
+
+<div class="peak-page">
+  <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+  <div class="peak-header">
+    <div>
+      <h2>Peak Hour Analysis</h2>
+
+      <p>Traffic volume patterns and congestion windows</p>
+    </div>
+
+    <div class="peak-header-actions">
+      <button id="periodButton" class="peak-button">Last 7 Days</button>
+
+      <button id="exportButton" class="peak-button">Export</button>
+    </div>
+  </div>
+
+  <!-- =====================================================
+         SUMMARY CARDS
+    ====================================================== -->
+
+  <div class="peak-summary-grid">
+    <div class="peak-summary-card morning">
+      <span class="peak-card-label"> Morning Peak </span>
+
+      <strong> 07:00–09:00 </strong>
+
+      <small> 587 veh/h avg · 28 km/h </small>
+    </div>
+
+    <div class="peak-summary-card evening">
+      <span class="peak-card-label"> Evening Peak </span>
+
+      <strong> 16:30–18:30 </strong>
+
+      <small> 698 veh/h avg · 17 km/h </small>
+    </div>
+
+    <div class="peak-summary-card">
+      <span class="peak-card-label"> Off-Peak Avg </span>
+
+      <strong>
+        187
+        <small class="unit"> veh/h </small>
+      </strong>
+    </div>
+
+    <div class="peak-summary-card peak-ratio">
+      <span class="peak-card-label"> Peak Ratio </span>
+
+      <strong> 3.7× </strong>
+
+      <small> peak vs off-peak </small>
+    </div>
+
+    <div class="peak-summary-card worst">
+      <span class="peak-card-label"> Worst Segment </span>
+
+      <strong> B2 — 17:00 </strong>
+    </div>
+  </div>
+
+  <!-- =====================================================
+         CHART AREA
+    ====================================================== -->
+
+  <div class="peak-chart-grid">
+    <!-- 24 HOUR CHART -->
+
+    <section class="peak-panel volume-panel">
+      <div class="peak-panel-title">24-Hour Volume Profile — Today</div>
+
+      <div class="volume-chart-wrapper">
+        <canvas id="volumeChart"></canvas>
+      </div>
+    </section>
+
+    <!-- RADAR CHART -->
+
+    <section class="peak-panel radar-panel">
+      <div class="peak-panel-title">Daily Peak Volume (7D)</div>
+
+      <div class="radar-chart-wrapper">
+        <canvas id="dailyPeakChart"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <!-- =====================================================
+         ZONE BREAKDOWN
+    ====================================================== -->
+
+  <section class="zone-panel">
+    <div class="peak-panel-title">Peak Period Breakdown by Zone</div>
+
+    <div id="zoneBreakdown" class="zone-grid">
+      <!-- JS inserts zones -->
+    </div>
+  </section>
 </div>
+
+<!-- =====================================================
+     CHART.JS
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<!-- =====================================================
+     PAGE JS
+====================================================== -->
+
+<script src="{{ url_for('static', filename='js/controller/peak_hour_analysis.js') }}"></script>
 
 {% endblock %}

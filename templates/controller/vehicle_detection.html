@@ -1,11 +1,242 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %} {% block styles %}
 
-{% block content %}
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Vehicle detection</p>
-    <a href="" class="btn btn-logout"></a>
+<!-- Vehicle Detection CSS -->
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/vehicle_detection.css') }}"
+/>
+
+{% endblock %} {% block content %}
+
+<div class="vehicle-detection-page">
+  <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+  <div class="vehicle-detection-header">
+    <div>
+      <h2>Vehicle Detection</h2>
+
+      <p>YOLO v8.1 real-time object detection pipeline</p>
+    </div>
+
+    <div class="vehicle-detection-actions">
+      <span class="model-status"> YOLO V8.1 ACTIVE </span>
+
+      <button id="configureModelBtn" class="configure-btn">
+        Configure Model
+      </button>
+    </div>
+  </div>
+
+  <!-- =====================================================
+         KPI CARDS
+    ====================================================== -->
+
+  <div class="detection-kpi-grid">
+    <!-- Detection Rate -->
+
+    <div class="detection-kpi-card">
+      <div class="kpi-label">Detection Rate</div>
+
+      <div class="kpi-value">
+        <span id="detectionRate"> 32 </span>
+
+        <small> veh/min </small>
+      </div>
+    </div>
+
+    <!-- Avg Confidence -->
+
+    <div class="detection-kpi-card confidence-card">
+      <div class="kpi-label">Avg Confidence</div>
+
+      <div class="kpi-value">
+        <span id="avgConfidence"> 93.4 </span>
+
+        <small> % </small>
+      </div>
+
+      <div class="kpi-change positive">▲ 1.2% <span>24h avg</span></div>
+    </div>
+
+    <!-- Today -->
+
+    <div class="detection-kpi-card">
+      <div class="kpi-label">Today Detections</div>
+
+      <div class="kpi-value">
+        <span id="todayDetections"> 41,294 </span>
+      </div>
+    </div>
+
+    <!-- Latency -->
+
+    <div class="detection-kpi-card latency-card">
+      <div class="kpi-label">Model Latency</div>
+
+      <div class="kpi-value">
+        <span id="modelLatency"> 28 </span>
+
+        <small> ms </small>
+      </div>
+    </div>
+
+    <!-- False Positives -->
+
+    <div class="detection-kpi-card false-positive-card">
+      <div class="kpi-label">False Positives</div>
+
+      <div class="kpi-value">
+        <span> 0.4 </span>
+
+        <small> % </small>
+      </div>
+    </div>
+
+    <!-- Processing -->
+
+    <div class="detection-kpi-card processing-card">
+      <div class="kpi-label">Processing</div>
+
+      <div class="kpi-value">
+        <span> 6/6 </span>
+      </div>
+
+      <div class="kpi-subtext">cameras active</div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+         ANALYTICS ROW
+    ====================================================== -->
+
+  <div class="detection-analytics-grid">
+    <!-- =================================================
+             DETECTION RATE CHART
+        ================================================== -->
+
+    <section class="detection-panel chart-panel">
+      <div class="panel-header">
+        <h3>Detection Rate — Last 5 Min</h3>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="detectionRateChart"> </canvas>
+      </div>
+    </section>
+
+    <!-- =================================================
+             CONFIDENCE DISTRIBUTION
+        ================================================== -->
+
+    <section class="detection-panel confidence-panel">
+      <div class="panel-header">
+        <h3>Confidence Distribution</h3>
+      </div>
+
+      <div class="confidence-list">
+        <!-- >= 0.95 -->
+
+        <div class="confidence-row">
+          <span class="confidence-label"> ≥ 0.95 </span>
+
+          <div class="confidence-track">
+            <div class="confidence-fill green" style="width: 62%"></div>
+          </div>
+
+          <strong> 62% </strong>
+        </div>
+
+        <!-- 0.90 - 0.94 -->
+
+        <div class="confidence-row">
+          <span class="confidence-label"> 0.90 – 0.94 </span>
+
+          <div class="confidence-track">
+            <div class="confidence-fill yellow" style="width: 24%"></div>
+          </div>
+
+          <strong> 24% </strong>
+        </div>
+
+        <!-- 0.85 - 0.89 -->
+
+        <div class="confidence-row">
+          <span class="confidence-label"> 0.85 – 0.89 </span>
+
+          <div class="confidence-track">
+            <div class="confidence-fill orange" style="width: 10%"></div>
+          </div>
+
+          <strong> 10% </strong>
+        </div>
+
+        <!-- < 0.85 -->
+
+        <div class="confidence-row">
+          <span class="confidence-label"> &lt; 0.85 </span>
+
+          <div class="confidence-track">
+            <div class="confidence-fill red" style="width: 4%"></div>
+          </div>
+
+          <strong> 4% </strong>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =====================================================
+         LIVE DETECTION FEED
+    ====================================================== -->
+
+  <section class="detection-panel live-feed-panel">
+    <div class="live-feed-header">
+      <h3>Live Detection Feed</h3>
+
+      <span class="streaming-badge">
+        <span class="stream-dot"></span>
+
+        STREAMING
+      </span>
+    </div>
+
+    <div class="detection-table-wrapper">
+      <table class="detection-table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+
+            <th>Camera</th>
+
+            <th>Type</th>
+
+            <th>Vehicle ID</th>
+
+            <th>Speed</th>
+
+            <th>Conf.</th>
+
+            <th>Zone</th>
+          </tr>
+        </thead>
+
+        <tbody id="detectionTableBody">
+          <!-- Javascript will populate this -->
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>
+
+<!-- =========================================================
+     VEHICLE DETECTION JAVASCRIPT
+========================================================= -->
+
+<script src="{{ url_for('static', filename='js/controller/vehicle_detection.js') }}"></script>
 
 {% endblock %}

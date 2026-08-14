@@ -1,11 +1,309 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %} {% block styles %}
 
-{% block content %}
+<!-- Leaflet CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Livemap</p>
-    <a href="" class="btn btn-logout"></a>
+<!-- Page CSS -->
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/live_map.css') }}"
+/>
+
+{% endblock %} {% block content %}
+
+<div class="live-map-page">
+  <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+  <div class="live-map-header">
+    <div class="live-map-title">
+      <h2>Live Traffic Map</h2>
+
+      <p>Real-time city road network overview</p>
+    </div>
+
+    <div class="live-map-actions">
+      <button id="exportKmlBtn" class="map-action-btn">Export KML</button>
+
+      <button id="printMapBtn" class="map-action-btn">Print Map</button>
+    </div>
+  </div>
+
+  <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+  <div class="live-map-layout">
+    <!-- =================================================
+             MAP SECTION
+        ================================================== -->
+
+    <section class="map-panel">
+      <!-- Traffic Filters -->
+
+      <div class="map-toolbar">
+        <div class="traffic-filters">
+          <button class="traffic-filter active" data-filter="all">All</button>
+
+          <button class="traffic-filter" data-filter="free">Free</button>
+
+          <button class="traffic-filter" data-filter="moderate">
+            Moderate
+          </button>
+
+          <button class="traffic-filter" data-filter="heavy">Heavy</button>
+
+          <button class="traffic-filter" data-filter="standstill">
+            Standstill
+          </button>
+        </div>
+
+        <!-- Legend -->
+
+        <div class="map-legend">
+          <span>
+            <i class="legend-dot free"></i>
+            Free
+          </span>
+
+          <span>
+            <i class="legend-dot moderate"></i>
+            Moderate
+          </span>
+
+          <span>
+            <i class="legend-dot heavy"></i>
+            Heavy
+          </span>
+
+          <span>
+            <i class="legend-dot standstill"></i>
+            Standstill
+          </span>
+        </div>
+      </div>
+
+      <!-- =================================================
+                 LEAFLET MAP
+            ================================================== -->
+
+      <div id="trafficMap"></div>
+    </section>
+
+    <!-- =================================================
+             RIGHT SIDEBAR
+        ================================================== -->
+
+    <aside class="map-sidebar">
+      <!-- =================================================
+                 NETWORK SUMMARY
+            ================================================== -->
+
+      <section class="map-info-panel">
+        <div class="map-info-header">
+          <h3>Network Summary</h3>
+        </div>
+
+        <div class="summary-list">
+          <div class="summary-row">
+            <span> Total Intersections </span>
+
+            <strong> 9 </strong>
+          </div>
+
+          <div class="summary-row">
+            <span> Vehicles Active </span>
+
+            <strong id="vehiclesActive"> 2,847 </strong>
+          </div>
+
+          <div class="summary-row">
+            <span> Avg Speed </span>
+
+            <strong> 31 km/h </strong>
+          </div>
+
+          <div class="summary-row">
+            <span> Emergency Units </span>
+
+            <strong> 2 </strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================
+                 INTERSECTION STATUS
+            ================================================== -->
+
+      <section class="map-info-panel intersection-panel">
+        <div class="map-info-header">
+          <h3>Intersection Status</h3>
+        </div>
+
+        <div id="intersectionList">
+          <!-- A1 -->
+
+          <div class="intersection-row" data-status="free">
+            <div class="intersection-name">
+              <span class="status-dot free"></span>
+
+              <strong>A1</strong>
+            </div>
+
+            <div class="intersection-data">
+              <strong>FREE</strong>
+
+              <span> 12 veh · 62 km/h </span>
+            </div>
+          </div>
+
+          <!-- C1 -->
+
+          <div class="intersection-row" data-status="free">
+            <div class="intersection-name">
+              <span class="status-dot free"></span>
+
+              <strong>C1</strong>
+            </div>
+
+            <div class="intersection-data">
+              <strong>FREE</strong>
+
+              <span> 9 veh · 58 km/h </span>
+            </div>
+          </div>
+
+          <!-- C3 -->
+
+          <div class="intersection-row" data-status="free">
+            <div class="intersection-name">
+              <span class="status-dot free"></span>
+
+              <strong>C3</strong>
+            </div>
+
+            <div class="intersection-data">
+              <strong>FREE</strong>
+
+              <span> 14 veh · 54 km/h </span>
+            </div>
+          </div>
+
+          <!-- A2 -->
+
+          <div class="intersection-row" data-status="moderate">
+            <div class="intersection-name">
+              <span class="status-dot moderate"></span>
+
+              <strong>A2</strong>
+            </div>
+
+            <div class="intersection-data">
+              <strong>MODERATE</strong>
+
+              <span> 37 veh · 41 km/h </span>
+            </div>
+          </div>
+
+          <!-- B1 -->
+
+          <div class="intersection-row" data-status="moderate">
+            <div class="intersection-name">
+              <span class="status-dot moderate"></span>
+
+              <strong>B1</strong>
+            </div>
+
+            <div class="intersection-data">
+              <strong>MODERATE</strong>
+
+              <span> 42 veh · 38 km/h </span>
+            </div>
+          </div>
+
+          <!-- C2 -->
+
+          <div class="intersection-row" data-status="moderate">
+            <div class="intersection-name">
+              <span class="status-dot moderate"></span>
+
+              <strong>C2</strong>
+            </div>
+
+            <div class="intersection-data">
+              <strong>MODERATE</strong>
+
+              <span> 38 veh · 35 km/h </span>
+            </div>
+          </div>
+
+          <!-- A3 -->
+
+          <div class="intersection-row" data-status="heavy">
+            <div class="intersection-name">
+              <span class="status-dot heavy"></span>
+
+              <strong>A3</strong>
+            </div>
+
+            <div class="intersection-data">
+              <strong>HEAVY</strong>
+
+              <span> 67 veh · 24 km/h </span>
+            </div>
+          </div>
+
+          <!-- B3 -->
+
+          <div class="intersection-row" data-status="heavy">
+            <div class="intersection-name">
+              <span class="status-dot heavy"></span>
+
+              <strong>B3</strong>
+            </div>
+
+            <div class="intersection-data">
+              <strong>HEAVY</strong>
+
+              <span> 55 veh · 19 km/h </span>
+            </div>
+          </div>
+
+          <!-- B2 -->
+
+          <div class="intersection-row" data-status="standstill">
+            <div class="intersection-name">
+              <span class="status-dot standstill"></span>
+
+              <strong>B2</strong>
+            </div>
+
+            <div class="intersection-data">
+              <strong>STANDSTILL</strong>
+
+              <span> 89 veh · 8 km/h </span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </div>
 </div>
+
+<!-- =========================================================
+     LEAFLET JS
+========================================================= -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- =========================================================
+     PAGE JS
+========================================================= -->
+
+<script src="{{ url_for('static', filename='js/controller/live_map.js') }}"></script>
 
 {% endblock %}

@@ -1,0 +1,389 @@
+/* =========================================================
+   PEAK HOUR ANALYSIS
+========================================================= */
+
+.peak-page {
+  min-height: calc(100vh - 58px);
+
+  padding: 14px 16px 30px;
+
+  background: #f5f7fa;
+
+  color: #111827;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.peak-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  margin-bottom: 28px;
+}
+
+.peak-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  line-height: 1.2;
+
+  font-weight: 700;
+}
+
+.peak-header p {
+  margin: 4px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+.peak-header-actions {
+  display: flex;
+
+  gap: 7px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.peak-button {
+  padding: 7px 12px;
+
+  border: 1px solid #cfd6df;
+
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  color: #334155;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.peak-button:hover {
+  background: #f8fafc;
+
+  border-color: #94a3b8;
+}
+
+.peak-button.active {
+  background: #111827;
+
+  border-color: #111827;
+
+  color: #ffffff;
+}
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.peak-summary-grid {
+  display: grid;
+
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+}
+
+.peak-summary-card {
+  min-height: 85px;
+
+  padding: 13px 14px;
+
+  border: 1px solid #dfe3e8;
+
+  border-top: 2px solid #111827;
+
+  border-radius: 6px;
+
+  background: #ffffff;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.peak-summary-card.morning {
+  border-top-color: #f97316;
+}
+
+.peak-summary-card.evening {
+  border-top-color: #ef4444;
+}
+
+.peak-summary-card.peak-ratio {
+  border-top-color: #7c3aed;
+}
+
+.peak-summary-card.worst {
+  border-top-color: #ef4444;
+}
+
+.peak-card-label {
+  margin-bottom: 6px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+
+  text-transform: uppercase;
+}
+
+.peak-summary-card strong {
+  font-family: "SFMono-Regular", Consolas, monospace;
+
+  font-size: 20px;
+
+  line-height: 1.1;
+}
+
+.peak-summary-card small {
+  margin-top: 4px;
+
+  color: #94a3b8;
+
+  font-size: 9px;
+}
+
+.peak-summary-card .unit {
+  display: inline;
+
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  font-weight: 400;
+}
+
+/* =========================================================
+   CHART GRID
+========================================================= */
+
+.peak-chart-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 2.2fr)
+    minmax(280px, 1fr);
+
+  gap: 12px;
+
+  margin-bottom: 12px;
+}
+
+/* =========================================================
+   PANELS
+========================================================= */
+
+.peak-panel {
+  min-width: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 6px;
+
+  padding: 14px;
+}
+
+.peak-panel-title {
+  margin-bottom: 12px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   VOLUME CHART
+========================================================= */
+
+.volume-chart-wrapper {
+  position: relative;
+
+  height: 220px;
+
+  width: 100%;
+}
+
+.volume-chart-wrapper canvas {
+  width: 100% !important;
+
+  height: 100% !important;
+}
+
+/* =========================================================
+   RADAR CHART
+========================================================= */
+
+.radar-chart-wrapper {
+  position: relative;
+
+  height: 220px;
+
+  width: 100%;
+}
+
+.radar-chart-wrapper canvas {
+  width: 100% !important;
+
+  height: 100% !important;
+}
+
+/* =========================================================
+   ZONE PANEL
+========================================================= */
+
+.zone-panel {
+  padding: 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 6px;
+}
+
+.zone-grid {
+  display: grid;
+
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+
+  gap: 6px;
+}
+
+.zone-card {
+  min-height: 75px;
+
+  padding: 10px 6px;
+
+  border-radius: 5px;
+
+  background: #f8fafc;
+
+  text-align: center;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.zone-name {
+  color: #111827;
+
+  font-size: 10px;
+
+  font-weight: 600;
+}
+
+.zone-value {
+  margin-top: 6px;
+
+  font-family: "SFMono-Regular", Consolas, monospace;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+.zone-unit {
+  margin-top: 4px;
+
+  color: #94a3b8;
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   ZONE SEVERITY
+========================================================= */
+
+.zone-card.low .zone-value {
+  color: #16a34a;
+}
+
+.zone-card.medium .zone-value {
+  color: #f59e0b;
+}
+
+.zone-card.high .zone-value {
+  color: #f97316;
+}
+
+.zone-card.critical .zone-value {
+  color: #dc2626;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+  .peak-summary-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .zone-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .peak-chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .peak-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .peak-header {
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .peak-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .zone-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

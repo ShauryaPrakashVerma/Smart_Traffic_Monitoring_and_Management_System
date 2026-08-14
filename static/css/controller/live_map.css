@@ -1,0 +1,579 @@
+/* =========================================================
+   LIVE TRAFFIC MAP
+========================================================= */
+
+.live-map-page {
+  padding: 14px 16px 18px;
+
+  background: #f5f7fa;
+
+  min-height: calc(100vh - 58px);
+
+  color: #111827;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.live-map-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  margin-bottom: 18px;
+}
+
+.live-map-title h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.live-map-title p {
+  margin: 4px 0 0;
+
+  font-size: 12px;
+
+  color: #9ca3af;
+}
+
+.live-map-actions {
+  display: flex;
+
+  gap: 8px;
+}
+
+.map-action-btn {
+  height: 32px;
+
+  padding: 0 12px;
+
+  border-radius: 5px;
+
+  border: 1px solid #d5dbe3;
+
+  background: #ffffff;
+
+  color: #374151;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  cursor: pointer;
+
+  transition: 0.18s ease;
+}
+
+.map-action-btn:hover {
+  background: #f8fafc;
+
+  border-color: #c5ccd6;
+}
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.live-map-layout {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) 280px;
+
+  gap: 12px;
+}
+
+/* =========================================================
+   MAP PANEL
+========================================================= */
+
+.map-panel {
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 6px;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   MAP TOOLBAR
+========================================================= */
+
+.map-toolbar {
+  min-height: 46px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 8px 12px;
+
+  border-bottom: 1px solid #e4e7eb;
+}
+
+.traffic-filters {
+  display: flex;
+
+  gap: 6px;
+}
+
+.traffic-filter {
+  height: 26px;
+
+  padding: 0 12px;
+
+  border: 1px solid #dce1e7;
+
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  color: #4b5563;
+
+  font-family: inherit;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.traffic-filter:hover {
+  background: #f8fafc;
+}
+
+.traffic-filter.active {
+  background: #111827;
+
+  border-color: #111827;
+
+  color: #ffffff;
+}
+
+/* =========================================================
+   LEGEND
+========================================================= */
+
+.map-legend {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  color: #6b7280;
+
+  font-size: 10px;
+}
+
+.map-legend span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.legend-dot {
+  width: 9px;
+
+  height: 3px;
+
+  display: inline-block;
+
+  border-radius: 2px;
+}
+
+.legend-dot.free {
+  background: #16a34a;
+}
+
+.legend-dot.moderate {
+  background: #d89b00;
+}
+
+.legend-dot.heavy {
+  background: #f97316;
+}
+
+.legend-dot.standstill {
+  background: #ef4444;
+}
+
+/* =========================================================
+   LEAFLET MAP
+========================================================= */
+
+#trafficMap {
+  width: 100%;
+
+  height: calc(100vh - 190px);
+
+  min-height: 650px;
+}
+
+.leaflet-container {
+  font-family: Inter, sans-serif;
+
+  background: #eef2f5;
+}
+
+/* =========================================================
+   CUSTOM LEAFLET POPUP
+========================================================= */
+
+.leaflet-popup-content-wrapper {
+  border-radius: 7px;
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px;
+
+  font-size: 12px;
+}
+
+.leaflet-popup-content strong {
+  font-size: 14px;
+}
+
+/* =========================================================
+   CUSTOM INTERSECTION MARKER
+========================================================= */
+
+.intersection-marker {
+  width: 34px;
+
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  border: 3px solid #16a34a;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+  color: #111827;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+.intersection-marker.moderate {
+  border-color: #d89b00;
+}
+
+.intersection-marker.heavy {
+  border-color: #f97316;
+}
+
+.intersection-marker.standstill {
+  border-color: #ef4444;
+}
+
+/* =========================================================
+   EMERGENCY VEHICLE
+========================================================= */
+
+.emergency-marker {
+  width: 18px;
+
+  height: 18px;
+
+  border-radius: 50%;
+
+  background: #ef4444;
+
+  border: 3px solid #ffffff;
+
+  box-shadow: 0 0 0 5px rgba(239, 68, 68, 0.18);
+
+  animation: emergencyPulse 1.5s infinite;
+}
+
+@keyframes emergencyPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+  }
+
+  70% {
+    box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+/* =========================================================
+   RIGHT SIDEBAR
+========================================================= */
+
+.map-sidebar {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.map-info-panel {
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 6px;
+
+  overflow: hidden;
+}
+
+.map-info-header {
+  padding: 14px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.map-info-header h3 {
+  margin: 0;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  color: #9ca3af;
+}
+
+/* =========================================================
+   NETWORK SUMMARY
+========================================================= */
+
+.summary-list {
+  padding: 7px 14px;
+}
+
+.summary-row {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  min-height: 34px;
+
+  border-bottom: 1px solid #edf0f3;
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-row span {
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+.summary-row strong {
+  color: #111827;
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   INTERSECTION STATUS
+========================================================= */
+
+.intersection-panel {
+  flex: 1;
+}
+
+#intersectionList {
+  padding: 5px 14px;
+}
+
+.intersection-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  min-height: 54px;
+
+  border-bottom: 1px solid #edf0f3;
+}
+
+.intersection-row:last-child {
+  border-bottom: none;
+}
+
+.intersection-name {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.intersection-name strong {
+  font-size: 11px;
+
+  color: #111827;
+}
+
+.status-dot {
+  width: 7px;
+
+  height: 7px;
+
+  border-radius: 50%;
+}
+
+.status-dot.free {
+  background: #16a34a;
+}
+
+.status-dot.moderate {
+  background: #d89b00;
+}
+
+.status-dot.heavy {
+  background: #f97316;
+}
+
+.status-dot.standstill {
+  background: #ef4444;
+}
+
+.intersection-data {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  gap: 3px;
+}
+
+.intersection-data strong {
+  font-size: 9px;
+}
+
+.intersection-data span {
+  color: #9ca3af;
+
+  font-size: 9px;
+}
+
+.intersection-row[data-status="free"] .intersection-data strong {
+  color: #16a34a;
+}
+
+.intersection-row[data-status="moderate"] .intersection-data strong {
+  color: #c58c00;
+}
+
+.intersection-row[data-status="heavy"] .intersection-data strong {
+  color: #ea580c;
+}
+
+.intersection-row[data-status="standstill"] .intersection-data strong {
+  color: #dc2626;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .live-map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-sidebar {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #trafficMap {
+    height: 600px;
+
+    min-height: 600px;
+  }
+}
+
+@media (max-width: 700px) {
+  .live-map-page {
+    padding: 12px;
+  }
+
+  .live-map-header {
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .live-map-actions {
+    width: 100%;
+  }
+
+  .map-action-btn {
+    flex: 1;
+  }
+
+  .map-toolbar {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .traffic-filters {
+    width: 100%;
+
+    overflow-x: auto;
+  }
+
+  .traffic-filter {
+    flex-shrink: 0;
+  }
+
+  .map-legend {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+  .map-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  #trafficMap {
+    height: 500px;
+
+    min-height: 500px;
+  }
+}

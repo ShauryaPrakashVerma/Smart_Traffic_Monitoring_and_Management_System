@@ -1,11 +1,392 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %}
+
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/controller/notifications.css') }}"
+>
+{% endblock %}
+
 
 {% block content %}
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Notifications</p>
-    <a href="" class="btn btn-logout"></a>
+<div class="notifications-page">
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <div class="notifications-header">
+
+        <div class="notifications-title">
+
+            <h2>Notifications & Alerts</h2>
+
+            <p>
+                <span id="activeCount">3</span> active
+                ·
+                <span id="totalCount">6</span> total
+            </p>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <button
+                id="markAllReadBtn"
+                class="notification-btn secondary-btn">
+                Mark All Read
+            </button>
+
+            <button
+                id="exportBtn"
+                class="notification-btn secondary-btn">
+                Export Log
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FILTERS
+    ========================== -->
+
+    <div class="notification-filters">
+
+        <button
+            class="filter-btn active"
+            data-filter="all">
+            All
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="active">
+            Active
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="critical">
+            Critical
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="high">
+            High
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="medium">
+            Medium
+        </button>
+
+        <button
+            class="filter-btn"
+            data-filter="low">
+            Low
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         ALERT GRID
+    ========================== -->
+
+    <div
+        id="notificationsGrid"
+        class="notifications-grid">
+
+
+        <!-- =========================
+             ALERT 1
+        ========================== -->
+
+        <article
+            class="notification-card critical active"
+            data-severity="critical"
+            data-status="active">
+
+            <div class="notification-main">
+
+                <div class="notification-icon">
+                    🚨
+                </div>
+
+                <div class="notification-content">
+
+                    <h3>
+                        Multi-vehicle collision
+                    </h3>
+
+                    <p class="notification-meta">
+                        <span>📍 B2 / 2nd St</span>
+                        <span>·</span>
+                        <span>17:42</span>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="notification-actions">
+
+                <span class="status-badge active-badge">
+                    ACTIVE
+                </span>
+
+                <button
+                    class="ack-btn">
+                    Ack
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- =========================
+             ALERT 2
+        ========================== -->
+
+        <article
+            class="notification-card high acknowledged"
+            data-severity="high"
+            data-status="acknowledged">
+
+            <div class="notification-main">
+
+                <div class="notification-icon">
+                    🚑
+                </div>
+
+                <div class="notification-content">
+
+                    <h3>
+                        Emergency vehicle en route
+                    </h3>
+
+                    <p class="notification-meta">
+                        <span>📍 A3 → B3 corridor</span>
+                        <span>·</span>
+                        <span>17:38</span>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="notification-actions">
+
+                <span class="status-badge acknowledged-badge">
+                    ACKNOWLEDGED
+                </span>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- =========================
+             ALERT 3
+        ========================== -->
+
+        <article
+            class="notification-card high active"
+            data-severity="high"
+            data-status="active">
+
+            <div class="notification-main">
+
+                <div class="notification-icon">
+                    🚦
+                </div>
+
+                <div class="notification-content">
+
+                    <h3>
+                        Severe congestion detected
+                    </h3>
+
+                    <p class="notification-meta">
+                        <span>📍 B2 Junction</span>
+                        <span>·</span>
+                        <span>17:31</span>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="notification-actions">
+
+                <span class="status-badge active-badge">
+                    ACTIVE
+                </span>
+
+                <button
+                    class="ack-btn">
+                    Ack
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- =========================
+             ALERT 4
+        ========================== -->
+
+        <article
+            class="notification-card medium active"
+            data-severity="medium"
+            data-status="active">
+
+            <div class="notification-main">
+
+                <div class="notification-icon">
+                    ⚡
+                </div>
+
+                <div class="notification-content">
+
+                    <h3>
+                        Signal controller fault
+                    </h3>
+
+                    <p class="notification-meta">
+                        <span>📍 B2 Signal Head</span>
+                        <span>·</span>
+                        <span>17:18</span>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="notification-actions">
+
+                <span class="status-badge active-badge">
+                    ACTIVE
+                </span>
+
+                <button
+                    class="ack-btn">
+                    Ack
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- =========================
+             ALERT 5
+        ========================== -->
+
+        <article
+            class="notification-card medium acknowledged"
+            data-severity="medium"
+            data-status="acknowledged">
+
+            <div class="notification-main">
+
+                <div class="notification-icon">
+                    🚧
+                </div>
+
+                <div class="notification-content">
+
+                    <h3>
+                        Lane closure — maintenance
+                    </h3>
+
+                    <p class="notification-meta">
+                        <span>📍 A3 Eastbound</span>
+                        <span>·</span>
+                        <span>16:55</span>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="notification-actions">
+
+                <span class="status-badge acknowledged-badge">
+                    ACKNOWLEDGED
+                </span>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- =========================
+             ALERT 6
+        ========================== -->
+
+        <article
+            class="notification-card low resolved"
+            data-severity="low"
+            data-status="resolved">
+
+            <div class="notification-main">
+
+                <div class="notification-icon">
+                    🚦
+                </div>
+
+                <div class="notification-content">
+
+                    <h3>
+                        Congestion cleared
+                    </h3>
+
+                    <p class="notification-meta">
+                        <span>📍 C2 Intersection</span>
+                        <span>·</span>
+                        <span>16:30</span>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="notification-actions">
+
+                <span class="status-badge resolved-badge">
+                    RESOLVED
+                </span>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
 </div>
+
+
+<script src="{{ url_for('static', filename='js/controller/notifications.js') }}"></script>
 
 {% endblock %}

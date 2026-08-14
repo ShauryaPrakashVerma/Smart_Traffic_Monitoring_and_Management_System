@@ -1,0 +1,598 @@
+/* =========================================================
+   VEHICLE DETECTION PAGE
+========================================================= */
+
+.vehicle-detection-page {
+  padding: 14px 16px 30px;
+
+  min-height: calc(100vh - 58px);
+
+  background: #f5f7fa;
+
+  color: #111827;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.vehicle-detection-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  margin-bottom: 28px;
+}
+
+.vehicle-detection-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+.vehicle-detection-header p {
+  margin: 4px 0 0;
+
+  color: #9ca3af;
+
+  font-size: 12px;
+}
+
+.vehicle-detection-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.model-status {
+  display: flex;
+
+  align-items: center;
+
+  height: 30px;
+
+  padding: 0 10px;
+
+  border: 1px solid #bbf7d0;
+
+  border-radius: 4px;
+
+  background: #f0fdf4;
+
+  color: #16a34a;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+.configure-btn {
+  height: 32px;
+
+  padding: 0 13px;
+
+  border: 1px solid #cfd6df;
+
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  color: #374151;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.configure-btn:hover {
+  background: #f8fafc;
+}
+
+/* =========================================================
+   KPI CARDS
+========================================================= */
+
+.detection-kpi-grid {
+  display: grid;
+
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-bottom: 12px;
+}
+
+.detection-kpi-card {
+  position: relative;
+
+  min-height: 87px;
+
+  padding: 14px;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 6px;
+
+  overflow: hidden;
+}
+
+.detection-kpi-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  top: 0;
+
+  width: 100%;
+
+  height: 2px;
+
+  background: #111827;
+}
+
+.confidence-card::before {
+  background: #16a34a;
+}
+
+.latency-card::before {
+  background: #7c3aed;
+}
+
+.false-positive-card::before {
+  background: #16a34a;
+}
+
+.processing-card::before {
+  background: #16a34a;
+}
+
+.kpi-label {
+  margin-bottom: 7px;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+}
+
+.kpi-value {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 5px;
+
+  color: #111827;
+
+  font-size: 22px;
+
+  font-weight: 700;
+}
+
+.kpi-value small {
+  color: #64748b;
+
+  font-size: 11px;
+
+  font-weight: 500;
+}
+
+.kpi-change {
+  margin-top: 4px;
+
+  font-size: 9px;
+}
+
+.kpi-change.positive {
+  color: #16a34a;
+}
+
+.kpi-change span {
+  color: #9ca3af;
+}
+
+.kpi-subtext {
+  margin-top: 4px;
+
+  color: #9ca3af;
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   ANALYTICS
+========================================================= */
+
+.detection-analytics-grid {
+  display: grid;
+
+  grid-template-columns: 1.1fr 0.9fr;
+
+  gap: 12px;
+
+  margin-bottom: 12px;
+}
+
+.detection-panel {
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 6px;
+
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 14px 16px 0;
+}
+
+.panel-header h3 {
+  margin: 0;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   CHART
+========================================================= */
+
+.chart-container {
+  height: 160px;
+
+  padding: 8px 14px 10px;
+}
+
+#detectionRateChart {
+  width: 100% !important;
+
+  height: 100% !important;
+}
+
+/* =========================================================
+   CONFIDENCE DISTRIBUTION
+========================================================= */
+
+.confidence-panel {
+  min-height: 206px;
+}
+
+.confidence-list {
+  padding: 21px 16px;
+}
+
+.confidence-row {
+  display: grid;
+
+  grid-template-columns: 80px minmax(0, 1fr) 35px;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 17px;
+}
+
+.confidence-row:last-child {
+  margin-bottom: 0;
+}
+
+.confidence-label {
+  color: #64748b;
+
+  font-size: 11px;
+}
+
+.confidence-track {
+  height: 5px;
+
+  border-radius: 4px;
+
+  background: #f0f2f4;
+
+  overflow: hidden;
+}
+
+.confidence-fill {
+  height: 100%;
+
+  border-radius: inherit;
+}
+
+.confidence-fill.green {
+  background: #16a34a;
+}
+
+.confidence-fill.yellow {
+  background: #d89b00;
+}
+
+.confidence-fill.orange {
+  background: #ea580c;
+}
+
+.confidence-fill.red {
+  background: #dc2626;
+}
+
+.confidence-row strong {
+  text-align: right;
+
+  font-size: 10px;
+}
+
+.confidence-row:nth-child(1) strong {
+  color: #16a34a;
+}
+
+.confidence-row:nth-child(2) strong {
+  color: #d89b00;
+}
+
+.confidence-row:nth-child(3) strong {
+  color: #ea580c;
+}
+
+.confidence-row:nth-child(4) strong {
+  color: #dc2626;
+}
+
+/* =========================================================
+   LIVE FEED
+========================================================= */
+
+.live-feed-panel {
+  overflow: hidden;
+}
+
+.live-feed-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 14px 16px;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.live-feed-header h3 {
+  margin: 0;
+
+  color: #9ca3af;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+}
+
+.streaming-badge {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 3px 7px;
+
+  border: 1px solid #bbf7d0;
+
+  border-radius: 4px;
+
+  background: #f0fdf4;
+
+  color: #16a34a;
+
+  font-size: 9px;
+
+  font-weight: 700;
+}
+
+.stream-dot {
+  width: 5px;
+
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #16a34a;
+
+  animation: streamPulse 1.5s infinite;
+}
+
+@keyframes streamPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.detection-table-wrapper {
+  overflow-x: auto;
+}
+
+.detection-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  table-layout: fixed;
+}
+
+.detection-table th {
+  height: 32px;
+
+  padding: 0 16px;
+
+  text-align: left;
+
+  color: #9ca3af;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+.detection-table td {
+  height: 29px;
+
+  padding: 0 16px;
+
+  border-top: 1px solid #edf0f3;
+
+  color: #374151;
+
+  font-size: 10px;
+
+  white-space: nowrap;
+}
+
+.detection-table tbody tr:nth-child(even) {
+  background: #fafbfc;
+}
+
+.detection-table tbody tr:hover {
+  background: #f3f6f9;
+}
+
+/* =========================================================
+   TABLE DATA COLORS
+========================================================= */
+
+.vehicle-id {
+  color: #4f46e5 !important;
+
+  font-weight: 500;
+}
+
+.speed-low {
+  color: #dc2626 !important;
+}
+
+.speed-medium {
+  color: #d97706 !important;
+}
+
+.speed-high {
+  color: #16a34a !important;
+}
+
+.confidence-high {
+  color: #16a34a !important;
+}
+
+.confidence-medium {
+  color: #d97706 !important;
+}
+
+.confidence-low {
+  color: #dc2626 !important;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1250px) {
+  .detection-kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .detection-analytics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .vehicle-detection-page {
+    padding: 12px;
+  }
+
+  .vehicle-detection-header {
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .vehicle-detection-actions {
+    width: 100%;
+  }
+
+  .configure-btn {
+    flex: 1;
+  }
+
+  .detection-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 450px) {
+  .detection-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .confidence-row {
+    grid-template-columns: 70px minmax(0, 1fr) 30px;
+  }
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+  .vehicle-detection-page {
+    background: #ffffff;
+  }
+
+  .vehicle-detection-actions {
+    display: none;
+  }
+}

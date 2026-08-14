@@ -16,7 +16,7 @@
 
 // Initialize map
 
-const map = L.map("map").setView([28.6139,77.2090],13);
+const map = L.map("map").setView([26.8467,80.9462],13);
 
 // OpenStreetMap Tiles
 
@@ -24,4 +24,6 @@ L.tileLayer(
 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 {
     attribution:'© OpenStreetMap contributors'
-}).addTo(map);
+    }).addTo(map);
+
+setView([26.8467,80.9462],13);

@@ -1,11 +1,265 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %} {% block styles %}
 
-{% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/emergency_corridor.css') }}"
+/>
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Emergency Corridor</p>
-    <a href="" class="btn btn-logout"></a>
+{% endblock %} {% block content %}
+
+<div class="emergency-page">
+  <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+  <div class="emergency-header">
+    <div>
+      <h2>Emergency Corridor</h2>
+
+      <p>Priority routing for emergency vehicles</p>
+    </div>
+
+    <span id="corridorStatusBadge" class="corridor-status-badge hidden">
+      CORRIDOR ACTIVE
+    </span>
+  </div>
+
+  <!-- =====================================================
+         ACTIVE CORRIDOR BANNER
+    ====================================================== -->
+
+  <div id="activeCorridorBanner" class="active-corridor-banner hidden">
+    <div class="active-banner-content">
+      <span class="active-banner-icon"> 🚨 </span>
+
+      <div>
+        <strong>
+          Emergency Corridor Active —
+          <span id="activeRouteText"> A3-B3-C3 </span>
+        </strong>
+
+        <p>
+          Unit
+          <span id="activeUnitText"> EV-07 </span>
+          · All signals along route set to green · Cross-traffic held
+        </p>
+      </div>
+    </div>
+
+    <button id="bannerDeactivateBtn" class="secondary-button">
+      Deactivate
+    </button>
+  </div>
+
+  <!-- =====================================================
+         MAIN TWO-COLUMN AREA
+    ====================================================== -->
+
+  <div class="emergency-content-grid">
+    <!-- =================================================
+             CONFIGURE CORRIDOR
+        ================================================== -->
+
+    <section class="emergency-panel configure-panel">
+      <div class="emergency-panel-title">Configure Corridor</div>
+
+      <!-- Emergency Unit -->
+
+      <div class="emergency-field">
+        <label> Emergency Unit </label>
+
+        <div class="unit-selector">
+          <button type="button" class="unit-button selected" data-unit="EV-07">
+            EV-07
+          </button>
+
+          <button type="button" class="unit-button" data-unit="EV-12">
+            EV-12
+          </button>
+
+          <button type="button" class="unit-button" data-unit="AMB-03">
+            AMB-03
+          </button>
+
+          <button type="button" class="unit-button" data-unit="FIRE-01">
+            FIRE-01
+          </button>
+
+          <button type="button" class="unit-button" data-unit="POLICE-09">
+            POLICE-09
+          </button>
+        </div>
+      </div>
+
+      <!-- Corridor Route -->
+
+      <div class="emergency-field">
+        <label> Corridor Route </label>
+
+        <div class="route-selector">
+          <label class="route-option">
+            <input type="radio" name="corridorRoute" value="A3-B3-C3" checked />
+
+            <span> A3-B3-C3 </span>
+          </label>
+
+          <label class="route-option">
+            <input type="radio" name="corridorRoute" value="A1-B1-C1" />
+
+            <span> A1-B1-C1 </span>
+          </label>
+
+          <label class="route-option">
+            <input type="radio" name="corridorRoute" value="A2-B2-C2" />
+
+            <span> A2-B2-C2 </span>
+          </label>
+
+          <label class="route-option">
+            <input type="radio" name="corridorRoute" value="A1-A2-A3" />
+
+            <span> A1-A2-A3 </span>
+          </label>
+
+          <label class="route-option">
+            <input type="radio" name="corridorRoute" value="C1-C2-C3" />
+
+            <span> C1-C2-C3 </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+
+      <div class="corridor-actions">
+        <button id="activateCorridorBtn" class="activate-button" type="button">
+          🚨 Activate Corridor
+        </button>
+
+        <button
+          id="deactivateCorridorBtn"
+          class="secondary-button hidden"
+          type="button"
+        >
+          ✕ Deactivate Corridor
+        </button>
+
+        <button
+          id="extendCorridorBtn"
+          class="extend-button hidden"
+          type="button"
+        >
+          Extend 5 min
+        </button>
+      </div>
+
+      <!-- Timer -->
+
+      <div id="corridorTimer" class="corridor-timer hidden">
+        Corridor expires in
+        <strong id="timerValue"> 5:00 </strong>
+      </div>
+    </section>
+
+    <!-- =================================================
+             AFFECTED INTERSECTIONS
+        ================================================== -->
+
+    <section class="emergency-panel affected-panel">
+      <div class="emergency-panel-title">Affected Intersections</div>
+
+      <div id="affectedIntersections" class="intersection-list">
+        <!-- Intersection 1 -->
+
+        <div class="intersection-row" data-intersection="A3">
+          <div class="intersection-number">1</div>
+
+          <div class="intersection-info">
+            <strong> A3 </strong>
+
+            <span>
+              67 vehicles ·
+              <span class="signal-text"> Signal: emergency </span>
+            </span>
+          </div>
+
+          <span class="signal-badge hidden"> GREEN </span>
+        </div>
+
+        <!-- Intersection 2 -->
+
+        <div class="intersection-row" data-intersection="B3">
+          <div class="intersection-number">2</div>
+
+          <div class="intersection-info">
+            <strong> B3 </strong>
+
+            <span>
+              55 vehicles ·
+              <span class="signal-text"> Signal: normal </span>
+            </span>
+          </div>
+
+          <span class="signal-badge hidden"> GREEN </span>
+        </div>
+
+        <!-- Intersection 3 -->
+
+        <div class="intersection-row" data-intersection="C3">
+          <div class="intersection-number">3</div>
+
+          <div class="intersection-info">
+            <strong> C3 </strong>
+
+            <span>
+              14 vehicles ·
+              <span class="signal-text"> Signal: normal </span>
+            </span>
+          </div>
+
+          <span class="signal-badge hidden"> GREEN </span>
+        </div>
+      </div>
+
+      <!-- =================================================
+                 ACTIVE EMERGENCY VEHICLES
+            ================================================== -->
+
+      <div class="active-vehicles-box">
+        <div class="active-vehicles-title">Active Emergency Vehicles</div>
+
+        <div class="emergency-vehicle-row">
+          <div>
+            <strong> EV-07 </strong>
+
+            <span> Ambulance </span>
+          </div>
+
+          <div class="vehicle-route">
+            <span> B3 → B2 </span>
+
+            <strong> ETA 2 min </strong>
+          </div>
+        </div>
+
+        <div class="emergency-vehicle-row">
+          <div>
+            <strong> EV-12 </strong>
+
+            <span> Fire Engine </span>
+          </div>
+
+          <div class="vehicle-route">
+            <span> A3 Corridor </span>
+
+            <strong> ETA 5 min </strong>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
+
+<script src="{{ url_for('static', filename='js/controller/emergency_corridor.js') }}"></script>
 
 {% endblock %}

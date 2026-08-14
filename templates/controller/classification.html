@@ -1,11 +1,216 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %} {% block styles %}
 
-{% block content %}
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Classification</p>
-    <a href="" class="btn btn-logout"></a>
+<!-- Classification CSS -->
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/classification.css') }}"
+/>
+
+{% endblock %} {% block content %}
+
+<div class="classification-page">
+  <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+  <div class="classification-header">
+    <div>
+      <h2>Vehicle Classification</h2>
+
+      <p>AI-powered vehicle type detection across all camera zones</p>
+    </div>
+  </div>
+
+  <!-- =====================================================
+         VEHICLE TYPE KPI CARDS
+    ====================================================== -->
+
+  <div class="classification-kpi-grid">
+    <div class="classification-kpi-card cars">
+      <div class="classification-kpi-label">Cars</div>
+
+      <div class="classification-kpi-value">68%</div>
+    </div>
+
+    <div class="classification-kpi-card motorcycles">
+      <div class="classification-kpi-label">Motorcycles</div>
+
+      <div class="classification-kpi-value">12%</div>
+    </div>
+
+    <div class="classification-kpi-card trucks">
+      <div class="classification-kpi-label">Trucks</div>
+
+      <div class="classification-kpi-value">10%</div>
+    </div>
+
+    <div class="classification-kpi-card buses">
+      <div class="classification-kpi-label">Buses</div>
+
+      <div class="classification-kpi-value">6%</div>
+    </div>
+
+    <div class="classification-kpi-card vans">
+      <div class="classification-kpi-label">Vans</div>
+
+      <div class="classification-kpi-value">3%</div>
+    </div>
+
+    <div class="classification-kpi-card emergency">
+      <div class="classification-kpi-label">Emergency</div>
+
+      <div class="classification-kpi-value">1%</div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+         CLASS DISTRIBUTION + ZONE BREAKDOWN
+    ====================================================== -->
+
+  <div class="classification-analysis-grid">
+    <!-- =================================================
+             CLASS DISTRIBUTION
+        ================================================== -->
+
+    <section class="classification-panel distribution-panel">
+      <div class="classification-panel-title">Class Distribution</div>
+
+      <div class="distribution-chart-container">
+        <canvas id="classDistributionChart"> </canvas>
+      </div>
+    </section>
+
+    <!-- =================================================
+             ZONE BREAKDOWN
+        ================================================== -->
+
+    <section class="classification-panel zone-panel">
+      <div class="classification-panel-title">
+        Zone Breakdown by Vehicle Type
+      </div>
+
+      <div class="zone-chart-container">
+        <canvas id="zoneBreakdownChart"> </canvas>
+      </div>
+    </section>
+  </div>
+
+  <!-- =====================================================
+         CLASSIFICATION ACCURACY
+    ====================================================== -->
+
+  <section class="classification-panel accuracy-panel">
+    <div class="classification-panel-title">
+      Classification Accuracy Per Type
+    </div>
+
+    <div class="accuracy-grid">
+      <!-- Cars -->
+
+      <div class="accuracy-card">
+        <div class="accuracy-header">
+          <strong> Cars </strong>
+
+          <span> 98.2% </span>
+        </div>
+
+        <div class="accuracy-track">
+          <div class="accuracy-progress" style="width: 98.2%"></div>
+        </div>
+
+        <p>2,841 detections today</p>
+      </div>
+
+      <!-- Motorcycles -->
+
+      <div class="accuracy-card">
+        <div class="accuracy-header">
+          <strong> Motorcycles </strong>
+
+          <span> 94.7% </span>
+        </div>
+
+        <div class="accuracy-track">
+          <div class="accuracy-progress" style="width: 94.7%"></div>
+        </div>
+
+        <p>498 detections today</p>
+      </div>
+
+      <!-- Trucks -->
+
+      <div class="accuracy-card">
+        <div class="accuracy-header">
+          <strong> Trucks </strong>
+
+          <span> 96.1% </span>
+        </div>
+
+        <div class="accuracy-track">
+          <div class="accuracy-progress" style="width: 96.1%"></div>
+        </div>
+
+        <p>417 detections today</p>
+      </div>
+
+      <!-- Buses -->
+
+      <div class="accuracy-card">
+        <div class="accuracy-header">
+          <strong> Buses </strong>
+
+          <span> 97.8% </span>
+        </div>
+
+        <div class="accuracy-track">
+          <div class="accuracy-progress" style="width: 97.8%"></div>
+        </div>
+
+        <p>250 detections today</p>
+      </div>
+
+      <!-- Vans -->
+
+      <div class="accuracy-card">
+        <div class="accuracy-header">
+          <strong> Vans </strong>
+
+          <span> 91.3% </span>
+        </div>
+
+        <div class="accuracy-track">
+          <div class="accuracy-progress" style="width: 91.3%"></div>
+        </div>
+
+        <p>125 detections today</p>
+      </div>
+
+      <!-- Emergency -->
+
+      <div class="accuracy-card">
+        <div class="accuracy-header">
+          <strong> Emergency </strong>
+
+          <span> 99.4% </span>
+        </div>
+
+        <div class="accuracy-track">
+          <div class="accuracy-progress" style="width: 99.4%"></div>
+        </div>
+
+        <p>42 detections today</p>
+      </div>
+    </div>
+  </section>
 </div>
+
+<!-- =========================================================
+     CLASSIFICATION JAVASCRIPT
+========================================================= -->
+
+<script src="{{ url_for('static', filename='js/controller/classification.js') }}"></script>
 
 {% endblock %}
