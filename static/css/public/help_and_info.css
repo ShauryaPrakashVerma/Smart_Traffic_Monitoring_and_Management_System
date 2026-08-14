@@ -1,0 +1,282 @@
+/* =========================================================
+   HELP PAGE
+========================================================= */
+
+.help-page {
+  min-height: calc(100vh - 100px);
+
+  padding: 22px 16px 40px;
+
+  background: #f7f8fa;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.help-header {
+  margin-bottom: 16px;
+}
+
+.help-header h1 {
+  margin: 0;
+
+  color: #101828;
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.help-header p {
+  margin: 5px 0 0;
+
+  color: #98a2b3;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   FAQ CONTAINER
+========================================================= */
+
+.faq-container {
+  width: 476px;
+  max-width: 100%;
+}
+
+/* =========================================================
+   FAQ ITEM
+========================================================= */
+
+.faq-item {
+  margin-bottom: 5px;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 5px;
+
+  overflow: hidden;
+}
+
+/* =========================================================
+   QUESTION BUTTON
+========================================================= */
+
+.faq-question {
+  width: 100%;
+  min-height: 40px;
+
+  padding: 0 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: none;
+
+  background: #ffffff;
+
+  color: #101828;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: background 0.15s ease;
+}
+
+.faq-question:hover {
+  background: #f9fafb;
+}
+
+/* =========================================================
+   QUESTION ICON
+========================================================= */
+
+.faq-icon {
+  flex-shrink: 0;
+
+  width: 18px;
+
+  color: #98a2b3;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  text-align: center;
+}
+
+/* =========================================================
+   ANSWER
+========================================================= */
+
+.faq-answer {
+  max-height: 0;
+
+  overflow: hidden;
+
+  padding: 0 13px;
+
+  color: #667085;
+
+  font-size: 11px;
+  line-height: 1.6;
+
+  opacity: 0;
+
+  transition:
+    max-height 0.25s ease,
+    opacity 0.2s ease,
+    padding 0.25s ease;
+}
+
+.faq-answer p {
+  margin: 0 0 10px;
+}
+
+.faq-answer p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   ACTIVE FAQ
+========================================================= */
+
+.faq-item.active .faq-answer {
+  max-height: 400px;
+
+  padding-top: 8px;
+  padding-bottom: 13px;
+
+  opacity: 1;
+}
+
+.faq-item.active .faq-question {
+  background: #ffffff;
+}
+
+/* =========================================================
+   TRAFFIC LEGEND
+========================================================= */
+
+.traffic-legend {
+  margin-top: 8px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #667085;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+}
+
+.legend-dot.free {
+  background: #12b76a;
+}
+
+.legend-dot.moderate {
+  background: #f79009;
+}
+
+.legend-dot.heavy {
+  background: #f04438;
+}
+
+.legend-dot.standstill {
+  background: #d92d20;
+}
+
+/* =========================================================
+   SUPPORT CARD
+========================================================= */
+
+.support-card {
+  margin-top: 6px;
+
+  padding: 13px 15px;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 5px;
+}
+
+/* =========================================================
+   SUPPORT TITLE
+========================================================= */
+
+.support-title {
+  margin-bottom: 11px;
+
+  color: #98a2b3;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+/* =========================================================
+   SUPPORT ROW
+========================================================= */
+
+.support-row {
+  min-height: 23px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 11px;
+}
+
+.support-label {
+  color: #98a2b3;
+}
+
+.support-value {
+  color: #101828;
+
+  font-weight: 600;
+
+  text-align: right;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+  .help-page {
+    padding: 18px 12px 30px;
+  }
+
+  .faq-container {
+    width: 100%;
+  }
+}

@@ -1,11 +1,175 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/public/help_and_info.css') }}"
+/>
+{% endblock %} {% block content %}
 
-{% block content %}
+<div class="help-page">
+  <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Help & Info</p>
-    <a href="" class="btn btn-logout"></a>
+  <div class="help-header">
+    <h1>Help & Information</h1>
+
+    <p>Frequently asked questions about the public traffic portal.</p>
+  </div>
+
+  <!-- =====================================================
+         FAQ SECTION
+    ====================================================== -->
+
+  <div class="faq-container">
+    <!-- FAQ 1 -->
+
+    <div class="faq-item">
+      <button type="button" class="faq-question" aria-expanded="false">
+        <span> What do the traffic colors mean? </span>
+
+        <span class="faq-icon">+</span>
+      </button>
+
+      <div class="faq-answer">
+        <p>
+          Traffic colors indicate the current traffic conditions on the road
+          network.
+        </p>
+
+        <div class="traffic-legend">
+          <div class="legend-item">
+            <span class="legend-dot free"></span>
+            <span> <strong>Green</strong> — Free flowing </span>
+          </div>
+
+          <div class="legend-item">
+            <span class="legend-dot moderate"></span>
+            <span> <strong>Yellow</strong> — Moderate traffic </span>
+          </div>
+
+          <div class="legend-item">
+            <span class="legend-dot heavy"></span>
+            <span> <strong>Orange</strong> — Heavy traffic </span>
+          </div>
+
+          <div class="legend-item">
+            <span class="legend-dot standstill"></span>
+            <span> <strong>Red</strong> — Standstill / severe congestion </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 2 -->
+
+    <div class="faq-item">
+      <button type="button" class="faq-question" aria-expanded="false">
+        <span> How do I plan a journey? </span>
+
+        <span class="faq-icon">+</span>
+      </button>
+
+      <div class="faq-answer">
+        <p>
+          Open the <strong>Plan Journey</strong> section from the sidebar. Enter
+          your starting point and destination to view available routes and their
+          current traffic conditions.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ 3 -->
+
+    <div class="faq-item">
+      <button type="button" class="faq-question" aria-expanded="false">
+        <span> How do I raise a complaint? </span>
+
+        <span class="faq-icon">+</span>
+      </button>
+
+      <div class="faq-answer">
+        <p>
+          Open <strong>Raise Complaint</strong> from the sidebar. Select the
+          type of issue, provide its location and description, and submit the
+          complaint.
+        </p>
+
+        <p>
+          A complaint reference number will be generated after successful
+          submission.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ 4 -->
+
+    <div class="faq-item">
+      <button type="button" class="faq-question" aria-expanded="false">
+        <span> How often is data updated? </span>
+
+        <span class="faq-icon">+</span>
+      </button>
+
+      <div class="faq-answer">
+        <p>
+          Traffic information is updated continuously using available live
+          traffic and monitoring data.
+        </p>
+      </div>
+    </div>
+
+    <!-- FAQ 5 — OPEN BY DEFAULT -->
+
+    <div class="faq-item active">
+      <button type="button" class="faq-question" aria-expanded="true">
+        <span> How do I save a route? </span>
+
+        <span class="faq-icon">−</span>
+      </button>
+
+      <div class="faq-answer">
+        <p>
+          After planning a journey, tap the star icon on your preferred route to
+          save it. Saved routes appear in the
+          <strong>Saved Routes</strong> section.
+        </p>
+      </div>
+    </div>
+
+    <!-- =================================================
+             CONTACT & SUPPORT
+        ================================================== -->
+
+    <div class="support-card">
+      <div class="support-title">CONTACT & SUPPORT</div>
+
+      <div class="support-row">
+        <span class="support-label"> Emergency </span>
+
+        <span class="support-value"> 999 / 112 </span>
+      </div>
+
+      <div class="support-row">
+        <span class="support-label"> Traffic Hotline </span>
+
+        <span class="support-value"> 0800 123 456 </span>
+      </div>
+
+      <div class="support-row">
+        <span class="support-label"> Email </span>
+
+        <span class="support-value"> traffic@cityofmetro.gov </span>
+      </div>
+
+      <div class="support-row">
+        <span class="support-label"> Operating Hours </span>
+
+        <span class="support-value"> 24 / 7 — 365 days </span>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script src="{{ url_for('static', filename='js/public/help_and_info.js') }}"></script>
 
 {% endblock %}

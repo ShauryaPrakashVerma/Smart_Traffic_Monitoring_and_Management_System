@@ -1,11 +1,352 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %}
+
+{% block styles %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/public/saved_routes.css') }}"
+>
+{% endblock %}
+
 
 {% block content %}
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Saved Routes</p>
-    <a href="" class="btn btn-logout"></a>
+<div class="saved-routes-page">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="saved-routes-header">
+
+        <h1>Saved Routes</h1>
+
+        <p>
+            Your frequently used routes with current traffic status.
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         ROUTES LIST
+    ====================================================== -->
+
+    <div
+        class="routes-container"
+        id="routesContainer"
+    >
+
+
+        <!-- =================================================
+             ROUTE 1
+        ================================================== -->
+
+        <div
+            class="route-card heavy"
+            data-route-id="route-1"
+        >
+
+            <div class="route-main">
+
+                <div class="route-title">
+                    Home → Office
+                </div>
+
+                <div class="route-path">
+                    A2 → B2 → C2 · 6.1 km
+                </div>
+
+            </div>
+
+
+            <div class="route-meta">
+
+                <div class="traffic-status heavy-text">
+                    HEAVY
+                </div>
+
+                <div class="saved-time">
+                    Saved 2 days ago
+                </div>
+
+            </div>
+
+
+            <div class="route-actions">
+
+                <button
+                    type="button"
+                    class="route-btn navigate-btn"
+                    data-route="Home → Office"
+                >
+                    Navigate
+                </button>
+
+                <button
+                    type="button"
+                    class="route-btn remove-btn"
+                >
+                    Remove
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ROUTE 2
+        ================================================== -->
+
+        <div
+            class="route-card moderate"
+            data-route-id="route-2"
+        >
+
+            <div class="route-main">
+
+                <div class="route-title">
+                    Office → Gym
+                </div>
+
+                <div class="route-path">
+                    A3 → B3 · 3.4 km
+                </div>
+
+            </div>
+
+
+            <div class="route-meta">
+
+                <div class="traffic-status moderate-text">
+                    MODERATE
+                </div>
+
+                <div class="saved-time">
+                    Saved 5 days ago
+                </div>
+
+            </div>
+
+
+            <div class="route-actions">
+
+                <button
+                    type="button"
+                    class="route-btn navigate-btn"
+                    data-route="Office → Gym"
+                >
+                    Navigate
+                </button>
+
+                <button
+                    type="button"
+                    class="route-btn remove-btn"
+                >
+                    Remove
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ROUTE 3
+        ================================================== -->
+
+        <div
+            class="route-card free"
+            data-route-id="route-3"
+        >
+
+            <div class="route-main">
+
+                <div class="route-title">
+                    Weekend Park Route
+                </div>
+
+                <div class="route-path">
+                    C1 → B1 → A1 · 8.2 km
+                </div>
+
+            </div>
+
+
+            <div class="route-meta">
+
+                <div class="traffic-status free-text">
+                    FREE
+                </div>
+
+                <div class="saved-time">
+                    Saved 1 week ago
+                </div>
+
+            </div>
+
+
+            <div class="route-actions">
+
+                <button
+                    type="button"
+                    class="route-btn navigate-btn"
+                    data-route="Weekend Park Route"
+                >
+                    Navigate
+                </button>
+
+                <button
+                    type="button"
+                    class="route-btn remove-btn"
+                >
+                    Remove
+                </button>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         ADD NEW ROUTE BUTTON
+    ====================================================== -->
+
+    <button
+        type="button"
+        id="addRouteBtn"
+        class="add-route-btn"
+    >
+        + Add New Route
+    </button>
+
+
+    <!-- =====================================================
+         ADD ROUTE FORM
+    ====================================================== -->
+
+    <div
+        id="addRouteForm"
+        class="add-route-form"
+        hidden
+    >
+
+        <div class="form-title">
+            ADD NEW ROUTE
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="routeName">
+                Route Name
+            </label>
+
+            <input
+                type="text"
+                id="routeName"
+                placeholder="e.g. Home → College"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="routePath">
+                Route Path
+            </label>
+
+            <input
+                type="text"
+                id="routePath"
+                placeholder="e.g. A1 → B2 → C3"
+            >
+
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label for="routeDistance">
+                    Distance
+                </label>
+
+                <input
+                    type="text"
+                    id="routeDistance"
+                    placeholder="e.g. 5.4 km"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="routeTraffic">
+                    Traffic Status
+                </label>
+
+                <select id="routeTraffic">
+
+                    <option value="free">
+                        Free
+                    </option>
+
+                    <option value="moderate">
+                        Moderate
+                    </option>
+
+                    <option value="heavy">
+                        Heavy
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <button
+                type="button"
+                id="cancelRouteBtn"
+                class="cancel-btn"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="saveRouteBtn"
+                class="save-btn"
+            >
+                Save Route
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="routeToast"
+        class="route-toast"
+    ></div>
+
 </div>
+
+<script src="{{ url_for('static', filename='js/public/saved_routes.js') }}"></script>
 
 {% endblock %}

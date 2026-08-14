@@ -1,11 +1,247 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/public/raise_complaint.css') }}"
+/>
+{% endblock %} {% block content %}
 
-{% block content %}
+<div class="complaint-page">
+  <!-- =====================================================
+       PAGE HEADER
+  ====================================================== -->
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Raise Complaint</p>
-    <a href="" class="btn btn-logout"></a>
+  <div class="complaint-header">
+    <div>
+      <h1>Complaints</h1>
+
+      <p>Report road issues and track your complaint history.</p>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       TWO COLUMN LAYOUT
+  ====================================================== -->
+
+  <div class="complaint-layout">
+    <!-- =================================================
+         LEFT COLUMN
+    ================================================== -->
+
+    <div class="complaint-left">
+      <!-- =================================================
+           STATISTICS
+      ================================================== -->
+
+      <div class="complaint-stats">
+        <div class="stat-card">
+          <span class="stat-label"> TOTAL FILED </span>
+
+          <strong id="totalFiled"> 6 </strong>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label"> OPEN </span>
+
+          <strong id="openCount" class="open-value"> 3 </strong>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label"> RESOLVED </span>
+
+          <strong id="resolvedCount" class="resolved-value"> 2 </strong>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label"> AVG RESOLUTION </span>
+
+          <strong> 1.8 days </strong>
+        </div>
+      </div>
+
+      <!-- =================================================
+           SUCCESS BANNER
+      ================================================== -->
+
+      <div id="successBanner" class="success-banner" hidden>
+        <div>
+          <strong>
+            ✓ Complaint submitted —
+            <span id="successReference"></span>
+          </strong>
+
+          <p>We will review and respond within 48 hours.</p>
+        </div>
+
+        <button type="button" id="closeSuccessBtn" class="close-success-btn">
+          ×
+        </button>
+      </div>
+
+      <!-- =================================================
+           RAISE NEW COMPLAINT
+      ================================================== -->
+
+      <button type="button" id="raiseNewComplaintBtn" class="raise-new-btn">
+        + Raise New Complaint
+      </button>
+
+      <!-- =================================================
+           COMPLAINT FORM
+      ================================================== -->
+
+      <div id="complaintFormCard" class="complaint-form-card" hidden>
+        <div class="card-title">NEW COMPLAINT</div>
+
+        <form id="complaintForm">
+          <!-- CATEGORY -->
+
+          <div class="form-group">
+            <label for="category"> CATEGORY </label>
+
+            <select id="category" name="category" required>
+              <option value="Signal Fault">Signal Fault</option>
+
+              <option value="Road Damage / Pothole">
+                Road Damage / Pothole
+              </option>
+
+              <option value="Illegal Parking">Illegal Parking</option>
+
+              <option value="Congestion">Congestion</option>
+
+              <option value="Accident">Accident</option>
+
+              <option value="Street Light">Street Light</option>
+
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- LOCATION -->
+
+          <div class="form-group">
+            <label for="location"> LOCATION </label>
+
+            <input
+              type="text"
+              id="location"
+              name="location"
+              placeholder="e.g. Junction B2, Main St"
+              required
+            />
+          </div>
+
+          <!-- DATE / TIME -->
+
+          <div class="form-group">
+            <label for="issueDate"> DATE & TIME OF ISSUE </label>
+
+            <input
+              type="datetime-local"
+              id="issueDate"
+              name="issueDate"
+              required
+            />
+          </div>
+
+          <!-- DESCRIPTION -->
+
+          <div class="form-group">
+            <label for="description"> DESCRIPTION </label>
+
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Describe the issue in detail..."
+              required
+            ></textarea>
+          </div>
+
+          <!-- CONTACT -->
+
+          <div class="form-group">
+            <label for="contact">
+              YOUR CONTACT
+              <span>(OPTIONAL)</span>
+            </label>
+
+            <input
+              type="email"
+              id="contact"
+              name="contact"
+              placeholder="name@email.com"
+            />
+          </div>
+
+          <!-- FORM BUTTONS -->
+
+          <div class="form-actions">
+            <button
+              type="submit"
+              id="submitComplaintBtn"
+              class="submit-complaint-btn"
+            >
+              Submit Complaint
+            </button>
+
+            <button type="button" id="cancelComplaintBtn" class="cancel-btn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- =================================================
+         RIGHT COLUMN — COMPLAINT HISTORY
+    ================================================== -->
+
+    <div class="complaint-history">
+      <!-- HISTORY HEADER -->
+
+      <div class="history-header">
+        <div>
+          <div class="card-title">COMPLAINT HISTORY</div>
+
+          <span id="historyCount" class="history-count"> 6 complaints </span>
+        </div>
+
+        <!-- FILTERS -->
+
+        <div class="filter-tabs">
+          <button type="button" class="filter-btn active" data-filter="All">
+            All
+          </button>
+
+          <button type="button" class="filter-btn" data-filter="Submitted">
+            Submitted
+          </button>
+
+          <button type="button" class="filter-btn" data-filter="Under Review">
+            Under Review
+          </button>
+
+          <button type="button" class="filter-btn" data-filter="In Progress">
+            In Progress
+          </button>
+
+          <button type="button" class="filter-btn" data-filter="Resolved">
+            Resolved
+          </button>
+
+          <button type="button" class="filter-btn" data-filter="Rejected">
+            Rejected
+          </button>
+        </div>
+      </div>
+
+      <!-- COMPLAINT LIST -->
+
+      <div id="complaintList" class="complaint-list"></div>
+    </div>
+  </div>
 </div>
+
+<script src="{{ url_for('static', filename='js/public/raise_complaint.js') }}"></script>
 
 {% endblock %}
