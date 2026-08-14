@@ -1,11 +1,381 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %} {% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/controller/ai_prediction.css') }}" />
 
-{% block content %}
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the AI Prediction</p>
-    <a href="" class="btn btn-logout"></a>
+{% endblock %} {% block content %}
+
+<div class="ai-page">
+  <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+  <div class="ai-header">
+    <div>
+      <h1>AI Traffic Prediction</h1>
+
+      <p>YOLO v8.1 + LSTM neural network — 3-hour forecast horizon</p>
+    </div>
+
+    <div class="ai-header-actions">
+      <span id="modelStatus" class="model-badge"> MODEL V4.2 • LSTM </span>
+
+      <button id="retrainBtn" class="action-btn" type="button">
+        Retrain Model
+      </button>
+    </div>
+  </div>
+
+  <!-- =====================================================
+         KPI CARDS
+    ====================================================== -->
+
+  <section class="ai-kpis">
+    <div class="ai-kpi green">
+      <span>FORECAST ACCURACY</span>
+
+      <strong> 89.4 <small>%</small> </strong>
+
+      <small class="positive"> ▲ 1.8% 7d avg </small>
+    </div>
+
+    <div class="ai-kpi purple">
+      <span>MODEL VERSION</span>
+
+      <strong id="modelVersion"> v4.2 </strong>
+
+      <small> LSTM + attention </small>
+    </div>
+
+    <div class="ai-kpi dark">
+      <span>TRAINING DATA</span>
+
+      <strong> 180d </strong>
+
+      <small> 1.2M observations </small>
+    </div>
+
+    <div class="ai-kpi dark">
+      <span>PREDICTION RMSE</span>
+
+      <strong> 24.1 <small>veh</small> </strong>
+
+      <small> current model </small>
+    </div>
+
+    <div class="ai-kpi red">
+      <span>NEXT PEAK</span>
+
+      <strong> 17:00–18:30 </strong>
+
+      <small> B2 — 91% confidence </small>
+    </div>
+  </section>
+
+  <!-- =====================================================
+         FORECAST + RECOMMENDATIONS
+    ====================================================== -->
+
+  <section class="ai-main-grid">
+    <!-- FORECAST -->
+    <div class="ai-panel forecast-panel">
+      <div class="panel-heading">
+        <span> VOLUME FORECAST — NEXT 2.5 HOURS </span>
+
+        <span class="confidence-badge"> 89% CONFIDENCE </span>
+      </div>
+
+      <div class="forecast-chart-wrapper">
+        <canvas id="forecastChart"></canvas>
+      </div>
+    </div>
+
+    <!-- AI RECOMMENDATIONS -->
+    <div class="ai-panel recommendations-panel">
+      <div class="panel-heading">AI RECOMMENDATIONS</div>
+
+      <div
+        class="recommendation"
+        data-recommendation="Extend B2 green phase by 15s"
+      >
+        <div class="recommendation-meta">
+          <span>Now</span>
+
+          <strong>92% conf</strong>
+        </div>
+
+        <p>Extend B2 green phase by 15s</p>
+
+        <button class="apply-btn" type="button">Apply</button>
+      </div>
+
+      <div
+        class="recommendation"
+        data-recommendation="Activate B2→B3 diversion sign"
+      >
+        <div class="recommendation-meta">
+          <span>+30m</span>
+
+          <strong>87% conf</strong>
+        </div>
+
+        <p>Activate B2→B3 diversion sign</p>
+
+        <button class="apply-btn" type="button">Apply</button>
+      </div>
+
+      <div
+        class="recommendation"
+        data-recommendation="Pre-stage EV corridor A3-B3"
+      >
+        <div class="recommendation-meta">
+          <span>+1h</span>
+
+          <strong>78% conf</strong>
+        </div>
+
+        <p>Pre-stage EV corridor A3-B3</p>
+
+        <button class="apply-btn" type="button">Apply</button>
+      </div>
+
+      <div
+        class="recommendation"
+        data-recommendation="Reduce B2 cycle to ease clearing"
+      >
+        <div class="recommendation-meta">
+          <span>+2h</span>
+
+          <strong>84% conf</strong>
+        </div>
+
+        <p>Reduce B2 cycle to ease clearing</p>
+
+        <button class="apply-btn" type="button">Apply</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+         LOWER ANALYTICS
+    ====================================================== -->
+
+  <section class="ai-bottom-grid">
+    <!-- ZONE CONGESTION -->
+    <div class="ai-panel">
+      <div class="panel-heading">ZONE CONGESTION FORECAST — 1H</div>
+
+      <div class="zone-list">
+        <div class="zone-row" data-zone="A1" data-value="13">
+          <span>A1</span>
+
+          <div class="progress-track">
+            <div class="progress-fill low" style="width: 13%"></div>
+          </div>
+
+          <strong>13%</strong>
+        </div>
+
+        <div class="zone-row" data-zone="A2" data-value="37">
+          <span>A2</span>
+
+          <div class="progress-track">
+            <div class="progress-fill low" style="width: 37%"></div>
+          </div>
+
+          <strong>37%</strong>
+        </div>
+
+        <div class="zone-row" data-zone="A3" data-value="74">
+          <span>A3</span>
+
+          <div class="progress-track">
+            <div class="progress-fill high" style="width: 74%"></div>
+          </div>
+
+          <strong>74%</strong>
+        </div>
+
+        <div class="zone-row" data-zone="B1" data-value="31">
+          <span>B1</span>
+
+          <div class="progress-track">
+            <div class="progress-fill low" style="width: 31%"></div>
+          </div>
+
+          <strong>31%</strong>
+        </div>
+
+        <div class="zone-row" data-zone="B2" data-value="98">
+          <span>B2</span>
+
+          <div class="progress-track">
+            <div class="progress-fill critical" style="width: 98%"></div>
+          </div>
+
+          <strong>98%</strong>
+        </div>
+
+        <div class="zone-row" data-zone="B3" data-value="61">
+          <span>B3</span>
+
+          <div class="progress-track">
+            <div class="progress-fill medium" style="width: 61%"></div>
+          </div>
+
+          <strong>61%</strong>
+        </div>
+
+        <div class="zone-row" data-zone="C1" data-value="16">
+          <span>C1</span>
+
+          <div class="progress-track">
+            <div class="progress-fill low" style="width: 16%"></div>
+          </div>
+
+          <strong>16%</strong>
+        </div>
+
+        <div class="zone-row" data-zone="C2" data-value="34">
+          <span>C2</span>
+
+          <div class="progress-track">
+            <div class="progress-fill low" style="width: 34%"></div>
+          </div>
+
+          <strong>34%</strong>
+        </div>
+
+        <div class="zone-row" data-zone="C3" data-value="15">
+          <span>C3</span>
+
+          <div class="progress-track">
+            <div class="progress-fill low" style="width: 15%"></div>
+          </div>
+
+          <strong>15%</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODEL PERFORMANCE -->
+    <div class="ai-panel">
+      <div class="panel-heading">MODEL PERFORMANCE</div>
+
+      <div class="performance-row">
+        <span>MAE</span>
+        <strong>18.4 veh</strong>
+      </div>
+
+      <div class="performance-row">
+        <span>RMSE</span>
+        <strong>24.1 veh</strong>
+      </div>
+
+      <div class="performance-row">
+        <span>MAPE</span>
+        <strong>6.2%</strong>
+      </div>
+
+      <div class="performance-row">
+        <span>R²</span>
+        <strong>0.943</strong>
+      </div>
+
+      <div class="performance-row">
+        <span>Last retrained</span>
+        <strong id="lastRetrained"> 2 days ago </strong>
+      </div>
+
+      <div class="performance-row">
+        <span>Training loss</span>
+        <strong>0.0038</strong>
+      </div>
+    </div>
+
+    <!-- FEATURE IMPORTANCE -->
+    <div class="ai-panel">
+      <div class="panel-heading">FEATURE IMPORTANCE</div>
+
+      <div class="feature-row" data-feature="Hour of day" data-value="88">
+        <div class="feature-label">
+          <span>Hour of day</span>
+          <strong>88%</strong>
+        </div>
+
+        <div class="feature-track">
+          <div style="width: 88%"></div>
+        </div>
+      </div>
+
+      <div class="feature-row" data-feature="Historical avg" data-value="76">
+        <div class="feature-label">
+          <span>Historical avg</span>
+          <strong>76%</strong>
+        </div>
+
+        <div class="feature-track">
+          <div style="width: 76%"></div>
+        </div>
+      </div>
+
+      <div class="feature-row" data-feature="Incident count" data-value="62">
+        <div class="feature-label">
+          <span>Incident count</span>
+          <strong>62%</strong>
+        </div>
+
+        <div class="feature-track">
+          <div style="width: 62%"></div>
+        </div>
+      </div>
+
+      <div class="feature-row" data-feature="Weather" data-value="41">
+        <div class="feature-label">
+          <span>Weather</span>
+          <strong>41%</strong>
+        </div>
+
+        <div class="feature-track">
+          <div style="width: 41%"></div>
+        </div>
+      </div>
+
+      <div class="feature-row" data-feature="Day of week" data-value="37">
+        <div class="feature-label">
+          <span>Day of week</span>
+          <strong>37%</strong>
+        </div>
+
+        <div class="feature-track">
+          <div style="width: 37%"></div>
+        </div>
+      </div>
+
+      <div class="feature-row" data-feature="Signal state" data-value="29">
+        <div class="feature-label">
+          <span>Signal state</span>
+          <strong>29%</strong>
+        </div>
+
+        <div class="feature-track">
+          <div style="width: 29%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+  <div id="aiToast" class="ai-toast"></div>
 </div>
 
-{% endblock %}
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{{ url_for('static', filename='js/controller/ai_prediction.js') }}"></script>
+{% endblock %} 
+
+

@@ -1,0 +1,835 @@
+/* =========================================================
+   DIGITAL TWIN PAGE
+========================================================= */
+
+.digital-twin-page {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 14px 14px 40px;
+
+  color: #101828;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.dt-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-bottom: 16px;
+}
+
+.dt-header h1 {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #101828;
+}
+
+.dt-header p {
+  margin: 4px 0 0;
+
+  font-size: 11px;
+
+  color: #8a96a8;
+}
+
+.dt-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+/* =========================================================
+   SYNC STATUS
+========================================================= */
+
+.sync-badge {
+  padding: 6px 9px;
+
+  border-radius: 3px;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+}
+
+.sync-badge.active {
+  background: #ecfdf3;
+
+  border: 1px solid #abefc6;
+
+  color: #079455;
+}
+
+.sync-badge.paused {
+  background: #fff7ed;
+
+  border: 1px solid #fed7aa;
+
+  color: #c2410c;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.dt-button {
+  height: 30px;
+
+  padding: 0 12px;
+
+  border: 1px solid #d0d5dd;
+
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  color: #344054;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.dt-button:hover {
+  background: #f8fafc;
+
+  border-color: #98a2b3;
+}
+
+.dt-button:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   DIGITAL TWIN VIEWPORT
+========================================================= */
+
+.dt-viewport-section {
+  width: 100%;
+
+  margin-bottom: 12px;
+}
+
+.dt-viewport {
+  position: relative;
+
+  /*
+       IMPORTANT:
+       Increased height for the Digital Twin.
+    */
+
+  height: 560px;
+
+  min-height: 560px;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  background: #090909;
+
+  border-radius: 7px;
+
+  border: 1px solid #151515;
+
+  /*
+       Subtle technical grid
+    */
+
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+
+  background-size: 38px 38px;
+}
+
+/* =========================================================
+   LIVE INDICATOR
+========================================================= */
+
+.dt-live-indicator {
+  position: absolute;
+
+  top: 12px;
+  left: 12px;
+
+  z-index: 20;
+
+  padding: 4px 7px;
+
+  border-radius: 3px;
+
+  background: rgba(0, 40, 15, 0.75);
+
+  border: 1px solid #087443;
+
+  color: #00d65a;
+
+  font-family: monospace;
+
+  font-size: 8px;
+}
+
+/* =========================================================
+   NETWORK
+========================================================= */
+
+.dt-network {
+  position: absolute;
+
+  left: 50%;
+
+  top: 50%;
+
+  width: 620px;
+
+  height: 400px;
+
+  transform: translate(-50%, -50%);
+}
+
+/* =========================================================
+   NODES
+========================================================= */
+
+.dt-node {
+  position: absolute;
+
+  width: 145px;
+
+  height: 56px;
+
+  box-sizing: border-box;
+
+  padding: 8px 10px;
+
+  border: 2px solid #d89b00;
+
+  border-radius: 5px;
+
+  background: rgba(18, 18, 18, 0.92);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.dt-node:hover {
+  transform: scale(1.04);
+
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.12);
+
+  z-index: 10;
+}
+
+.dt-node .node-title {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #d89b00;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.dt-node .node-data {
+  margin-top: 7px;
+
+  text-align: center;
+
+  color: #727272;
+
+  font-family: monospace;
+
+  font-size: 8px;
+}
+
+.node-dot {
+  position: absolute;
+
+  top: 7px;
+  right: 7px;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #d89b00;
+}
+
+/* =========================================================
+   NODE STATES
+========================================================= */
+
+.dt-node.critical {
+  border-color: #e31b23;
+}
+
+.dt-node.critical .node-title {
+  color: #e31b23;
+}
+
+.dt-node.critical .node-dot {
+  background: #e31b23;
+}
+
+.dt-node.node-a1,
+.dt-node.node-c1,
+.dt-node.node-c3 {
+  border-color: #079455;
+}
+
+.dt-node.node-a1 .node-title,
+.dt-node.node-c1 .node-title,
+.dt-node.node-c3 .node-title {
+  color: #079455;
+}
+
+.dt-node.node-a1 .node-dot,
+.dt-node.node-c1 .node-dot,
+.dt-node.node-c3 .node-dot {
+  background: #079455;
+}
+
+.dt-node.node-a3,
+.dt-node.node-b3 {
+  border-color: #f04438;
+}
+
+.dt-node.node-a3 .node-title,
+.dt-node.node-b3 .node-title {
+  color: #f04438;
+}
+
+.dt-node.node-a3 .node-dot,
+.dt-node.node-b3 .node-dot {
+  background: #f04438;
+}
+
+/* =========================================================
+   NODE POSITIONS
+========================================================= */
+
+.node-a1 {
+  left: 0;
+  top: 25px;
+}
+
+.node-a2 {
+  left: 205px;
+  top: 25px;
+}
+
+.node-a3 {
+  left: 410px;
+  top: 25px;
+}
+
+.node-b1 {
+  left: 0;
+  top: 145px;
+}
+
+.node-b2 {
+  left: 205px;
+  top: 145px;
+}
+
+.node-b3 {
+  left: 410px;
+  top: 145px;
+}
+
+.node-c1 {
+  left: 0;
+  top: 265px;
+}
+
+.node-c2 {
+  left: 205px;
+  top: 265px;
+}
+
+.node-c3 {
+  left: 410px;
+  top: 265px;
+}
+
+/* =========================================================
+   ROADS
+========================================================= */
+
+.road {
+  position: absolute;
+
+  height: 2px;
+
+  background: #a87900;
+
+  z-index: 0;
+}
+
+.road-a1-a2 {
+  width: 60px;
+
+  left: 145px;
+
+  top: 53px;
+}
+
+.road-a2-a3 {
+  width: 60px;
+
+  left: 350px;
+
+  top: 53px;
+}
+
+.road-b1-b2 {
+  width: 60px;
+
+  left: 145px;
+
+  top: 173px;
+}
+
+.road-b2-b3 {
+  width: 60px;
+
+  left: 350px;
+
+  top: 173px;
+}
+
+.road-c1-c2 {
+  width: 60px;
+
+  left: 145px;
+
+  top: 293px;
+}
+
+.road-c2-c3 {
+  width: 60px;
+
+  left: 350px;
+
+  top: 293px;
+}
+
+.road.vertical {
+  width: 2px;
+
+  height: 64px;
+}
+
+.road-a1-b1 {
+  left: 72px;
+
+  top: 81px;
+}
+
+.road-a2-b2 {
+  left: 277px;
+
+  top: 81px;
+}
+
+.road-a3-b3 {
+  left: 482px;
+
+  top: 81px;
+}
+
+.road-b1-c1 {
+  left: 72px;
+
+  top: 201px;
+}
+
+.road-b2-c2 {
+  left: 277px;
+
+  top: 201px;
+}
+
+.road-b3-c3 {
+  left: 482px;
+
+  top: 201px;
+}
+
+/* =========================================================
+   SYSTEM STATUS
+========================================================= */
+
+.dt-system-status {
+  position: absolute;
+
+  right: 16px;
+
+  top: 16px;
+
+  width: 135px;
+
+  padding: 10px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #252525;
+
+  border-radius: 5px;
+
+  background: rgba(12, 12, 12, 0.88);
+
+  color: #737373;
+
+  font-family: monospace;
+
+  font-size: 8px;
+}
+
+.status-title {
+  margin-bottom: 6px;
+
+  color: #555;
+
+  font-size: 8px;
+}
+
+.status-active {
+  margin-bottom: 7px;
+
+  color: #00d65a;
+
+  font-weight: 700;
+}
+
+.status-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-top: 5px;
+}
+
+.status-row strong {
+  color: #777;
+}
+
+/* =========================================================
+   WATERMARK
+========================================================= */
+
+.dt-watermark {
+  position: absolute;
+
+  bottom: 10px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  color: #252525;
+
+  font-family: monospace;
+
+  font-size: 7px;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   METRICS
+========================================================= */
+
+.dt-metrics {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 8px;
+
+  margin-bottom: 10px;
+}
+
+.dt-metric {
+  min-height: 60px;
+
+  padding: 10px 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dfe3e8;
+
+  border-top: 2px solid #101828;
+
+  border-radius: 5px;
+
+  background: #ffffff;
+}
+
+.dt-metric span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #8290a4;
+
+  font-size: 8px;
+
+  letter-spacing: 0.8px;
+}
+
+.dt-metric strong {
+  color: #101828;
+
+  font-size: 17px;
+}
+
+.dt-metric small {
+  font-size: 10px;
+
+  color: #8290a4;
+}
+
+/* =========================================================
+   LOWER GRID
+========================================================= */
+
+.dt-lower-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  /*
+       Nothing is fixed to viewport height.
+       Therefore the page can naturally scroll.
+    */
+}
+
+/* =========================================================
+   PANELS
+========================================================= */
+
+.dt-panel {
+  padding: 12px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 5px;
+}
+
+.panel-title {
+  margin-bottom: 10px;
+
+  color: #8290a4;
+
+  font-size: 8px;
+
+  letter-spacing: 1px;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   DIVERGENCE
+========================================================= */
+
+.divergence-item {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 9px 0;
+
+  border-bottom: 1px solid #edf0f3;
+}
+
+.divergence-item:last-child {
+  border-bottom: none;
+}
+
+.divergence-item strong {
+  display: block;
+
+  font-size: 10px;
+
+  color: #344054;
+}
+
+.divergence-item span:not(.severity) {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 9px;
+
+  color: #8a96a8;
+}
+
+/* =========================================================
+   SEVERITY
+========================================================= */
+
+.severity {
+  padding: 3px 6px;
+
+  border-radius: 3px;
+
+  font-size: 7px;
+
+  font-weight: 700;
+}
+
+.severity.high {
+  color: #f04438;
+
+  background: #fef3f2;
+
+  border: 1px solid #fecdca;
+}
+
+.severity.medium {
+  color: #d97706;
+
+  background: #fffaeb;
+
+  border: 1px solid #fedf89;
+}
+
+.severity.low {
+  color: #079455;
+
+  background: #ecfdf3;
+
+  border: 1px solid #abefc6;
+}
+
+/* =========================================================
+   PARAMETERS
+========================================================= */
+
+.parameter {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 7px 0;
+
+  border-bottom: 1px solid #edf0f3;
+
+  font-size: 9px;
+}
+
+.parameter:last-child {
+  border-bottom: none;
+}
+
+.parameter span {
+  color: #8a96a8;
+}
+
+.parameter strong {
+  color: #344054;
+
+  font-family: monospace;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .dt-viewport {
+    height: 520px;
+    min-height: 520px;
+  }
+
+  .dt-system-status {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .dt-header {
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .dt-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dt-lower-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dt-viewport {
+    height: 500px;
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 700px) {
+  .digital-twin-page {
+    padding: 12px 8px 30px;
+  }
+
+  .dt-viewport {
+    height: 470px;
+    min-height: 470px;
+  }
+
+  .dt-network {
+    transform: translate(-50%, -50%) scale(0.75);
+  }
+}
+
+@media (max-width: 500px) {
+  .dt-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .dt-viewport {
+    height: 430px;
+    min-height: 430px;
+  }
+
+  .dt-network {
+    transform: translate(-50%, -50%) scale(0.58);
+  }
+}

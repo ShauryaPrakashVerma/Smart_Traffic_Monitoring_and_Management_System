@@ -1,11 +1,313 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %} {% block styles %}
 
-{% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/digital_twin.css') }}"
+/>
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the digital twin</p>
-    <a href="" class="btn btn-logout"></a>
+{% endblock %} {% block content %}
+
+<div class="digital-twin-page">
+  <!-- PAGE HEADER -->
+  <div class="dt-header">
+    <div>
+      <h1>Digital Twin</h1>
+      <p>Real-time 3D network model with live data synchronization</p>
+    </div>
+
+    <div class="dt-actions">
+      <span id="syncStatus" class="sync-badge active"> SYNCING </span>
+
+      <button id="syncToggle" class="dt-button" type="button">
+        Pause Sync
+      </button>
+    </div>
+  </div>
+
+  <!-- DIGITAL TWIN VIEWPORT -->
+  <section class="dt-viewport-section">
+    <div class="dt-viewport">
+      <!-- LIVE SYNC INDICATOR -->
+      <div class="dt-live-indicator">● LIVE SYNC @ 250MS</div>
+
+      <!-- NETWORK -->
+      <div class="dt-network">
+        <!-- ROW A -->
+
+        <div
+          class="dt-node node-a1"
+          data-node="A1"
+          data-vehicles="12"
+          data-speed="62"
+        >
+          <div class="node-title">
+            A1
+            <span class="node-dot"></span>
+          </div>
+
+          <div class="node-data">12 veh · 62 km/h</div>
+        </div>
+
+        <div
+          class="dt-node node-a2"
+          data-node="A2"
+          data-vehicles="34"
+          data-speed="41"
+        >
+          <div class="node-title">
+            A2
+            <span class="node-dot"></span>
+          </div>
+
+          <div class="node-data">34 veh · 41 km/h</div>
+        </div>
+
+        <div
+          class="dt-node node-a3"
+          data-node="A3"
+          data-vehicles="67"
+          data-speed="24"
+        >
+          <div class="node-title">
+            A3
+            <span class="node-dot"></span>
+          </div>
+
+          <div class="node-data">67 veh · 24 km/h</div>
+        </div>
+
+        <!-- ROW B -->
+
+        <div
+          class="dt-node node-b1"
+          data-node="B1"
+          data-vehicles="28"
+          data-speed="38"
+        >
+          <div class="node-title">
+            B1
+            <span class="node-dot"></span>
+          </div>
+
+          <div class="node-data">28 veh · 38 km/h</div>
+        </div>
+
+        <div
+          class="dt-node node-b2 critical"
+          data-node="B2"
+          data-vehicles="89"
+          data-speed="8"
+        >
+          <div class="node-title">
+            B2
+            <span class="node-dot"></span>
+          </div>
+
+          <div class="node-data">89 veh · 8 km/h</div>
+        </div>
+
+        <div
+          class="dt-node node-b3"
+          data-node="B3"
+          data-vehicles="55"
+          data-speed="19"
+        >
+          <div class="node-title">
+            B3
+            <span class="node-dot"></span>
+          </div>
+
+          <div class="node-data">55 veh · 19 km/h</div>
+        </div>
+
+        <!-- ROW C -->
+
+        <div
+          class="dt-node node-c1"
+          data-node="C1"
+          data-vehicles="9"
+          data-speed="58"
+        >
+          <div class="node-title">
+            C1
+            <span class="node-dot"></span>
+          </div>
+
+          <div class="node-data">9 veh · 58 km/h</div>
+        </div>
+
+        <div
+          class="dt-node node-c2"
+          data-node="C2"
+          data-vehicles="31"
+          data-speed="35"
+        >
+          <div class="node-title">
+            C2
+            <span class="node-dot"></span>
+          </div>
+
+          <div class="node-data">31 veh · 35 km/h</div>
+        </div>
+
+        <div
+          class="dt-node node-c3"
+          data-node="C3"
+          data-vehicles="14"
+          data-speed="54"
+        >
+          <div class="node-title">
+            C3
+            <span class="node-dot"></span>
+          </div>
+
+          <div class="node-data">14 veh · 54 km/h</div>
+        </div>
+
+        <!-- HORIZONTAL CONNECTIONS -->
+
+        <div class="road road-a1-a2"></div>
+        <div class="road road-a2-a3"></div>
+
+        <div class="road road-b1-b2"></div>
+        <div class="road road-b2-b3"></div>
+
+        <div class="road road-c1-c2"></div>
+        <div class="road road-c2-c3"></div>
+
+        <!-- VERTICAL CONNECTIONS -->
+
+        <div class="road road-a1-b1 vertical"></div>
+        <div class="road road-a2-b2 vertical"></div>
+        <div class="road road-a3-b3 vertical"></div>
+
+        <div class="road road-b1-c1 vertical"></div>
+        <div class="road road-b2-c2 vertical"></div>
+        <div class="road road-b3-c3 vertical"></div>
+      </div>
+
+      <!-- SYSTEM STATUS -->
+      <div class="dt-system-status">
+        <div class="status-title">System Status</div>
+
+        <div class="status-active">Sync: ACTIVE</div>
+
+        <div class="status-row">
+          Latency:
+          <strong id="statusLatency">247ms</strong>
+        </div>
+
+        <div class="status-row">
+          Accuracy:
+          <strong>98.2%</strong>
+        </div>
+
+        <div class="status-row">
+          Sensors:
+          <strong>14,832</strong>
+        </div>
+
+        <div class="status-row">
+          Updated:
+          <strong id="lastUpdate">0.25s ago</strong>
+        </div>
+      </div>
+
+      <div class="dt-watermark">
+        DIGITAL TWIN v2.4 · ITOP CITY NETWORK MODEL · REAL-TIME
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <section class="dt-metrics">
+    <div class="dt-metric">
+      <span>MODEL ACCURACY</span>
+      <strong>98.2 <small>%</small></strong>
+    </div>
+
+    <div class="dt-metric">
+      <span>SYNC LATENCY</span>
+      <strong id="latencyMetric"> 247 <small>ms</small> </strong>
+    </div>
+
+    <div class="dt-metric">
+      <span>SENSOR POINTS</span>
+      <strong>14,832</strong>
+    </div>
+
+    <div class="dt-metric">
+      <span>LAST CALIBRATED</span>
+      <strong>2h <small>ago</small></strong>
+    </div>
+  </section>
+
+  <!-- LOWER CONTENT -->
+  <section class="dt-lower-grid">
+    <!-- DIVERGENCE ALERTS -->
+    <div class="dt-panel">
+      <div class="panel-title">DIVERGENCE ALERTS</div>
+
+      <div class="divergence-item">
+        <div>
+          <strong>B2 — Vehicle Count</strong>
+          <span>+8 vs model</span>
+        </div>
+
+        <span class="severity high"> HIGH </span>
+      </div>
+
+      <div class="divergence-item">
+        <div>
+          <strong>A3 — Speed Reading</strong>
+          <span>-3 km/h vs model</span>
+        </div>
+
+        <span class="severity medium"> MEDIUM </span>
+      </div>
+
+      <div class="divergence-item">
+        <div>
+          <strong>C1 — Sensor Offline</strong>
+          <span>Loop 3 unresponsive</span>
+        </div>
+
+        <span class="severity low"> LOW </span>
+      </div>
+    </div>
+
+    <!-- MODEL PARAMETERS -->
+    <div class="dt-panel">
+      <div class="panel-title">MODEL PARAMETERS</div>
+
+      <div class="parameter">
+        <span>Simulation timestep</span>
+        <strong>250 ms</strong>
+      </div>
+
+      <div class="parameter">
+        <span>History window</span>
+        <strong>72 hours</strong>
+      </div>
+
+      <div class="parameter">
+        <span>Forecast horizon</span>
+        <strong>3 hours</strong>
+      </div>
+
+      <div class="parameter">
+        <span>Sensor fusion</span>
+        <strong>CV + Loop + GPS</strong>
+      </div>
+
+      <div class="parameter">
+        <span>Update protocol</span>
+        <strong>MQTT over TLS</strong>
+      </div>
+    </div>
+  </section>
 </div>
+
+<script src="{{ url_for('static', filename='js/controller/digital_twin.js') }}"></script>
 
 {% endblock %}
