@@ -1,362 +1,420 @@
-/* =====================================================
+/* =========================================================
    REPORTS PAGE
-===================================================== */
+========================================================= */
 
-.reports-container{
-    padding:8px;
+.reports-page {
+  padding: 18px;
+
+  background: #f5f7fa;
+
+  min-height: 100%;
+
+  color: #111827;
 }
 
-/* --------------------------------------- */
-/* PAGE HEADER */
-/* --------------------------------------- */
+/* =========================================================
+   HEADER
+========================================================= */
 
-.page-header{
-    margin-bottom:28px;
+.reports-header {
+  margin-bottom: 28px;
 }
 
-.page-header h2{
-    font-size:2rem;
-    font-weight:700;
-    color:#18202b;
-    margin-bottom:4px;
+.reports-header h2 {
+  margin: 0;
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  color: #111827;
 }
 
-.page-header p{
-    color:#8c96a8;
-    font-size:.95rem;
-    margin:0;
+.reports-header p {
+  margin: 3px 0 0;
+
+  font-size: 13px;
+
+  color: #94a3b8;
 }
 
+/* =========================================================
+   MAIN GRID
+========================================================= */
 
-/* --------------------------------------- */
-/* CARD */
-/* --------------------------------------- */
+.reports-grid {
+  display: grid;
 
-.report-card{
-    background:#ffffff;
-    border:1px solid #dfe5ec;
-    border-radius:10px;
-    padding:22px;
-    height:100%;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
 }
 
+/* =========================================================
+   GENERATOR / RECENT REPORTS
+========================================================= */
 
-/* --------------------------------------- */
-/* SECTION TITLE */
-/* --------------------------------------- */
+.report-generator,
+.recent-reports {
+  background: #ffffff;
 
-.section-title{
-    font-size:.72rem;
-    font-weight:700;
-    color:#9aa3b2;
-    text-transform:uppercase;
-    letter-spacing:1px;
-    margin-bottom:20px;
+  border: 1px solid #dce1e7;
+
+  border-radius: 7px;
+
+  padding: 17px;
 }
 
+/* =========================================================
+   SECTION TITLE
+========================================================= */
 
-/* --------------------------------------- */
-/* REPORT TABS */
-/* --------------------------------------- */
+.report-section-title {
+  margin-bottom: 14px;
 
-.report-tabs{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
+  color: #8a9ab0;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
 }
 
-.report-tab{
+/* =========================================================
+   REPORT TYPES
+========================================================= */
 
-    background:#ffffff;
+.report-types {
+  display: flex;
 
-    border:1px solid #d6dce5;
+  gap: 6px;
 
-    color:#455066;
-
-    border-radius:6px;
-
-    padding:8px 18px;
-
-    font-size:.87rem;
-
-    font-weight:500;
-
-    cursor:pointer;
-
-    transition:.18s;
+  margin-bottom: 14px;
 }
 
-.report-tab:hover{
+.report-type {
+  padding: 7px 12px;
 
-    background:#f3f5f8;
+  border: 1px solid #d8dee7;
 
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  color: #334155;
+
+  font-size: 12px;
+
+  cursor: pointer;
 }
 
-.report-tab.active{
-
-    background:#171d2d;
-
-    color:#ffffff;
-
-    border-color:#171d2d;
-
+.report-type:hover {
+  background: #f8fafc;
 }
 
+.report-type.active {
+  background: #111827;
 
-/* --------------------------------------- */
-/* CHECKBOXES */
-/* --------------------------------------- */
+  border-color: #111827;
 
-.form-check{
-
-    margin-bottom:15px;
-
+  color: #ffffff;
 }
 
-.form-check-input{
+/* =========================================================
+   CUSTOM DATE RANGE
+========================================================= */
 
-    width:17px;
-    height:17px;
+.custom-date-range {
+  display: flex;
 
-    cursor:pointer;
+  gap: 10px;
 
+  margin-bottom: 15px;
 }
 
-.form-check-input:checked{
+.custom-date-range > div {
+  display: flex;
 
-    background:#171d2d;
-    border-color:#171d2d;
+  flex-direction: column;
 
+  gap: 5px;
 }
 
-.form-check-label{
+.custom-date-range label {
+  color: #8a9ab0;
 
-    color:#374151;
+  font-size: 9px;
 
-    font-size:.94rem;
+  font-weight: 700;
 
-    margin-left:5px;
-
+  letter-spacing: 0.8px;
 }
 
+.custom-date-range input {
+  height: 32px;
 
-/* --------------------------------------- */
-/* GENERATE BUTTON */
-/* --------------------------------------- */
+  padding: 0 8px;
 
-.generate-btn{
+  border: 1px solid #d8dee7;
 
-    background:#171d2d;
+  border-radius: 4px;
 
-    color:white;
+  font-size: 12px;
 
-    border:none;
-
-    border-radius:6px;
-
-    padding:11px 22px;
-
-    font-size:.92rem;
-
-    font-weight:600;
-
-    transition:.2s;
-
+  color: #334155;
 }
 
-.generate-btn:hover{
+/* =========================================================
+   CHECKBOX GRID
+========================================================= */
 
-    background:#2b3248;
+.report-options {
+  display: grid;
 
+  grid-template-columns: 1fr 1fr;
+
+  column-gap: 35px;
+
+  row-gap: 12px;
+
+  margin-bottom: 17px;
 }
 
+.report-checkbox {
+  display: flex;
 
-/* --------------------------------------- */
-/* RECENT REPORTS */
-/* --------------------------------------- */
+  align-items: center;
 
-.recent-report{
+  gap: 7px;
 
-    display:flex;
+  font-size: 12px;
 
-    justify-content:space-between;
+  color: #334155;
 
-    align-items:center;
-
-    padding:16px 0;
-
-    border-bottom:1px solid #eceff3;
-
+  cursor: pointer;
 }
 
-.recent-report:last-child{
+.report-checkbox input {
+  width: 14px;
 
-    border-bottom:none;
+  height: 14px;
 
+  accent-color: #111827;
+
+  cursor: pointer;
 }
 
-.recent-report h6{
+/* =========================================================
+   GENERATE BUTTON
+========================================================= */
 
-    margin:0;
+.generate-report-btn {
+  display: inline-flex;
 
-    font-size:1rem;
+  align-items: center;
 
-    font-weight:600;
+  gap: 8px;
 
-    color:#1f2937;
+  padding: 9px 14px;
 
+  border: 0;
+
+  border-radius: 5px;
+
+  background: #111827;
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.15s ease;
 }
 
-.recent-report small{
-
-    color:#9ca3af;
-
-    font-size:.82rem;
-
+.generate-report-btn:hover {
+  background: #1f2937;
 }
 
+.generate-report-btn:disabled {
+  opacity: 0.65;
 
-/* --------------------------------------- */
-/* ACTIONS */
-/* --------------------------------------- */
-
-.report-actions{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
+  cursor: wait;
 }
 
+/* =========================================================
+   STATUS
+========================================================= */
 
-/* --------------------------------------- */
-/* BADGE */
-/* --------------------------------------- */
+.report-status {
+  margin-top: 12px;
 
-.badge-tag{
+  padding: 8px 10px;
 
-    background:#171d2d;
+  border-radius: 4px;
 
-    color:#ffffff;
+  background: #eff6ff;
 
-    font-size:.66rem;
+  border: 1px solid #bfdbfe;
 
-    font-weight:700;
+  color: #2563eb;
 
-    letter-spacing:.5px;
-
-    border-radius:4px;
-
-    padding:6px 10px;
-
-    min-width:58px;
-
-    text-align:center;
-
+  font-size: 11px;
 }
 
+/* =========================================================
+   RECENT REPORT
+========================================================= */
 
-/* --------------------------------------- */
-/* PDF BUTTON */
-/* --------------------------------------- */
+.recent-report {
+  display: flex;
 
-.pdf-btn{
-    background:#ffffff;
-    border:1px solid #d5dce5;
-    border-radius:6px;
-    padding:7px 16px;
-    font-size:.82rem;
-    font-weight:600;
-    color:#293041;
-    transition:.2s;
+  justify-content: space-between;
+
+  align-items: center;
+
+  min-height: 57px;
+
+  border-bottom: 1px solid #edf0f3;
 }
 
-.pdf-btn:hover{
-
-    background:#f4f6f9;
-
-    border-color:#bcc6d4;
-
+.recent-report:last-child {
+  border-bottom: none;
 }
 
+.recent-report-info {
+  display: flex;
 
-/* --------------------------------------- */
-/* BUTTON ACTIVE */
-/* --------------------------------------- */
+  flex-direction: column;
 
-.generate-btn:active,
-.report-tab:active,
-.pdf-btn:active{
-
-    transform:scale(.98);
-
+  gap: 3px;
 }
 
+.recent-report-info strong {
+  font-size: 13px;
 
-/* --------------------------------------- */
-/* RESPONSIVE */
-/* --------------------------------------- */
+  font-weight: 600;
 
-@media (max-width:992px){
-
-    .report-card{
-
-        margin-bottom:22px;
-
-    }
-
+  color: #111827;
 }
 
+.recent-report-info span {
+  font-size: 10px;
 
-@media (max-width:768px){
-
-    .report-tabs{
-
-        gap:6px;
-
-    }
-
-    .report-tab{
-
-        flex:1 1 45%;
-
-    }
-
-    .recent-report{
-
-        flex-direction:column;
-
-        align-items:flex-start;
-
-        gap:12px;
-
-    }
-
-    .report-actions{
-
-        width:100%;
-
-        justify-content:space-between;
-
-    }
-
+  color: #94a3b8;
 }
 
+/* =========================================================
+   REPORT ACTIONS
+========================================================= */
 
-@media (max-width:576px){
+.recent-report-actions {
+  display: flex;
 
-    .page-header h2{
+  align-items: center;
 
-        font-size:1.6rem;
+  gap: 6px;
+}
 
-    }
+/* =========================================================
+   BADGES
+========================================================= */
 
-    .report-tab{
+.report-badge {
+  padding: 7px 8px;
 
-        flex:1 1 100%;
+  border-radius: 3px;
 
-    }
+  font-size: 9px;
 
+  font-weight: 700;
+
+  color: #ffffff;
+
+  background: #111827;
+}
+
+/* =========================================================
+   PDF BUTTON
+========================================================= */
+
+.pdf-btn {
+  padding: 7px 11px;
+
+  border: 1px solid #d8dee7;
+
+  border-radius: 4px;
+
+  background: #ffffff;
+
+  color: #334155;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.pdf-btn:hover {
+  background: #f1f5f9;
+
+  border-color: #aeb8c5;
+}
+
+/* =========================================================
+   GENERATED REPORT ANIMATION
+========================================================= */
+
+.report-new {
+  animation: reportAppear 0.3s ease;
+}
+
+@keyframes reportAppear {
+  from {
+    opacity: 0;
+
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+  .reports-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .report-options {
+    grid-template-columns: 1fr;
+  }
+
+  .report-types {
+    flex-wrap: wrap;
+  }
+
+  .recent-report {
+    align-items: flex-start;
+
+    padding: 10px 0;
+
+    gap: 10px;
+  }
+
+  .recent-report-actions {
+    flex-wrap: wrap;
+
+    justify-content: flex-end;
+  }
 }

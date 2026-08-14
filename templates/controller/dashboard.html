@@ -1,293 +1,394 @@
-{% extends "homepage.html" %}
+{% extends "homepage.html" %} {% block styles %}
 
-{% block styles %}
-<link rel="stylesheet"
-href="{{ url_for('static', filename='css/controller/dashboard.css') }}">
-{% endblock %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/dashboard.css') }}"
+/>
 
-{% block content %}
+<!-- Leaflet -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+{% endblock %} {% block content %}
 
 <div class="dashboard-page">
+  <!-- =====================================================
+         TOP HEADER
+    ====================================================== -->
 
-    <!-- ================= HEADER ================= -->
+  <div class="dashboard-header">
+    <div>
+      <h2>Dashboard</h2>
+      <p>Real-time traffic monitoring and control center</p>
+    </div>
+  </div>
 
-    <div class="dashboard-header">
+  <!-- =====================================================
+         KPI CARDS
+    ====================================================== -->
 
+  <div class="dashboard-kpi-grid">
+    <div class="dashboard-kpi-card kpi-blue">
+      <span class="dashboard-kpi-title"> TOTAL VEHICLES </span>
+
+      <div class="dashboard-kpi-value">
+        2,847
+        <small>active</small>
+      </div>
+
+      <div class="dashboard-kpi-positive">▲ 8% <span>vs 1h ago</span></div>
+    </div>
+
+    <div class="dashboard-kpi-card kpi-orange">
+      <span class="dashboard-kpi-title"> AVG NETWORK SPEED </span>
+
+      <div class="dashboard-kpi-value">
+        31
+        <small>km/h</small>
+      </div>
+
+      <div class="dashboard-kpi-negative">▼ 12% <span>vs baseline</span></div>
+    </div>
+
+    <div class="dashboard-kpi-card kpi-red">
+      <span class="dashboard-kpi-title"> CONGESTION LEVEL </span>
+
+      <div class="dashboard-kpi-value">HIGH</div>
+
+      <div class="dashboard-kpi-subtext">B2 corridor critical</div>
+    </div>
+
+    <div class="dashboard-kpi-card kpi-red">
+      <span class="dashboard-kpi-title"> ACTIVE INCIDENTS </span>
+
+      <div class="dashboard-kpi-value">3</div>
+
+      <div class="dashboard-kpi-subtext">2 acknowledged</div>
+    </div>
+
+    <div class="dashboard-kpi-card kpi-purple">
+      <span class="dashboard-kpi-title"> EMERGENCY VEHICLES </span>
+
+      <div class="dashboard-kpi-value">2</div>
+
+      <div class="dashboard-kpi-subtext">EV-07, EV-12 active</div>
+    </div>
+
+    <div class="dashboard-kpi-card kpi-green">
+      <span class="dashboard-kpi-title"> YOLO ACCURACY </span>
+
+      <div class="dashboard-kpi-value">
+        97.4
+        <small>%</small>
+      </div>
+
+      <div class="dashboard-kpi-positive">▲ 0.3% <span>24h avg</span></div>
+    </div>
+
+    <div class="dashboard-kpi-card kpi-green">
+      <span class="dashboard-kpi-title"> SIGNALS ONLINE </span>
+
+      <div class="dashboard-kpi-value">9/9</div>
+
+      <div class="dashboard-kpi-subtext">All operational</div>
+    </div>
+
+    <div class="dashboard-kpi-card kpi-blue">
+      <span class="dashboard-kpi-title"> CAMERA STATUS </span>
+
+      <div class="dashboard-kpi-value">6/6</div>
+
+      <div class="dashboard-kpi-subtext">All feeds live</div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+         MAP + ALERTS
+    ====================================================== -->
+
+  <div class="dashboard-main-grid">
+    <!-- ================= MAP ================= -->
+
+    <section class="dashboard-map-panel">
+      <div class="dashboard-panel-header">
         <div>
+          <span class="dashboard-panel-title"> CITY ROAD NETWORK </span>
 
-            <h2>Traffic Operations Dashboard</h2>
-
-            <p>
-                AI Powered Smart Traffic Monitoring & Management System
-            </p>
-
+          <span class="dashboard-live-badge"> LIVE </span>
         </div>
 
-        <div class="header-buttons">
+        <div class="dashboard-map-actions">
+          <button id="dashboardDigitalTwinBtn" class="dashboard-action-btn">
+            🌐 Digital Twin
+          </button>
 
-            <button class="btn-outline">
-                Digital Twin
-            </button>
+          <button
+            id="dashboardEmergencyBtn"
+            class="dashboard-action-btn emergency"
+          >
+            🚨 Emergency
+          </button>
+        </div>
+      </div>
 
-            <button class="btn-danger">
-                Emergency
-            </button>
+      <!-- REAL LEAFLET MAP -->
 
+      <div id="dashboardMap" class="dashboard-leaflet-map"></div>
+
+      <!-- MAP LEGEND -->
+
+      <div class="dashboard-map-legend">
+        <span>
+          <i class="legend-dot free"></i>
+          Free
+        </span>
+
+        <span>
+          <i class="legend-dot moderate"></i>
+          Moderate
+        </span>
+
+        <span>
+          <i class="legend-dot heavy"></i>
+          Heavy
+        </span>
+
+        <span>
+          <i class="legend-dot standstill"></i>
+          Standstill
+        </span>
+      </div>
+    </section>
+
+    <!-- ================= ALERTS ================= -->
+
+    <section class="dashboard-alert-panel">
+      <div class="dashboard-alert-header">
+        <span class="dashboard-panel-title"> LIVE ALERTS </span>
+
+        <span class="dashboard-alert-count"> 3 ACTIVE </span>
+      </div>
+
+      <div class="dashboard-alert-list">
+        <!-- ALERT 1 -->
+
+        <div class="dashboard-alert alert-critical" data-alert="collision">
+          <div class="dashboard-alert-top">
+            <strong> 🚨 Multi-vehicle collision </strong>
+
+            <span class="alert-status active"> ACTIVE </span>
+          </div>
+
+          <div class="dashboard-alert-info">
+            📍 B2 / 2nd St · 17:42
+
+            <button class="dashboard-ack-btn">Ack</button>
+          </div>
         </div>
 
+        <!-- ALERT 2 -->
+
+        <div class="dashboard-alert alert-high" data-alert="emergency">
+          <div class="dashboard-alert-top">
+            <strong> 🚑 Emergency vehicle en route </strong>
+
+            <span class="alert-status acknowledged"> ACKNOWLEDGED </span>
+          </div>
+
+          <div class="dashboard-alert-info">📍 A3 → B3 corridor · 17:38</div>
+        </div>
+
+        <!-- ALERT 3 -->
+
+        <div class="dashboard-alert alert-high" data-alert="congestion">
+          <div class="dashboard-alert-top">
+            <strong> 🚦 Severe congestion detected </strong>
+
+            <span class="alert-status active"> ACTIVE </span>
+          </div>
+
+          <div class="dashboard-alert-info">
+            📍 B2 Junction · 17:31
+
+            <button class="dashboard-ack-btn">Ack</button>
+          </div>
+        </div>
+
+        <!-- ALERT 4 -->
+
+        <div class="dashboard-alert alert-medium" data-alert="signal">
+          <div class="dashboard-alert-top">
+            <strong> ⚡ Signal controller fault </strong>
+
+            <span class="alert-status active"> ACTIVE </span>
+          </div>
+
+          <div class="dashboard-alert-info">
+            📍 B2 Signal Head · 17:18
+
+            <button class="dashboard-ack-btn">Ack</button>
+          </div>
+        </div>
+
+        <!-- ALERT 5 -->
+
+        <div class="dashboard-alert alert-medium" data-alert="lane">
+          <div class="dashboard-alert-top">
+            <strong> 🚧 Lane closure — maintenance </strong>
+
+            <span class="alert-status acknowledged"> ACKNOWLEDGED </span>
+          </div>
+
+          <div class="dashboard-alert-info">📍 A3 Eastbound · 16:55</div>
+        </div>
+
+        <!-- ALERT 6 -->
+
+        <div class="dashboard-alert alert-resolved" data-alert="cleared">
+          <div class="dashboard-alert-top">
+            <strong> 🚦 Congestion cleared </strong>
+
+            <span class="alert-status resolved"> RESOLVED </span>
+          </div>
+
+          <div class="dashboard-alert-info">📍 C2 Intersection · 16:30</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =====================================================
+         ANALYTICS
+    ====================================================== -->
+
+  <div class="dashboard-analytics-grid">
+    <!-- VEHICLE / SPEED -->
+
+    <div class="dashboard-chart-card">
+      <div class="dashboard-chart-title">VEHICLE COUNT & AVG SPEED — TODAY</div>
+
+      <div class="dashboard-chart-placeholder">
+        <div class="fake-line vehicle-line"></div>
+
+        <div class="fake-line speed-line"></div>
+
+        <div class="fake-axis">
+          06:00&nbsp;&nbsp;&nbsp; 08:00&nbsp;&nbsp;&nbsp;
+          10:00&nbsp;&nbsp;&nbsp; 12:00&nbsp;&nbsp;&nbsp;
+          14:00&nbsp;&nbsp;&nbsp; 16:00&nbsp;&nbsp;&nbsp;
+          18:00&nbsp;&nbsp;&nbsp; 19:00
+        </div>
+      </div>
     </div>
 
+    <!-- ZONE DENSITY -->
 
+    <div class="dashboard-chart-card">
+      <div class="dashboard-chart-title">ZONE DENSITY %</div>
 
-    <!-- ================= TOP STATS ================= -->
-
-    <div class="stats-grid">
-
-
-        <div class="stat-card green">
-
-            <span>Total Vehicles</span>
-
-            <h2 id="vehicleCount">2847</h2>
-
-            <small>↑ 8% from last hour</small>
-
+      <div class="dashboard-bars">
+        <div class="dashboard-bar" style="height: 18%">
+          <span>A1</span>
         </div>
 
-
-        <div class="stat-card blue">
-
-            <span>Average Speed</span>
-
-            <h2 id="avgSpeed">31 km/h</h2>
-
-            <small>Network Average</small>
-
+        <div class="dashboard-bar" style="height: 52%">
+          <span>A2</span>
         </div>
 
-
-        <div class="stat-card red">
-
-            <span>Congestion Level</span>
-
-            <h2 id="congestionLevel">HIGH</h2>
-
-            <small>B2 Corridor Critical</small>
-
+        <div class="dashboard-bar" style="height: 74%">
+          <span>A3</span>
         </div>
 
-
-        <div class="stat-card orange">
-
-            <span>Active Incidents</span>
-
-            <h2 id="incidentCount">3</h2>
-
-            <small>2 Acknowledged</small>
-
+        <div class="dashboard-bar" style="height: 41%">
+          <span>B1</span>
         </div>
 
-
-
-        <div class="stat-card purple">
-
-            <span>Emergency Vehicles</span>
-
-            <h2>2</h2>
-
-            <small>EV-07 & EV-12</small>
-
+        <div class="dashboard-bar" style="height: 92%">
+          <span>B2</span>
         </div>
 
-
-        <div class="stat-card green">
-
-            <span>YOLO Accuracy</span>
-
-            <h2>97.4%</h2>
-
-            <small>24 Hour Average</small>
-
+        <div class="dashboard-bar" style="height: 68%">
+          <span>B3</span>
         </div>
 
-
-        <div class="stat-card green">
-
-            <span>Signals Online</span>
-
-            <h2>9 / 9</h2>
-
-            <small>Operational</small>
-
+        <div class="dashboard-bar" style="height: 11%">
+          <span>C1</span>
         </div>
 
-
-        <div class="stat-card dark">
-
-            <span>Camera Status</span>
-
-            <h2>6 / 6</h2>
-
-            <small>All Live</small>
-
+        <div class="dashboard-bar" style="height: 38%">
+          <span>C2</span>
         </div>
 
-
+        <div class="dashboard-bar" style="height: 20%">
+          <span>C3</span>
+        </div>
+      </div>
     </div>
 
-
-
-
-    <!-- ================= MAIN GRID ================= -->
-
-    <div class="dashboard-grid">
-
-
-
-
-        <!-- LEFT SIDE -->
-
-        <div class="network-panel">
-
-            <div class="panel-header">
-
-                <h3>City Road Network</h3>
-
-                <span class="live-badge">
-                    LIVE
-                </span>
-
-            </div>
-
-
-            <!-- SVG MAP WILL COME IN PART 2 -->
-
-            <div id="city-map">
-
-              <div class="network-panel">
-
-                  <div class="panel-header">
-
-                      <h3>City Road Network</h3>
-
-                      <span class="live-badge">
-                          LIVE
-                      </span>
-
-                  </div>
-
-                  <div id="map"></div>
-
-              </div>
-            </div>
-
-        </div>
-
-
-
-
-
-
-        <!-- RIGHT SIDE -->
-
-        <div class="alerts-panel">
-
-            <div class="panel-header">
-
-                <h3>Live Alerts</h3>
-
-                <span class="active-count">
-
-                    3 Active
-
-                </span>
-
-            </div>
-
-
-
-
-            <div id="alertsContainer">
-
-                <div class="alert-card critical">
-
-                    <div>
-
-                        <h4>Multi Vehicle Collision</h4>
-
-                        <p>B2 / 2nd Street</p>
-
-                    </div>
-
-                    <span>ACTIVE</span>
-
-                </div>
-
-
-
-                <div class="alert-card warning">
-
-                    <div>
-
-                        <h4>Emergency Vehicle Route</h4>
-
-                        <p>A3 → B3 Corridor</p>
-
-                    </div>
-
-                    <span>ACKNOWLEDGED</span>
-
-                </div>
-
-
-
-                <div class="alert-card danger">
-
-                    <div>
-
-                        <h4>Severe Congestion</h4>
-
-                        <p>B2 Junction</p>
-
-                    </div>
-
-                    <span>ACTIVE</span>
-
-                </div>
-
-
-
-                <div class="alert-card resolved">
-
-                    <div>
-
-                        <h4>Congestion Cleared</h4>
-
-                        <p>C2 Intersection</p>
-
-                    </div>
-
-                    <span>RESOLVED</span>
-
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-
-
+    <!-- INCIDENT TRENDS -->
+
+    <div class="dashboard-chart-card">
+      <div class="dashboard-chart-title">INCIDENT TRENDS — 7D</div>
+
+      <div class="dashboard-trend-chart">
+        <svg viewBox="0 0 300 150" preserveAspectRatio="none">
+          <polyline
+            points="0,100 45,120 90,65 135,95 180,40 225,80 270,105 300,110"
+            fill="none"
+            stroke="#ef4444"
+            stroke-width="3"
+          />
+
+          <polyline
+            points="0,55 45,95 90,45 135,85 180,30 225,70 270,90 300,95"
+            fill="none"
+            stroke="#f59e0b"
+            stroke-width="3"
+          />
+        </svg>
+      </div>
     </div>
+  </div>
 
+  <!-- =====================================================
+         BOTTOM ACTIONS
+    ====================================================== -->
+
+  <div class="dashboard-bottom-actions">
+    <button class="dashboard-bottom-btn primary" id="signalTimingBtn">
+      🚦 Adjust Signal Timing
+    </button>
+
+    <button class="dashboard-bottom-btn emergency" id="emergencyCorridorBtn">
+      🚨 Emergency Corridor
+    </button>
+
+    <button class="dashboard-bottom-btn" id="cameraBtn">
+      📷 View All Cameras
+    </button>
+
+    <button class="dashboard-bottom-btn" id="digitalTwinBottomBtn">
+      🌐 Digital Twin
+    </button>
+
+    <button class="dashboard-bottom-btn" id="predictionBtn">
+      🤖 AI Prediction
+    </button>
+
+    <button class="dashboard-bottom-btn" id="generateReportBtn">
+      📄 Generate Report
+    </button>
+  </div>
 </div>
+
+<!-- =====================================================
+     LEAFLET
+====================================================== -->
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script src="{{ url_for('static', filename='js/controller/dashboard.js') }}"></script>
 
-
 {% endblock %}
-
-
-<!-- {% block scripts %}
-{% endblock %} -->

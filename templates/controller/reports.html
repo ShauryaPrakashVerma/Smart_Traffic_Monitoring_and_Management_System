@@ -1,315 +1,217 @@
-{% extends "homepage.html" %}
+{% extends "homepage.html" %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/reports.css') }}"
+/>
+{% endblock %} {% block content %}
 
-{% block styles %}
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='css/controller/reports.css') }}">
-{% endblock %}
+<div class="reports-page">
+  <!-- ================= HEADER ================= -->
 
-
-{% block content %}
-
-<div class="reports-container">
-
-    <div class="page-header">
-        <h2>Reports</h2>
-        <p>Generate and download traffic analysis reports</p>
+  <div class="reports-header">
+    <div>
+      <h2>Reports</h2>
+      <p>Generate and download traffic analysis reports</p>
     </div>
+  </div>
 
-    <div class="row g-4">
+  <!-- ================= MAIN GRID ================= -->
 
-        <!-- Left Panel -->
-        <div class="col-lg-6">
+  <div class="reports-grid">
+    <!-- =========================================
+             GENERATE REPORT
+        ========================================== -->
 
-            <div class="report-card">
+    <div class="report-generator">
+      <div class="report-section-title">GENERATE NEW REPORT</div>
 
-                <h6 class="section-title">
-                    Generate New Report
-                </h6>
+      <!-- Report Types -->
 
-                <!-- Report Type -->
+      <div class="report-types">
+        <button class="report-type active" data-type="Daily">Daily</button>
 
-                <div class="report-tabs">
+        <button class="report-type" data-type="Weekly">Weekly</button>
 
-                    <button class="report-tab active">
-                        Daily
-                    </button>
+        <button class="report-type" data-type="Monthly">Monthly</button>
 
-                    <button class="report-tab">
-                        Weekly
-                    </button>
+        <button class="report-type" data-type="Incident">Incident</button>
 
-                    <button class="report-tab">
-                        Monthly
-                    </button>
+        <button class="report-type" data-type="Custom">Custom</button>
+      </div>
 
-                    <button class="report-tab">
-                        Incident
-                    </button>
+      <!-- Custom Date Range -->
 
-                    <button class="report-tab">
-                        Custom
-                    </button>
-
-                </div>
-
-
-                <!-- Report Options -->
-
-                <div class="row mt-4">
-
-                    <div class="col-md-6">
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   checked>
-
-                            <label class="form-check-label">
-                                Vehicle Count Summary
-                            </label>
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   checked>
-
-                            <label class="form-check-label">
-                                Signal Performance
-                            </label>
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   checked>
-
-                            <label class="form-check-label">
-                                Congestion Heatmap
-                            </label>
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   checked>
-
-                            <label class="form-check-label">
-                                Classification Breakdown
-                            </label>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-6">
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   checked>
-
-                            <label class="form-check-label">
-                                Incident Log
-                            </label>
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   checked>
-
-                            <label class="form-check-label">
-                                YOLO Detection Statistics
-                            </label>
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   checked>
-
-                            <label class="form-check-label">
-                                Speed Analytics
-                            </label>
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   checked>
-
-                            <label class="form-check-label">
-                                Zone Comparison
-                            </label>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <button class="generate-btn mt-4">
-                    Generate Report
-                </button>
-
-            </div>
-
+      <div id="customDateRange" class="custom-date-range" style="display: none">
+        <div>
+          <label>START DATE</label>
+          <input type="date" id="startDate" />
         </div>
 
-        <!-- Right Panel -->
-
-        <div class="col-lg-6">
-
-            <div class="report-card">
-
-                <h6 class="section-title">
-                    Recent Reports
-                </h6>
-
-                <div class="recent-report">
-
-                    <div>
-
-                        <h6>Daily Report — Aug 02</h6>
-
-                        <small>
-                            Aug 02, 17:00 • 2.4 MB
-                        </small>
-
-                    </div>
-
-                    <div class="report-actions">
-
-                        <span class="badge-tag">
-                            DAILY
-                        </span>
-
-                        <button class="pdf-btn">
-                            PDF
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="recent-report">
-
-                    <div>
-
-                        <h6>Weekly Report — W30</h6>
-
-                        <small>
-                            Jul 28, 08:00 • 8.1 MB
-                        </small>
-
-                    </div>
-
-                    <div class="report-actions">
-
-                        <span class="badge-tag">
-                            WEEKLY
-                        </span>
-
-                        <button class="pdf-btn">
-                            PDF
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="recent-report">
-
-                    <div>
-
-                        <h6>Incident Log — Aug 01</h6>
-
-                        <small>
-                            Aug 01, 23:59 • 1.1 MB
-                        </small>
-
-                    </div>
-
-                    <div class="report-actions">
-
-                        <span class="badge-tag">
-                            INCIDENT
-                        </span>
-
-                        <button class="pdf-btn">
-                            PDF
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="recent-report">
-
-                    <div>
-
-                        <h6>Daily Report — Aug 01</h6>
-
-                        <small>
-                            Aug 01, 17:00 • 2.2 MB
-                        </small>
-
-                    </div>
-
-                    <div class="report-actions">
-
-                        <span class="badge-tag">
-                            DAILY
-                        </span>
-
-                        <button class="pdf-btn">
-                            PDF
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="recent-report">
-
-                    <div>
-
-                        <h6>Monthly Report — Jul</h6>
-
-                        <small>
-                            Jul 31, 23:59 • 18.7 MB
-                        </small>
-
-                    </div>
-
-                    <div class="report-actions">
-
-                        <span class="badge-tag">
-                            MONTHLY
-                        </span>
-
-                        <button class="pdf-btn">
-                            PDF
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+        <div>
+          <label>END DATE</label>
+          <input type="date" id="endDate" />
         </div>
+      </div>
 
+      <!-- Report Options -->
+
+      <div class="report-options">
+        <label class="report-checkbox">
+          <input type="checkbox" value="Vehicle Count Summary" checked />
+          <span>Vehicle Count Summary</span>
+        </label>
+
+        <label class="report-checkbox">
+          <input type="checkbox" value="Incident Log" checked />
+          <span>Incident Log</span>
+        </label>
+
+        <label class="report-checkbox">
+          <input type="checkbox" value="Signal Performance" checked />
+          <span>Signal Performance</span>
+        </label>
+
+        <label class="report-checkbox">
+          <input type="checkbox" value="YOLO Detection Stats" checked />
+          <span>YOLO Detection Stats</span>
+        </label>
+
+        <label class="report-checkbox">
+          <input type="checkbox" value="Congestion Heatmap" checked />
+          <span>Congestion Heatmap</span>
+        </label>
+
+        <label class="report-checkbox">
+          <input type="checkbox" value="Speed Analytics" checked />
+          <span>Speed Analytics</span>
+        </label>
+
+        <label class="report-checkbox">
+          <input type="checkbox" value="Classification Breakdown" checked />
+          <span>Classification Breakdown</span>
+        </label>
+
+        <label class="report-checkbox">
+          <input type="checkbox" value="Zone Comparison" checked />
+          <span>Zone Comparison</span>
+        </label>
+      </div>
+
+      <!-- Generate -->
+
+      <button id="generateReportBtn" class="generate-report-btn">
+        <span id="generateIcon">▣</span>
+
+        <span id="generateText"> Generate Report </span>
+      </button>
+
+      <!-- Status -->
+
+      <div id="reportStatus" class="report-status" style="display: none"></div>
     </div>
 
+    <!-- =========================================
+             RECENT REPORTS
+        ========================================== -->
+
+    <div class="recent-reports">
+      <div class="report-section-title">RECENT REPORTS</div>
+
+      <div id="recentReportsList">
+        <!-- REPORT 1 -->
+
+        <div class="recent-report">
+          <div class="recent-report-info">
+            <strong> Daily Report — Aug 02 </strong>
+
+            <span> Aug 02, 17:00 · 2.4 MB </span>
+          </div>
+
+          <div class="recent-report-actions">
+            <span class="report-badge daily"> DAILY </span>
+
+            <button class="pdf-btn" data-report="Daily Report — Aug 02">
+              ↓ PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- REPORT 2 -->
+
+        <div class="recent-report">
+          <div class="recent-report-info">
+            <strong> Weekly Report — W30 </strong>
+
+            <span> Jul 28, 08:00 · 8.1 MB </span>
+          </div>
+
+          <div class="recent-report-actions">
+            <span class="report-badge weekly"> WEEKLY </span>
+
+            <button class="pdf-btn" data-report="Weekly Report — W30">
+              ↓ PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- REPORT 3 -->
+
+        <div class="recent-report">
+          <div class="recent-report-info">
+            <strong> Incident Log — Aug 01 </strong>
+
+            <span> Aug 01, 23:59 · 1.1 MB </span>
+          </div>
+
+          <div class="recent-report-actions">
+            <span class="report-badge incident"> INCIDENT </span>
+
+            <button class="pdf-btn" data-report="Incident Log — Aug 01">
+              ↓ PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- REPORT 4 -->
+
+        <div class="recent-report">
+          <div class="recent-report-info">
+            <strong> Daily Report — Aug 01 </strong>
+
+            <span> Aug 01, 17:00 · 2.2 MB </span>
+          </div>
+
+          <div class="recent-report-actions">
+            <span class="report-badge daily"> DAILY </span>
+
+            <button class="pdf-btn" data-report="Daily Report — Aug 01">
+              ↓ PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- REPORT 5 -->
+
+        <div class="recent-report">
+          <div class="recent-report-info">
+            <strong> Monthly Report — Jul </strong>
+
+            <span> Jul 31, 23:59 · 18.7 MB </span>
+          </div>
+
+          <div class="recent-report-actions">
+            <span class="report-badge monthly"> MONTHLY </span>
+
+            <button class="pdf-btn" data-report="Monthly Report — Jul">
+              ↓ PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-{% endblock %}
-
-{% block scripts %}
 <script src="{{ url_for('static', filename='js/controller/reports.js') }}"></script>
+
 {% endblock %}
