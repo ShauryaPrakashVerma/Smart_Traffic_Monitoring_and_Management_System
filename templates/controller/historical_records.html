@@ -1,11 +1,93 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/controller/historical_records.css') }}"
+/>
+{% endblock %} {% block content %}
 
-{% block content %}
+<div class="historical-page">
+  <!-- ================= HEADER ================= -->
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Historical Data</p>
-    <a href="" class="btn btn-logout"></a>
+  <div class="historical-header">
+    <div>
+      <h2>Historical Records</h2>
+      <p>Traffic data archive and trend analysis</p>
+    </div>
+
+    <div class="historical-actions">
+      <button class="history-filter active" data-days="7">7d</button>
+
+      <button class="history-filter" data-days="30">30d</button>
+
+      <button class="history-filter" data-days="90">90d</button>
+
+      <button class="history-filter" data-days="365">1y</button>
+
+      <button id="exportHistoryBtn" class="history-export">Export CSV</button>
+    </div>
+  </div>
+
+  <!-- ================= GRAPHS ================= -->
+
+  <div class="historical-chart-grid">
+    <!-- Vehicle Count -->
+
+    <div class="historical-chart-card">
+      <div class="historical-chart-title">
+        <span>DAILY VEHICLE COUNT</span>
+      </div>
+
+      <div class="historical-chart-wrapper">
+        <canvas id="vehicleCountChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Incidents / Speed -->
+
+    <div class="historical-chart-card">
+      <div class="historical-chart-title">
+        <span>INCIDENTS & AVG SPEED</span>
+      </div>
+
+      <div class="historical-chart-wrapper">
+        <canvas id="incidentSpeedChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TABLE ================= -->
+
+  <div class="historical-table-card">
+    <div class="historical-table-header">
+      <span>DAILY SUMMARY LOG</span>
+
+      <span id="recordCount"> Showing 7 records </span>
+    </div>
+
+    <div class="historical-table-wrapper">
+      <table id="historicalTable">
+        <thead>
+          <tr>
+            <th>DATE</th>
+            <th>TOTAL VEHICLES</th>
+            <th>INCIDENTS</th>
+            <th>AVG SPEED</th>
+            <th>PEAK VOLUME</th>
+            <th>PEAK TIME</th>
+            <th>CONGESTION INDEX</th>
+          </tr>
+        </thead>
+
+        <tbody id="historicalTableBody"></tbody>
+      </table>
+    </div>
+  </div>
 </div>
+
+<!-- Chart.js -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{{ url_for('static', filename='js/controller/historical_records.js') }}"></script>
 
 {% endblock %}
