@@ -170,6 +170,133 @@
   </div>
 </div>
 
+<!-- =====================================================
+     AI TRAFFIC ASSISTANT
+====================================================== -->
+
+<div class="ai-assistant">
+  <!-- Floating Button -->
+
+  <button
+    type="button"
+    id="aiAssistantBtn"
+    class="ai-assistant-btn"
+    aria-label="Open AI Traffic Assistant"
+    title="Traffic Assistant"
+  >
+    <span class="ai-icon">✦</span>
+
+    <span class="ai-status-dot"></span>
+  </button>
+
+  <!-- Chat Window -->
+
+  <div id="aiChatWindow" class="ai-chat-window" aria-hidden="true">
+    <!-- Chat Header -->
+
+    <div class="ai-chat-header">
+      <div class="ai-chat-brand">
+        <div class="ai-avatar">✦</div>
+
+        <div>
+          <div class="ai-name">City Traffic Assistant</div>
+
+          <div class="ai-online">
+            <span></span>
+            Online
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        id="closeAiChat"
+        class="ai-close-btn"
+        aria-label="Close assistant"
+      >
+        ×
+      </button>
+    </div>
+
+    <!-- Chat Messages -->
+
+    <div id="aiChatMessages" class="ai-chat-messages">
+      <div class="ai-message assistant-message">
+        <div class="message-avatar">✦</div>
+
+        <div class="message-bubble">
+          Hi! I'm your City Traffic Assistant. 👋
+
+          <br /><br />
+
+          I can help you understand traffic conditions, routes, complaints,
+          alerts, and other features of this portal.
+
+          <br /><br />
+
+          What would you like to know?
+        </div>
+      </div>
+
+      <!-- Suggested Questions -->
+
+      <div class="ai-suggestions">
+        <button
+          type="button"
+          class="ai-suggestion"
+          data-question="How do I plan a journey?"
+        >
+          How do I plan a journey?
+        </button>
+
+        <button
+          type="button"
+          class="ai-suggestion"
+          data-question="What do the traffic colors mean?"
+        >
+          What do the traffic colors mean?
+        </button>
+
+        <button
+          type="button"
+          class="ai-suggestion"
+          data-question="How can I raise a complaint?"
+        >
+          How can I raise a complaint?
+        </button>
+      </div>
+    </div>
+
+    <!-- Typing Indicator -->
+
+    <div id="aiTypingIndicator" class="ai-typing-indicator" hidden>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Input -->
+
+    <div class="ai-chat-input-area">
+      <input
+        type="text"
+        id="aiChatInput"
+        placeholder="Ask about traffic..."
+        autocomplete="off"
+      />
+
+      <button
+        type="button"
+        id="aiSendBtn"
+        class="ai-send-btn"
+        aria-label="Send message"
+      >
+        ➤
+      </button>
+    </div>
+  </div>
+</div>
+
 <script src="{{ url_for('static', filename='js/public/help_and_info.js') }}"></script>
 
 {% endblock %}

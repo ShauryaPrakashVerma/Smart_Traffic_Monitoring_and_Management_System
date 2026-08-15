@@ -1,11 +1,213 @@
-{% extends 'homepage.html' %}
+{% extends "homepage.html" %}
+
+{% block styles %}
+
+<!-- Leaflet CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/public/live_traffic_map.css') }}"
+/>
+
+{% endblock %}
+
 
 {% block content %}
 
-<div>
-    <h1>Welcome, {{username}}</h1>
-    <p>Welcome to the Live Traffic Map</p>
-    <a href="" class="btn btn-logout"></a>
+<div class="traffic-map-page">
+
+    <!-- =====================================================
+         FULL MAP
+    ====================================================== -->
+
+    <div id="trafficMap" class="traffic-map"></div>
+
+
+    <!-- =====================================================
+         ROUTE SEARCH PANEL
+    ====================================================== -->
+
+    <div class="route-search-panel">
+
+        <div class="route-panel-header">
+
+            <div>
+                <div class="route-panel-title">
+                    Plan Route
+                </div>
+
+                <div class="route-panel-subtitle">
+                    Find the best available routes
+                </div>
+            </div>
+
+            <button
+                type="button"
+                id="clearRouteBtn"
+                class="clear-route-btn"
+                title="Clear route"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- FROM -->
+
+        <div class="route-input-row">
+
+            <div class="route-point from-point">
+                <span></span>
+            </div>
+
+            <div class="route-input-wrapper">
+
+                <label for="fromLocation">
+                    FROM
+                </label>
+
+                <input
+                    type="text"
+                    id="fromLocation"
+                    placeholder="Enter starting location"
+                    autocomplete="off"
+                />
+
+            </div>
+
+        </div>
+
+
+        <!-- TO -->
+
+        <div class="route-input-row">
+
+            <div class="route-point to-point">
+                <span></span>
+            </div>
+
+            <div class="route-input-wrapper">
+
+                <label for="toLocation">
+                    TO
+                </label>
+
+                <input
+                    type="text"
+                    id="toLocation"
+                    placeholder="Enter destination"
+                    autocomplete="off"
+                />
+
+            </div>
+
+        </div>
+
+
+        <!-- FIND ROUTE -->
+
+        <button
+            type="button"
+            id="findRouteBtn"
+            class="find-route-btn"
+        >
+            Find Route
+        </button>
+
+
+        <!-- STATUS -->
+
+        <div
+            id="routeStatus"
+            class="route-status"
+            hidden
+        ></div>
+
+
+        <!-- ROUTE RESULTS -->
+
+        <div
+            id="routeResults"
+            class="route-results"
+            hidden
+        >
+
+            <div class="route-results-title">
+                ROUTES
+            </div>
+
+            <div id="routeList"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAP LEGEND
+    ====================================================== -->
+
+    <div class="map-legend">
+
+        <div class="legend-title">
+            LIVE TRAFFIC
+        </div>
+
+        <div class="legend-item">
+            <span class="legend-line free"></span>
+            Free
+        </div>
+
+        <div class="legend-item">
+            <span class="legend-line moderate"></span>
+            Moderate
+        </div>
+
+        <div class="legend-item">
+            <span class="legend-line heavy"></span>
+            Heavy
+        </div>
+
+        <div class="legend-item">
+            <span class="legend-line standstill"></span>
+            Standstill
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAP CONTROL
+    ====================================================== -->
+
+    <button
+        type="button"
+        id="locateMeBtn"
+        class="locate-me-btn"
+        title="Use my location"
+    >
+        ⦿
+    </button>
+
 </div>
 
-{% endblock %}
+
+<!-- =========================================================
+     LEAFLET JS
+========================================================= -->
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+
+<script
+  src="{{ url_for('static', filename='js/public/live_traffic_map.js') }}">
+</script>
+
+{% endblock %}s
