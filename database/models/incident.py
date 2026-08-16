@@ -1,7 +1,6 @@
-from db import db
+from ..db import db
 
 class Incident(db.Model):
-    __tablename__ = "incident"
 
     id = db.Column(db.Integer, primary_key=True)
     location = db.Column(db.String(100))

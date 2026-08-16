@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Traffic Operations Center — Login</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth/login.css') }}"
+    />
+  </head>
+
+  <body>
+    <!-- =====================================================
+        ADMIN ACCESS BUTTON
+    ====================================================== -->
+
+    <a
+      href="{{ url_for('auth.admin_login') }}"
+      class="admin-access-btn"
+      id="adminAccessBtn"
+      aria-label="Administrator login"
+      title="Administrator Login"
+    >
+      <span class="wrench-icon">🔧</span>
+    </a>
+
+
+    <!-- =====================================================
+         TOP SYSTEM BAR
+    ====================================================== -->
+
+    <header class="system-bar">
+      <div class="authority-name">
+        <span class="authority-icon">◇</span>
+
+        CITY OF METRO — TRANSPORTATION AUTHORITY
+      </div>
+
+      <div class="system-indicators">
+        <span>
+          <i class="indicator green"></i>
+          System Online
+        </span>
+
+        <span>
+          <i class="indicator green"></i>
+          9 Intersections
+        </span>
+
+        <span>
+          <i class="indicator blue"></i>
+          6 Cameras
+        </span>
+
+        <span>
+          <i class="indicator purple"></i>
+          YOLO Detection Enabled
+        </span>
+      </div>
+    </header>
+
+    <!-- =====================================================
+         MAIN LOGIN AREA
+    ====================================================== -->
+
+    <main class="auth-page">
+      <section class="login-card">
+        <!-- =================================================
+             LOGO
+        ================================================== -->
+
+        <div class="traffic-logo">
+          <span class="traffic-light">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+
+        <!-- =================================================
+             TITLE
+        ================================================== -->
+
+        <h1>Traffic Operations Center</h1>
+
+        <p class="subtitle">Secure Authentication Portal</p>
+
+        <!-- =================================================
+             LOGIN FORM
+        ================================================== -->
+
+        <form id="loginForm" method="POST" action="{{ url_for('auth.login') }}">
+          <!-- =================================================
+               Email
+          ================================================== -->
+
+          <div class="form-group">
+            <label for="employeeId"> EMAIL </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="e.g. abc@gmail.com"
+              autocomplete="email"
+            />
+
+            <div id="employeeIdError" class="field-error"></div>
+          </div>
+
+          <!-- =================================================
+               PASSWORD
+          ================================================== -->
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="password"> PASSWORD </label>
+
+              <a href="#" id="forgotPassword"> Forgot password? </a>
+            </div>
+
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="••••••••••"
+                autocomplete="current-password"
+              />
+
+              <button
+                type="button"
+                id="togglePassword"
+                class="password-toggle"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+            </div>
+
+            <div id="passwordError" class="field-error"></div>
+          </div>
+
+          <!-- =================================================
+               REMEMBER ME
+          ================================================== -->
+
+          <label class="remember-row">
+            <input type="checkbox" id="rememberMe" name="remember_me" />
+
+            <span> Remember me on this device </span>
+          </label>
+
+          <!-- =================================================
+               LOGIN BUTTON
+          ================================================== -->
+
+          <button type="submit" id="signInBtn" class="sign-in-btn">
+            Sign In
+          </button>
+
+          <!-- =================================================
+               REGISTER LINK
+          ================================================== -->
+
+          <div class="register-prompt">
+            <span> Not a member? </span>
+
+            <a href="{{ url_for('auth.register') }}" id="registerLink">
+              Register
+            </a>
+          </div>
+        </form>
+
+        <!-- =================================================
+             DIVIDER
+        ================================================== -->
+
+        <div class="card-divider"></div>
+
+        <!-- =================================================
+             SYSTEM STATUS
+        ================================================== -->
+
+        <div class="system-status">
+          <div class="status-row">
+            <span>System Status</span>
+            <strong class="online">ONLINE</strong>
+          </div>
+
+          <div class="status-row">
+            <span>Intersections</span>
+            <strong>9 Active</strong>
+          </div>
+
+          <div class="status-row">
+            <span>Camera Network</span>
+            <strong>6 / 6 Online</strong>
+          </div>
+
+          <div class="status-row">
+            <span>YOLO Detection</span>
+            <strong>v8.1 Running</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================
+           SECURITY NOTICE
+      ====================================================== -->
+
+      <p class="security-notice">
+        Transportation Authority · Information Security Classification: OFFICIAL
+
+        <br />
+
+        Unauthorised access is prohibited and subject to monitoring.
+      </p>
+    </main>
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div id="loginToast" class="login-toast"></div>
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="{{ url_for('static', filename='js/auth/login.js') }}"></script>
+  </body>
+</html>

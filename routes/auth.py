@@ -1,4 +1,8 @@
 from flask import Blueprint, session, redirect, url_for, request, render_template
+from werkzeug.security import check_password_hash, generate_password_hash
+from database.models import User
+from datetime import datetime, timezone
+from database.db import db
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -7,33 +11,132 @@ auth_bp = Blueprint("auth", __name__)
 def login():
 
     if request.method == "POST":
-        role = request.form.get("role")
-        print("======================================")
-        print(role)
-        print("======================================")
         
+        email = request.form.get("email", "").strip()
+        password = request.form.get("password", "")
+        
+         # Basic validation
+        if not email or not password:
+            return render_template(
+                "auth/login.html",
+                error="Please enter email and password."
+            )
+    
 
-        if role == "controller":
-            session["role"] = "controller"
+        user = User.query.filter_by(email = email).first()
+    
+        if user and check_password_hash(user.password_hash, password):
+            if user.status != "approved":
+                return render_template(
+                    "auth/login.html",
+                    error="Your account has not been approved yet."
+                )
+                
+        # Store user information in session
+        session["user_id"] = user.id
+        session["role"] = user.role
+        session["email"] = user.email
 
-            employee_id = request.form.get("employee_id")
-            password = request.form.get("password")
+        print("Login Successful")
+        print("User:", user.email)
+        print("Role:", user.role)
+        
+        # Redirect according to role
+        if user.role == "admin":
+            return redirect(url_for("admin.dashboard"))
+
+        elif user.role == "operator":
+            print("operator login")
             return redirect(url_for("controller_dashboard.dashboard"))
 
-            
-        elif role == "viewer":
-            session["role"] = "viewer"
+        elif user.role == "public":
+            return redirect(url_for("public_livetrafficmap.live_traffic_map"))
 
-            email = request.form.get("email")
-            password = request.form.get("password")
-
-            return redirect(url_for('public_livetrafficmap.live_traffic_map'))
-            # return "<p>Hello i am user</p>"
+        else:
+            return render_template(
+                "auth/login.html",
+                error="Invalid user role."
+            )
             
-    return render_template("authentication/login.html")
+    else:
+        print("Invalid Credentials")
+
+        return render_template(
+            "auth/login.html",
+            error="Invalid email or password."
+        )
+
+    return render_template("auth/login.html")
+        
+          
+          
+            
+
+@auth_bp.route("/register", methods=["GET","POST"])
+def register():
+    if request.method == "POST":
+        full_name = request.form.get("full_name")
+        email = request.form.get("email")
+        phone = request.form.get("phone")
+        account_type = request.form.get("account_type")
+        password = request.form.get("password")
+        
+        password_hash = generate_password_hash(password)
+        username = generate_username(full_name)
+        
+        status = ""
+        approved_by = ""
+        approved_at = ""
+        
+        if account_type == "public":    
+            status = "approved"
+            approved_by = "system"
+            approved_at = datetime.now(timezone.utc)
+            
+        else:
+            # operator
+            status = "pending"
+            approved_at = datetime.now(timezone.utc)
+        
+        user = User(
+            username = username,
+            email = email,
+            password_hash=password_hash,
+            role = account_type,
+            full_name = full_name,
+            phone_number=phone,
+            status = status,
+            approved_by = approved_by,
+            approved_at = approved_at
+        )
+        
+        print("Commited")
+        
+        db.session.add(user)
+        db.session.commit()
+        
+    return render_template("auth/register.html")
+
+
+@auth_bp.route("/admin/login", methods=['GET','POST'])
+def admin_login():
+    return render_template("auth/admin_login.html")
 
 
 @auth_bp.route("/logout")
 def logout():
     session.clear()          # Removes everything stored in the session
     return redirect(url_for("login"))
+
+
+
+# ====================================================
+# Utils
+
+def generate_username(name):
+    first_name = name.find(" ")
+    if first_name != -1:
+        return name[0:first_name]
+    else:
+        return name
+    

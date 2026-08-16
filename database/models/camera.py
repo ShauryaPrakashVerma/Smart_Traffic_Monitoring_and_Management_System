@@ -1,8 +1,7 @@
-from db import db
+from ..db import db
 from datetime import datetime
 
 class Camera(db.Model):
-    __tablename__ = "camera"
 
     id = db.Column(db.Integer, primary_key=True)
     junction_id = db.Column(db.Integer)

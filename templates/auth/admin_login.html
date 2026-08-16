@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Administrator Login — Traffic Operations Center</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth/admin_login.css') }}"
+    />
+  </head>
+
+  <body>
+    <!-- =====================================================
+       TOP SYSTEM BAR
+  ====================================================== -->
+
+    <header class="system-bar">
+      <div class="authority-name">
+        <span class="authority-icon"> ◇ </span>
+
+        CITY OF METRO — TRANSPORTATION AUTHORITY
+      </div>
+
+      <div class="system-indicators">
+        <span>
+          <i class="indicator green"></i>
+          System Online
+        </span>
+
+        <span>
+          <i class="indicator green"></i>
+          9 Intersections
+        </span>
+
+        <span>
+          <i class="indicator blue"></i>
+          6 Cameras
+        </span>
+
+        <span>
+          <i class="indicator purple"></i>
+          YOLO Detection Enabled
+        </span>
+      </div>
+    </header>
+
+    <!-- =====================================================
+       ADMIN AUTHENTICATION AREA
+  ====================================================== -->
+
+    <main class="admin-auth-page">
+      <!-- =================================================
+         ADMIN LOGIN CARD
+    ================================================== -->
+
+      <section class="admin-login-card">
+        <!-- ADMIN ICON -->
+
+        <div class="admin-logo">
+          <span class="wrench-icon"> 🔧 </span>
+        </div>
+
+        <!-- TITLE -->
+
+        <h1>Administrator Access</h1>
+
+        <p class="subtitle">Restricted System Administration Portal</p>
+
+        <!-- SECURITY BADGE -->
+
+        <div class="admin-badge">
+          <span class="security-dot"></span>
+
+          AUTHORIZED PERSONNEL ONLY
+        </div>
+
+        <!-- =================================================
+           LOGIN FORM
+      ================================================== -->
+
+        <form
+          id="adminLoginForm"
+          method="POST"
+          action="{{ url_for('auth.admin_login') }}"
+        >
+          <!-- ADMIN ID -->
+
+          <div class="form-group">
+            <label for="adminId"> ADMINISTRATOR ID </label>
+
+            <input
+              type="text"
+              id="adminId"
+              name="admin_id"
+              placeholder="e.g. ADMIN-001"
+              autocomplete="username"
+              required
+            />
+
+            <div id="adminIdError" class="field-error"></div>
+          </div>
+
+          <!-- PASSWORD -->
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="password"> PASSWORD </label>
+
+              <a href="#" id="forgotPassword"> Forgot password? </a>
+            </div>
+
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="••••••••••"
+                autocomplete="current-password"
+                required
+              />
+
+              <button
+                type="button"
+                id="togglePassword"
+                class="password-toggle"
+                aria-label="Show password"
+              >
+                Show
+              </button>
+            </div>
+
+            <div id="passwordError" class="field-error"></div>
+          </div>
+
+          <!-- REMEMBER ME -->
+
+          <label class="remember-row">
+            <input type="checkbox" id="rememberMe" name="remember_me" />
+
+            <span> Remember me on this device </span>
+          </label>
+
+          <!-- SIGN IN -->
+
+          <button type="submit" id="adminSignInBtn" class="admin-sign-in-btn">
+            Sign In as Administrator
+          </button>
+
+          <!-- BACK TO NORMAL LOGIN -->
+
+          <div class="back-login">
+            <span> Not an administrator? </span>
+
+            <a href="{{ url_for('auth.login') }}"> Return to Login </a>
+          </div>
+        </form>
+
+        <!-- DIVIDER -->
+
+        <div class="card-divider"></div>
+
+        <!-- =================================================
+           ADMIN SECURITY INFORMATION
+      ================================================== -->
+
+        <div class="security-info">
+          <div class="security-row">
+            <span> Access Level </span>
+
+            <strong> SYSTEM ADMINISTRATOR </strong>
+          </div>
+
+          <div class="security-row">
+            <span> Authentication </span>
+
+            <strong> DATABASE VERIFIED </strong>
+          </div>
+
+          <div class="security-row">
+            <span> System Status </span>
+
+            <strong class="online"> ONLINE </strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================
+         SECURITY NOTICE
+    ================================================== -->
+
+      <p class="security-notice">
+        Transportation Authority · Information Security Classification:
+        RESTRICTED
+
+        <br />
+
+        Administrator access is monitored and logged.
+
+        <br />
+
+        Unauthorized access is prohibited.
+      </p>
+    </main>
+
+    <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+    <div id="adminToast" class="admin-toast"></div>
+
+    <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
+    <script src="{{ url_for('static', filename='js/auth/admin_login.js') }}"></script>
+  </body>
+</html>

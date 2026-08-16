@@ -1,10 +1,9 @@
-from db import db
+from ..db import db
 from datetime import datetime
 
 
 
-class Stolen_vehicle(db.Model):
-    __tablename__ = "stolen_vehicle"
+class Stolen_Vehicle(db.Model):
     
     id = db.Column(db.Integer, primary_key = True)
     license_plate = db.Column(db.String(100))

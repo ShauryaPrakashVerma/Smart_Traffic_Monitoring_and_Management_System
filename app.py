@@ -11,6 +11,11 @@ from routes.controller import register_controller_blueprints
 from routes.public import register_public_blueprints
 from routes.auth import auth_bp
 
+from database.models import (
+    Camera, Daily_Traffic_Summary, Incident, Junction, Report, Saved_Route, Stolen_Vehicle, User, Vehicle_Detection, Vehicle_Tracking
+)
+
+
 
 app = Flask(__name__)
 
@@ -29,8 +34,7 @@ with app.app_context():
 def home():
     if "username" in session:
         return redirect(url_for('dashboard'))
-    return render_template("authentication/login.html")
-
+    return render_template("auth/login.html")
 
 
 

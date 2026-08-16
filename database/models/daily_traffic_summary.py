@@ -1,9 +1,8 @@
-from db import db
+from ..db import db
 from datetime import datetime
 
 
 class Daily_Traffic_Summary(db.Model):
-    __tablename__ = "daily_traffic_summary"
     
     id = db.Column(db.Integer, primary_key = True)
     junction_id = db.Column(db.Integer, db.ForeignKey("junction.id"))

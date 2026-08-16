@@ -5,3 +5,7 @@ __pycache__/
 *.png
 
 videos/
+
+hard_seeding.py
+
+instance/

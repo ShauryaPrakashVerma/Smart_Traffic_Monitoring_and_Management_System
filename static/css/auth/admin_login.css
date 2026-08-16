@@ -1,0 +1,637 @@
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  min-height: 100%;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  color: #101828;
+}
+
+body {
+  background: #f8fafc;
+}
+
+/* =====================================================
+   SYSTEM BAR
+===================================================== */
+
+.system-bar {
+  width: 100%;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 20px;
+
+  background: #090909;
+
+  color: #ffffff;
+
+  border-bottom: 1px solid #202020;
+}
+
+.authority-name {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.2px;
+}
+
+.authority-icon {
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #cbd5e1;
+
+  border-radius: 5px;
+
+  color: #ffffff;
+
+  font-size: 12px;
+}
+
+/* =====================================================
+   SYSTEM INDICATORS
+===================================================== */
+
+.system-indicators {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  font-size: 10px;
+
+  color: #9ca3af;
+}
+
+.system-indicators span {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.indicator {
+  width: 5px;
+  height: 5px;
+
+  display: inline-block;
+
+  border-radius: 50%;
+}
+
+.indicator.green {
+  background: #12b76a;
+}
+
+.indicator.blue {
+  background: #3b82f6;
+}
+
+.indicator.purple {
+  background: #8b5cf6;
+}
+
+/* =====================================================
+   MAIN AUTH AREA
+===================================================== */
+
+.admin-auth-page {
+  min-height: calc(100vh - 46px);
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 40px 20px;
+}
+
+/* =====================================================
+   ADMIN CARD
+===================================================== */
+
+.admin-login-card {
+  width: 370px;
+
+  padding: 28px;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe3e8;
+
+  border-radius: 7px;
+
+  box-shadow: 0 2px 8px rgba(16, 24, 40, 0.07);
+
+  text-align: center;
+}
+
+/* =====================================================
+   ADMIN LOGO
+===================================================== */
+
+.admin-logo {
+  width: 42px;
+  height: 42px;
+
+  margin: 0 auto 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #101828;
+
+  border-radius: 7px;
+
+  box-shadow: 0 2px 5px rgba(16, 24, 40, 0.15);
+}
+
+.wrench-icon {
+  font-size: 19px;
+
+  line-height: 1;
+
+  filter: grayscale(100%);
+}
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.admin-login-card h1 {
+  margin: 0;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  color: #101828;
+}
+
+.subtitle {
+  margin: 5px 0 15px;
+
+  font-size: 10px;
+
+  color: #98a2b3;
+}
+
+/* =====================================================
+   SECURITY BADGE
+===================================================== */
+
+.admin-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin-bottom: 21px;
+
+  padding: 5px 8px;
+
+  border: 1px solid #f0d7a8;
+
+  border-radius: 4px;
+
+  background: #fffaf0;
+
+  color: #8a6116;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.45px;
+}
+
+.security-dot {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #f59e0b;
+}
+
+/* =====================================================
+   FORM
+===================================================== */
+
+#adminLoginForm {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label,
+.label-row label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+
+  color: #667085;
+}
+
+/* =====================================================
+   LABEL ROW
+===================================================== */
+
+.label-row {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.label-row a {
+  margin-bottom: 6px;
+
+  font-size: 9px;
+
+  color: #98a2b3;
+
+  text-decoration: none;
+}
+
+.label-row a:hover {
+  color: #101828;
+}
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+.form-group input {
+  width: 100%;
+
+  height: 36px;
+
+  padding: 0 10px;
+
+  border: 1px solid #cfd5dd;
+
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  color: #101828;
+
+  font-size: 12px;
+
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.form-group input::placeholder {
+  color: #98a2b3;
+}
+
+.form-group input:focus {
+  border-color: #667085;
+
+  box-shadow: 0 0 0 2px rgba(16, 24, 40, 0.06);
+}
+
+.form-group input.input-error {
+  border-color: #f04438;
+}
+
+/* =====================================================
+   FIELD ERROR
+===================================================== */
+
+.field-error {
+  min-height: 14px;
+
+  margin-top: 4px;
+
+  font-size: 9px;
+
+  color: #f04438;
+}
+
+/* =====================================================
+   PASSWORD
+===================================================== */
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 50px;
+}
+
+.password-toggle {
+  position: absolute;
+
+  top: 50%;
+  right: 8px;
+
+  transform: translateY(-50%);
+
+  padding: 3px 5px;
+
+  border: none;
+
+  background: transparent;
+
+  color: #667085;
+
+  font-size: 9px;
+
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  color: #101828;
+}
+
+/* =====================================================
+   REMEMBER ME
+===================================================== */
+
+.remember-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin: 1px 0 15px;
+
+  font-size: 10px;
+
+  color: #667085;
+
+  cursor: pointer;
+}
+
+.remember-row input {
+  width: 13px;
+  height: 13px;
+
+  margin: 0;
+
+  cursor: pointer;
+}
+
+/* =====================================================
+   ADMIN SIGN IN
+===================================================== */
+
+.admin-sign-in-btn {
+  width: 100%;
+
+  height: 36px;
+
+  border: none;
+
+  border-radius: 4px;
+
+  background: #101828;
+
+  color: #ffffff;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.admin-sign-in-btn:hover {
+  background: #1d2939;
+}
+
+.admin-sign-in-btn:active {
+  transform: translateY(1px);
+}
+
+.admin-sign-in-btn:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+/* =====================================================
+   BACK TO NORMAL LOGIN
+===================================================== */
+
+.back-login {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 4px;
+
+  margin-top: 14px;
+
+  font-size: 10px;
+
+  color: #98a2b3;
+}
+
+.back-login a {
+  color: #344054;
+
+  font-weight: 700;
+
+  text-decoration: none;
+}
+
+.back-login a:hover {
+  text-decoration: underline;
+}
+
+/* =====================================================
+   DIVIDER
+===================================================== */
+
+.card-divider {
+  height: 1px;
+
+  margin: 18px 0 14px;
+
+  background: #eaecf0;
+}
+
+/* =====================================================
+   SECURITY INFORMATION
+===================================================== */
+
+.security-info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.security-row {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  font-size: 9px;
+
+  color: #98a2b3;
+}
+
+.security-row strong {
+  color: #475467;
+
+  font-size: 8px;
+
+  letter-spacing: 0.25px;
+}
+
+.security-row strong.online {
+  color: #12b76a;
+}
+
+/* =====================================================
+   SECURITY NOTICE
+===================================================== */
+
+.security-notice {
+  margin: 14px 0 0;
+
+  text-align: center;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+
+  color: #98a2b3;
+}
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.admin-toast {
+  position: fixed;
+
+  left: 50%;
+
+  bottom: 25px;
+
+  transform: translateX(-50%) translateY(20px);
+
+  min-width: 250px;
+
+  padding: 10px 16px;
+
+  border-radius: 5px;
+
+  background: #101828;
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  text-align: center;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+
+  z-index: 1000;
+}
+
+.admin-toast.show {
+  opacity: 1;
+
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 700px) {
+  .system-bar {
+    height: auto;
+
+    min-height: 46px;
+
+    padding: 10px 14px;
+  }
+
+  .system-indicators {
+    display: none;
+  }
+
+  .authority-name {
+    font-size: 11px;
+  }
+
+  .admin-auth-page {
+    padding: 25px 15px;
+  }
+
+  .admin-login-card {
+    width: 100%;
+
+    max-width: 370px;
+  }
+}

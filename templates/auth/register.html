@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Traffic Operations Center — Register</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth/register.css') }}"
+    />
+  </head>
+
+  <body>
+    <!-- =====================================================
+         SYSTEM BAR
+    ====================================================== -->
+
+    <header class="system-bar">
+      <div class="authority-name">
+        <span class="authority-icon"> ◇ </span>
+
+        CITY OF METRO — TRANSPORTATION AUTHORITY
+      </div>
+
+      <div class="system-indicators">
+        <span>
+          <i class="indicator green"></i>
+          System Online
+        </span>
+
+        <span>
+          <i class="indicator green"></i>
+          9 Intersections
+        </span>
+
+        <span>
+          <i class="indicator blue"></i>
+          6 Cameras
+        </span>
+
+        <span>
+          <i class="indicator purple"></i>
+          YOLO Detection Enabled
+        </span>
+      </div>
+    </header>
+
+    <!-- =====================================================
+         REGISTER PAGE
+    ====================================================== -->
+
+    <main class="auth-page">
+      <section class="register-card">
+        <!-- LOGO -->
+
+        <div class="traffic-logo">
+          <span class="traffic-light">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+
+        <h1>Create an Account</h1>
+
+        <p class="subtitle">Register for the City Traffic Portal</p>
+
+        <!-- FORM -->
+
+        <form id="registerForm" method="POST" action="{{ url_for('auth.register') }}">
+          <!-- FULL NAME -->
+
+          <div class="form-group">
+            <label for="fullName"> FULL NAME </label>
+
+            <input
+              type="text"
+              id="fullName"
+              name="full_name"
+              placeholder="e.g. Shaurya Verma"
+              required
+            />
+
+            <div id="fullNameError" class="field-error"></div>
+          </div>
+
+          <!-- EMAIL -->
+
+          <div class="form-group">
+            <label for="email"> EMAIL ADDRESS </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@email.com"
+              required
+            />
+
+            <div id="emailError" class="field-error"></div>
+          </div>
+
+          <!-- USER ID -->
+
+          <!-- <div class="form-row">
+            <div class="form-group">
+              <label for="userId"> USERNAME </label>
+
+              <input
+                type="text"
+                id="userId"
+                name="user_id"
+                placeholder="e.g. USER-1024"
+                required
+              />
+            </div> -->
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+              <label for="phone"> PHONE </label>
+
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="e.g. 9876543210"
+              />
+            </div>
+          </div>
+
+          <!-- ACCOUNT TYPE -->
+
+          <div class="form-group">
+            <label for="accountType"> ACCOUNT TYPE </label>
+
+            <select id="accountType" name="account_type">
+              <option value="public">Public User</option>
+
+              <option value="operator">Traffic Operator</option>
+            </select>
+          </div>
+
+          <!-- PASSWORD -->
+
+          <div class="form-group">
+            <label for="password"> PASSWORD </label>
+
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create a password"
+                required
+              />
+
+              <button type="button" id="togglePassword" class="password-toggle">
+                Show
+              </button>
+            </div>
+
+            <div id="passwordStrength" class="password-strength"></div>
+          </div>
+
+          <!-- CONFIRM PASSWORD -->
+
+          <div class="form-group">
+            <label for="confirmPassword"> CONFIRM PASSWORD </label>
+
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirm_password"
+                placeholder="Repeat your password"
+                required
+              />
+            </div>
+
+            <div id="confirmPasswordError" class="field-error"></div>
+          </div>
+
+          <!-- TERMS -->
+
+          <label class="terms-row">
+            <input type="checkbox" id="terms" name="terms" />
+
+            <span>
+              I agree to the portal's
+              <a href="#"> terms and conditions </a>.
+            </span>
+          </label>
+
+          <!-- REGISTER -->
+
+          <button type="submit" id="registerBtn" class="register-btn">
+            Create Account
+          </button>
+
+          <!-- LOGIN -->
+
+          <div class="login-prompt">
+            <span> Already have an account? </span>
+
+            <a href="{{ url_for('auth.login') }}"> Sign In </a>
+          </div>
+        </form>
+
+        <!-- DIVIDER -->
+
+        <div class="card-divider"></div>
+
+        <!-- INFORMATION -->
+
+        <div class="registration-info">
+          <strong> Account Information </strong>
+
+          <p>
+            Public users can access traffic information, journey planning,
+            alerts and complaint services.
+          </p>
+
+          <p>
+            Operator accounts require authorization from the Transportation
+            Authority.
+          </p>
+        </div>
+      </section>
+
+      <p class="security-notice">
+        Transportation Authority · Information Security Classification:
+        OFFICIAL<br />
+
+        Account information is handled according to authority security policies.
+      </p>
+    </main>
+
+    <!-- TOAST -->
+
+    <div id="registerToast" class="register-toast"></div>
+
+    <script src="{{ url_for('static', filename='js/auth/register.js') }}"></script>
+  </body>
+</html>

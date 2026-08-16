@@ -1,8 +1,7 @@
-from db import db
+from ..db import db
 from datetime import datetime
 
 class Report(db.Model):
-    __tablename__ = "report"
     
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(50))
