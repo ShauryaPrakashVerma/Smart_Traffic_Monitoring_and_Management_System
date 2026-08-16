@@ -1,9 +1,9 @@
-from database.db import db
+from db import db
 from datetime import datetime
 
 
 class User(db.Model):
-    
+    __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False)
@@ -17,7 +17,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(
         db.DateTime,
-        default=datetime.utcnow
+        default=datetime.now
     )
     last_login = db.Column(
         db.DateTime

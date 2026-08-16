@@ -1,100 +1,344 @@
-{% extends 'homepage.html' %} {% block styles %}
+
+{% extends "homepage.html" %} {% block styles %}
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/controller/congestion_monitor.css') }}"
 />
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %} {% block content %}
-<div class="cm-container">
-  <div class="cm-header">
+
+<div class="congestion-page">
+  <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+  <div class="congestion-header">
     <div>
-      <h2>Congestion Monitor</h2>
+      <h1>Congestion Monitor</h1>
+
       <p>Real-time and historical congestion index by zone</p>
     </div>
-    <button class="export-btn">Export Data</button>
+
+    <button type="button" id="exportDataBtn" class="export-btn">
+      Export Data
+    </button>
   </div>
 
-  <div class="summary-grid">
-    {% for c in [ ('B2 Junction','98%','Standstill · 89 veh','red'), ('A3
-    Interchange','87%','Heavy · 67 veh','orange'), ('B3 Ramp','74%','Heavy · 55
-    veh','orange'), ('A2 High St','52%','Moderate · 34 veh','gold'), ('C2
-    Central','38%','Moderate · 31 veh','gold'), ('C3 Outbound','14%','Free · 14
-    veh','green')] %}
-    <div class="card {{c[3]}}">
-      <h5>{{c[0]}}</h5>
-      <h1>{{c[1]}}</h1>
-      <p>{{c[2]}}</p>
-    </div>
-    {% endfor %}
+  <!-- =====================================================
+         ZONE SUMMARY CARDS
+    ====================================================== -->
+
+  <div class="zone-summary-grid">
+    <button
+      type="button"
+      class="zone-card critical"
+      data-zone="B2"
+      data-index="98"
+      data-vehicles="89"
+    >
+      <span class="zone-name"> B2 JUNCTION </span>
+
+      <strong class="zone-index"> 98% </strong>
+
+      <span class="zone-description"> Standstill · 89 veh </span>
+    </button>
+
+    <button
+      type="button"
+      class="zone-card heavy"
+      data-zone="A3"
+      data-index="87"
+      data-vehicles="67"
+    >
+      <span class="zone-name"> A3 INTERCHANGE </span>
+
+      <strong class="zone-index"> 87% </strong>
+
+      <span class="zone-description"> Heavy · 67 veh </span>
+    </button>
+
+    <button
+      type="button"
+      class="zone-card heavy"
+      data-zone="B3"
+      data-index="74"
+      data-vehicles="55"
+    >
+      <span class="zone-name"> B3 RAMP </span>
+
+      <strong class="zone-index"> 74% </strong>
+
+      <span class="zone-description"> Heavy · 55 veh </span>
+    </button>
+
+    <button
+      type="button"
+      class="zone-card moderate"
+      data-zone="A2"
+      data-index="52"
+      data-vehicles="34"
+    >
+      <span class="zone-name"> A2 HIGH ST </span>
+
+      <strong class="zone-index"> 52% </strong>
+
+      <span class="zone-description"> Moderate · 34 veh </span>
+    </button>
+
+    <button
+      type="button"
+      class="zone-card moderate"
+      data-zone="C2"
+      data-index="38"
+      data-vehicles="31"
+    >
+      <span class="zone-name"> C2 CENTRAL </span>
+
+      <strong class="zone-index"> 38% </strong>
+
+      <span class="zone-description"> Moderate · 31 veh </span>
+    </button>
+
+    <button
+      type="button"
+      class="zone-card free"
+      data-zone="C3"
+      data-index="14"
+      data-vehicles="14"
+    >
+      <span class="zone-name"> C3 OUTBOUND </span>
+
+      <strong class="zone-index"> 14% </strong>
+
+      <span class="zone-description"> Free · 14 veh </span>
+    </button>
   </div>
 
-  <div class="charts">
-    <div class="panel">
-      <h4>Congestion Index — Top Zones (Today)</h4>
-      <canvas id="lineChart"></canvas>
+  <!-- =====================================================
+         CHART SECTION
+    ====================================================== -->
+
+  <div class="charts-grid">
+    <!-- CONGESTION LINE CHART -->
+
+    <div class="chart-card large-chart">
+      <div class="chart-card-header">
+        <div>
+          <div class="card-title">CONGESTION INDEX — TOP ZONES (TODAY)</div>
+
+          <div id="selectedZoneLabel" class="selected-zone-label">
+            Showing top congestion zones
+          </div>
+        </div>
+
+        <button type="button" id="resetChartBtn" class="small-btn">
+          Reset
+        </button>
+      </div>
+
+      <div class="line-chart-wrapper">
+        <canvas id="congestionLineChart"></canvas>
+      </div>
     </div>
-    <div class="panel">
-      <h4>Current Zone Density</h4>
-      <canvas id="barChart"></canvas>
+
+    <!-- CURRENT DENSITY -->
+
+    <div class="chart-card density-card">
+      <div class="card-title">CURRENT ZONE DENSITY</div>
+
+      <div class="density-chart-wrapper">
+        <canvas id="densityChart"></canvas>
+      </div>
     </div>
   </div>
 
-  <div class="panel">
-    <h4>Congestion Event Log</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>TIME</th>
-          <th>ZONE</th>
-          <th>INDEX</th>
-          <th>VEHICLES</th>
-          <th>AVG SPEED</th>
-          <th>DURATION</th>
-          <th>STATUS</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>17:42</td>
-          <td>B2</td>
-          <td>98%</td>
-          <td>89</td>
-          <td>8 km/h</td>
-          <td>52 min</td>
-          <td><span class="badge active">ACTIVE</span></td>
-        </tr>
-        <tr>
-          <td>17:15</td>
-          <td>A3</td>
-          <td>87%</td>
-          <td>67</td>
-          <td>24 km/h</td>
-          <td>37 min</td>
-          <td><span class="badge active">ACTIVE</span></td>
-        </tr>
-        <tr>
-          <td>16:10</td>
-          <td>A2</td>
-          <td>68%</td>
-          <td>52</td>
-          <td>28 km/h</td>
-          <td>35 min</td>
-          <td><span class="badge clearing">CLEARING</span></td>
-        </tr>
-        <tr>
-          <td>15:30</td>
-          <td>C2</td>
-          <td>45%</td>
-          <td>38</td>
-          <td>35 km/h</td>
-          <td>22 min</td>
-          <td><span class="badge resolved">RESOLVED</span></td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- =====================================================
+         EVENT LOG
+    ====================================================== -->
+
+  <div class="event-card">
+    <div class="event-header">
+      <div>
+        <div class="card-title">CONGESTION EVENT LOG</div>
+
+        <span id="eventCount" class="event-count"> 5 events </span>
+      </div>
+
+      <div class="event-filters">
+        <button type="button" class="event-filter active" data-status="ALL">
+          All
+        </button>
+
+        <button type="button" class="event-filter" data-status="ACTIVE">
+          Active
+        </button>
+
+        <button type="button" class="event-filter" data-status="CLEARING">
+          Clearing
+        </button>
+
+        <button type="button" class="event-filter" data-status="RESOLVED">
+          Resolved
+        </button>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+
+    <div class="table-wrapper">
+      <table class="event-table">
+        <thead>
+          <tr>
+            <th>TIME</th>
+            <th>ZONE</th>
+            <th>INDEX</th>
+            <th>VEHICLES</th>
+            <th>AVG SPEED</th>
+            <th>DURATION</th>
+            <th>STATUS</th>
+          </tr>
+        </thead>
+
+        <tbody id="eventTableBody">
+          <tr data-status="ACTIVE" data-zone="B2">
+            <td>17:42</td>
+
+            <td>
+              <strong>B2</strong>
+            </td>
+
+            <td class="index-critical">98%</td>
+
+            <td>89</td>
+
+            <td>8 km/h</td>
+
+            <td>52 min</td>
+
+            <td>
+              <span class="status active"> ACTIVE </span>
+            </td>
+          </tr>
+
+          <tr data-status="ACTIVE" data-zone="A3">
+            <td>17:15</td>
+
+            <td>
+              <strong>A3</strong>
+            </td>
+
+            <td class="index-critical">87%</td>
+
+            <td>67</td>
+
+            <td>24 km/h</td>
+
+            <td>37 min</td>
+
+            <td>
+              <span class="status active"> ACTIVE </span>
+            </td>
+          </tr>
+
+          <tr data-status="ACTIVE" data-zone="B3">
+            <td>16:50</td>
+
+            <td>
+              <strong>B3</strong>
+            </td>
+
+            <td class="index-critical">74%</td>
+
+            <td>55</td>
+
+            <td>19 km/h</td>
+
+            <td>48 min</td>
+
+            <td>
+              <span class="status active"> ACTIVE </span>
+            </td>
+          </tr>
+
+          <tr data-status="CLEARING" data-zone="A2">
+            <td>16:10</td>
+
+            <td>
+              <strong>A2</strong>
+            </td>
+
+            <td class="index-moderate">68%</td>
+
+            <td>52</td>
+
+            <td>28 km/h</td>
+
+            <td>35 min</td>
+
+            <td>
+              <span class="status clearing"> CLEARING </span>
+            </td>
+          </tr>
+
+          <tr data-status="RESOLVED" data-zone="C2">
+            <td>15:30</td>
+
+            <td>
+              <strong>C2</strong>
+            </td>
+
+            <td class="index-free">45%</td>
+
+            <td>38</td>
+
+            <td>35 km/h</td>
+
+            <td>22 min</td>
+
+            <td>
+              <span class="status resolved"> RESOLVED </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  <!-- =====================================================
+         ZONE DETAIL MODAL
+    ====================================================== -->
+
+  <div id="zoneModal" class="zone-modal" hidden>
+    <div class="zone-modal-content">
+      <button type="button" id="closeZoneModal" class="modal-close">×</button>
+
+      <div class="modal-zone-name">Zone</div>
+
+      <div id="modalZoneIndex" class="modal-zone-index">0%</div>
+
+      <div id="modalZoneVehicles" class="modal-zone-info">0 vehicles</div>
+
+      <div class="modal-divider"></div>
+
+      <p id="modalZoneMessage">Current congestion information.</p>
+
+      <button type="button" id="viewZoneEventsBtn" class="modal-action-btn">
+        View Zone Events
+      </button>
+    </div>
+  </div>
+
+  <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+  <div id="congestionToast" class="congestion-toast"></div>
 </div>
 
+<!-- =====================================================
+     CHART.JS
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 
 <script src="{{ url_for('static', filename='js/controller/congestion_monitor.js') }}"></script>
 
