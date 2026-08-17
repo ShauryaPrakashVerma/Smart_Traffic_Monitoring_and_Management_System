@@ -66,7 +66,6 @@ def login():
             error="Invalid email or password."
         )
 
-    return render_template("auth/login.html")
         
           
           
@@ -120,13 +119,85 @@ def register():
 
 @auth_bp.route("/admin/login", methods=['GET','POST'])
 def admin_login():
+    
+    if request.method == "POST":
+    
+        email = request.form.get("email", "").strip()
+        password = request.form.get("password", "")
+        
+        print(password)
+        print(email)
+        
+        if not email or not password:
+            
+            print("FAILED: Empty email/password")
+            return render_template(
+                "auth/admin_login.html",
+                error="Please enter email and password."
+            )
+            
+        admin = User.query.filter_by(email = email).first()
+        print("USER : ",admin)
+
+        if not admin:
+            print("FAILED: Admin/user not found")
+            return render_template(
+                "auth/admin_login.html",
+                error="Invalid email or password."
+            )
+            
+        print("HASH:", admin.password_hash)
+        print("ROLE:", admin.role)
+        print("STATUS:", admin.status)
+
+        if not check_password_hash(admin.password_hash, password):
+            print("FAILED: Password incorrect")
+            return render_template(
+                "auth/admin_login.html",
+                error="Invalid email or password."
+            )
+            
+        print("PASSWORD CORRECT")
+        
+        if admin.role != "admin":
+            print("FAILED: Role is not admin")
+            return render_template(
+                "auth/admin_login.html",
+                error="You do not have administrator access."
+            )
+            
+        print("ROLE CORRECT")
+        
+        if admin.status != "approved":
+            print("FAILED: Admin is not approved")
+            return render_template(
+                "auth/admin_login.html",
+                error="This administrator account is not approved."
+            )
+            
+        print("STATUS CORRECT")
+            
+        public_users = User.query.filter_by(role="public").all()
+        controllers = User.query.filter_by(role="controller").all()
+        
+        print("(1234)")
+        session["role"] = admin.role
+        session["email"] = admin.email
+
+        print("Admin Login Successful")
+        print("Admin:", admin.email)
+
+        return render_template("admin/dashboard.html", public_users=public_users, controllers=controllers)
+    
+    # GET Request
     return render_template("auth/admin_login.html")
+
 
 
 @auth_bp.route("/logout")
 def logout():
     session.clear()          # Removes everything stored in the session
-    return redirect(url_for("login"))
+    return redirect(url_for("auth.login"))
 
 
 

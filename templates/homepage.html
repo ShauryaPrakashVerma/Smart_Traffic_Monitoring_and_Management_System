@@ -54,7 +54,7 @@
 
 
         <div class="col-2 bg p-0 d-flex flex-column h-100">
-        {% if session.get('role') == "controller" %}
+        {% if session.get('role') == "operator" %}
           <!-- left sidebar -->
         
           <div class="row mx-0">
@@ -214,10 +214,6 @@
 
           {% endif %}
 
-          <!-- logout -->
-          <!-- <div class="row p-2 mx-0 mt-auto">
-            <small>Logout</small>
-          </div> -->
 
           <div class="logout">
               <a class="sidebar-link" href="{{ url_for('auth.logout') }}">

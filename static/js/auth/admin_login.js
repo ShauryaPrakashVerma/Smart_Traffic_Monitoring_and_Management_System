@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!id) {
       adminId.classList.add("input-error");
 
-      adminIdError.textContent = "Please enter your administrator ID.";
+      adminIdError.textContent = "Please enter your administrator email.";
 
       valid = false;
     }

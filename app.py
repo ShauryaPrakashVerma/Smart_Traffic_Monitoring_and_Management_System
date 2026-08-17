@@ -15,6 +15,8 @@ from database.models import (
     Camera, Daily_Traffic_Summary, Incident, Junction, Report, Saved_Route, Stolen_Vehicle, User, Vehicle_Detection, Vehicle_Tracking
 )
 
+from routes.admin.dashboard import admin_bp
+
 
 
 app = Flask(__name__)
@@ -47,6 +49,7 @@ register_controller_blueprints(app)
 register_public_blueprints(app)
 
 app.register_blueprint(auth_bp)
+app.register_blueprint(admin_bp)
 
 
 

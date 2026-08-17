@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Admin Control Center</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin/dashboard.css') }}"
+    />
+  </head>
+
+  <body>
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <header class="admin-topbar">
+      <div class="authority">
+        <div class="authority-icon">◇</div>
+
+        <div>
+          <strong>Traffic Operations Center</strong>
+          <span>Administration Portal</span>
+        </div>
+      </div>
+
+      <div class="admin-actions">
+        <span class="admin-name"> Administrator </span>
+
+        <a href="{{ url_for('auth.logout') }}" class="logout-btn"> Logout </a>
+      </div>
+    </header>
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="admin-page">
+      <!-- PAGE HEADER -->
+
+      <section class="page-header">
+        <div>
+          <h1>Admin Control Center</h1>
+
+          <p>Manage users, controllers and system permissions.</p>
+        </div>
+
+        <div class="system-status">
+          <span class="status-dot"></span>
+          System Online
+        </div>
+      </section>
+
+      <!-- =================================================
+             SUMMARY CARDS
+        ================================================== -->
+
+      <section class="summary-grid">
+        <div class="summary-card">
+          <span>Total Public Users</span>
+          <strong id="totalPublicUsers"> {{ public_users|length }} </strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Approved Users</span>
+          <strong id="approvedUsers">
+            {{ public_users|selectattr("status", "equalto",
+            "approved")|list|length }}
+          </strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Controllers</span>
+          <strong id="totalControllers"> {{ controllers|length }} </strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Pending Controllers</span>
+          <strong id="pendingControllers">
+            {{ controllers|selectattr("status", "equalto",
+            "pending")|list|length }}
+          </strong>
+        </div>
+      </section>
+
+      <!-- =================================================
+             USER MANAGEMENT
+        ================================================== -->
+
+      <section class="management-grid">
+        <!-- =============================================
+                 PUBLIC USERS
+            ============================================== -->
+
+        <div class="management-card">
+          <div class="card-header">
+            <div>
+              <h2>Public Users</h2>
+
+              <p>Manage public portal access.</p>
+            </div>
+
+            <span class="count-badge"> {{ public_users|length }} </span>
+          </div>
+
+          <!-- SEARCH -->
+
+          <div class="search-box">
+            <span>⌕</span>
+
+            <input
+              type="text"
+              id="publicUserSearch"
+              placeholder="Search users..."
+            />
+          </div>
+
+          <!-- USER LIST -->
+
+          <div class="user-list" id="publicUserList">
+            {% for user in public_users %}
+
+            <div
+              class="user-row"
+              data-name="{{ user.full_name|lower }}"
+              data-email="{{ user.email|lower }}"
+            >
+              <div class="user-information">
+                <strong> {{ user.full_name }} </strong>
+
+                <span> {{ user.email }} </span>
+              </div>
+
+              <div class="user-status">
+                <span
+                  class="status-label {% if user.status == 'approved' %} approved {% else %} not-approved {% endif %}"
+                  id="userStatus{{ user.id }}"
+                >
+                  {% if user.status == "approved" %} Approved {% else %} Not
+                  Approved {% endif %}
+                </span>
+
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    class="user-toggle"
+                    data-user-id="{{ user.id }}"
+                    {% if user.status=="approved" %}
+                    checked
+                    {% endif %}
+                  />
+
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            {% else %}
+
+            <div class="empty-state">No public users found.</div>
+
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- =============================================
+                 CONTROLLERS
+            ============================================== -->
+
+        <div class="management-card">
+          <div class="card-header">
+            <div>
+              <h2>Controllers</h2>
+
+              <p>Manage controller access.</p>
+            </div>
+
+            <span class="count-badge"> {{ controllers|length }} </span>
+          </div>
+
+          <!-- SEARCH -->
+
+          <div class="search-box">
+            <span>⌕</span>
+
+            <input
+              type="text"
+              id="controllerSearch"
+              placeholder="Search controllers..."
+            />
+          </div>
+
+          <!-- CONTROLLER LIST -->
+
+          <div class="user-list" id="controllerList">
+            {% for controller in controllers %}
+
+            <div
+              class="user-row"
+              data-name="{{ controller.full_name|lower }}"
+              data-email="{{ controller.email|lower }}"
+              data-employee="{{ controller.employee_id|lower if controller.employee_id else '' }}"
+            >
+              <div class="user-information">
+                <strong> {{ controller.full_name }} </strong>
+
+                <span> {{ controller.email }} </span>
+
+                {% if controller.employee_id %}
+                <small> {{ controller.employee_id }} </small>
+                {% endif %}
+              </div>
+
+              <div class="user-status">
+                <span
+                  class="status-label {% if controller.status == 'approved' %} approved {% else %} not-approved {% endif %}"
+                  id="controllerStatus{{ controller.id }}"
+                >
+                  {% if controller.status == "approved" %} Approved {% else %}
+                  Not Approved {% endif %}
+                </span>
+
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    class="controller-toggle"
+                    data-user-id="{{ controller.id }}"
+                    {% if controller.status =='approved' %}
+                    checked
+                    {%
+                    endif
+                    %}
+                  />
+
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            {% else %}
+
+            <div class="empty-state">No controllers found.</div>
+
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================
+             CONTROLLER PERMISSIONS
+        ================================================== -->
+
+      <section class="permissions-card">
+        <div class="permissions-header">
+          <div>
+            <h2>Controller Permissions</h2>
+
+            <p>
+              Assign the number of cameras each controller is allowed to
+              monitor.
+            </p>
+          </div>
+        </div>
+
+        <div class="permissions-table-wrapper">
+          <table class="permissions-table">
+            <thead>
+              <tr>
+                <th>Controller</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Cameras Assigned</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for controller in controllers %}
+
+              <tr>
+                <td>
+                  <strong> {{ controller.full_name }} </strong>
+                </td>
+
+                <td>{{ controller.email }}</td>
+
+                <td>
+                  <span
+                    class="table-status {% if controller.status == 'approved' %} approved {% else %} pending {% endif %}"
+                  >
+                    {{ controller.status|capitalize }}
+                  </span>
+                </td>
+
+                <td>
+                  <div class="camera-input">
+                    <input
+                      type="number"
+                      min="0"
+                      max="50"
+                      value="{{ controller.camera_limit or 0 }}"
+                      class="camera-count"
+                      data-user-id="{{ controller.id }}"
+                    />
+
+                    <span> cameras </span>
+                  </div>
+                </td>
+
+                <td>
+                  <button
+                    type="button"
+                    class="save-permission-btn"
+                    data-user-id="{{ controller.id }}"
+                  >
+                    Save
+                  </button>
+                </td>
+              </tr>
+
+              {% else %}
+
+              <tr>
+                <td colspan="5" class="empty-table">
+                  No controllers available.
+                </td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div id="adminToast" class="admin-toast"></div>
+
+    <script src="{{ url_for('static', filename='js/admin/dashboard.js') }}"></script>
+  </body>
+</html>
