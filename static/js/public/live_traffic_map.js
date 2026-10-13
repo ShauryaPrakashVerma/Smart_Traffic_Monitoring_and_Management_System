@@ -8,25 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
     attributionControl: true,
   });
 
-  /*
-   * OpenStreetMap tiles
-   */
-
+  // OpenStreetMap tiles
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
-
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
   }).addTo(map);
 
-  /*
-   * Initial city.
-   *
-   * New Delhi is only the initial viewport.
-   * Once the user searches a route, the map
-   * automatically moves to the searched locations.
-   */
-
+  // Initial city: New Delhi
   map.setView([28.6139, 77.209], 12);
 
   /* =====================================================
@@ -34,19 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
     ====================================================== */
 
   const fromInput = document.getElementById("fromLocation");
-
   const toInput = document.getElementById("toLocation");
-
   const findRouteBtn = document.getElementById("findRouteBtn");
-
   const clearRouteBtn = document.getElementById("clearRouteBtn");
-
   const locateMeBtn = document.getElementById("locateMeBtn");
-
   const routeStatus = document.getElementById("routeStatus");
-
   const routeResults = document.getElementById("routeResults");
-
   const routeList = document.getElementById("routeList");
 
   /* =====================================================
@@ -54,183 +36,47 @@ document.addEventListener("DOMContentLoaded", function () {
     ====================================================== */
 
   let routeLayers = [];
-
   let fromMarker = null;
-
   let toMarker = null;
-
-  let trafficLayers = [];
-
   let currentRoutes = [];
-
-  /* =====================================================
-       DEMO TRAFFIC NETWORK
-    ====================================================== */
-
-  /*
-   * These are visual traffic overlays.
-   *
-   * They are independent of the actual route engine.
-   * This gives the page the same traffic-monitoring
-   * appearance as your original design.
-   */
-
-  const trafficRoads = [
-    {
-      name: "Avenue A",
-      coordinates: [
-        [28.63, 77.19],
-        [28.63, 77.21],
-        [28.63, 77.23],
-      ],
-      status: "free",
-    },
-
-    {
-      name: "Avenue B",
-      coordinates: [
-        [28.615, 77.19],
-        [28.615, 77.21],
-        [28.615, 77.23],
-      ],
-      status: "heavy",
-    },
-
-    {
-      name: "Avenue C",
-      coordinates: [
-        [28.6, 77.19],
-        [28.6, 77.21],
-        [28.6, 77.23],
-      ],
-      status: "moderate",
-    },
-
-    {
-      name: "North Connector",
-      coordinates: [
-        [28.63, 77.19],
-        [28.615, 77.19],
-        [28.6, 77.19],
-      ],
-      status: "moderate",
-    },
-
-    {
-      name: "Central Connector",
-      coordinates: [
-        [28.63, 77.21],
-        [28.615, 77.21],
-        [28.6, 77.21],
-      ],
-      status: "standstill",
-    },
-
-    {
-      name: "East Connector",
-      coordinates: [
-        [28.63, 77.23],
-        [28.615, 77.23],
-        [28.6, 77.23],
-      ],
-      status: "heavy",
-    },
-  ];
-
-  /* =====================================================
-       TRAFFIC COLORS
-    ====================================================== */
-
-  const trafficColors = {
-    free: "#16a34a",
-
-    moderate: "#d99100",
-
-    heavy: "#f97316",
-
-    standstill: "#ef4444",
-  };
-
-  /* =====================================================
-       DRAW TRAFFIC NETWORK
-    ====================================================== */
-
-  trafficRoads.forEach(function (road) {
-    const layer = L.polyline(road.coordinates, {
-      color: trafficColors[road.status],
-
-      weight: 6,
-
-      opacity: 0.78,
-
-      lineCap: "round",
-
-      lineJoin: "round",
-    }).addTo(map);
-
-    layer.bindTooltip(
-      `
-                <strong>${road.name}</strong>
-                <br>
-                Traffic:
-                ${capitalize(road.status)}
-            `,
-      {
-        sticky: true,
-      },
-    );
-
-    trafficLayers.push(layer);
-  });
 
   /* =====================================================
        ROUTE SEARCH
     ====================================================== */
 
   findRouteBtn.addEventListener("click", async function () {
+    
     const from = fromInput.value.trim();
-
     const to = toInput.value.trim();
 
-    /*
-     * Validate input.
-     */
-
+    // Validate input
     if (!from || !to) {
       showStatus(
         "Please enter both the starting location and destination.",
         true,
       );
-
       return;
     }
 
-    /*
-     * Prevent repeated requests.
-     */
-
+    // Prevent repeated requests
     findRouteBtn.disabled = true;
-
     findRouteBtn.textContent = "Finding Routes...";
 
     showStatus("Locating the selected places...", false, true);
 
     try {
-      /*
-       * Geocode FROM.
-       */
-
+      // Geocode starting location
       const fromLocation = await geocodeLocation(from);
 
       if (!fromLocation) {
         throw new Error(`Could not find "${from}".`);
       }
 
-      /*
-       * Geocode TO.
-       */
-
+      // Geocode destination
       const toLocation = await geocodeLocation(to);
+
+      console.log("Geocoded start:", fromLocation);
+      console.log("Geocoded destination:", toLocation);
 
       if (!toLocation) {
         throw new Error(`Could not find "${to}".`);
@@ -238,10 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       showStatus("Calculating available routes...", false, true);
 
-      /*
-       * Request route alternatives.
-       */
-
+      // Request alternative routes from Flask
       const routes = await getRoutes(fromLocation, toLocation);
 
       if (!routes || routes.length === 0) {
@@ -250,28 +93,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
       currentRoutes = routes;
 
-      /*
-       * Display markers.
-       */
-
+      // Display starting and destination markers
       displayMarkers(fromLocation, toLocation);
 
-      /*
-       * Display routes.
-       */
-
+      // Draw all returned routes
       displayRoutes(routes);
 
-      /*
-       * Fit map around routes.
-       */
-
+      // Fit map around the routes
       fitRoutes(routes);
 
-      /*
-       * Route panel.
-       */
-
+      // Display route cards
       displayRouteResults(routes);
 
       showStatus(
@@ -284,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
       showStatus(error.message || "Unable to calculate the route.", true);
     } finally {
       findRouteBtn.disabled = false;
-
       findRouteBtn.textContent = "Find Route";
     }
   });
@@ -295,11 +125,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   async function geocodeLocation(query) {
     /*
-     * Nominatim geocoding.
-     *
-     * For production, move this request through
-     * your Flask backend and add appropriate
-     * caching/rate limiting.
+     * Nominatim converts the user's location text
+     * into latitude and longitude.
      */
 
     const url =
@@ -316,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     if (!response.ok) {
-      throw new Error("Location search failed.");
+      throw new Error(`Location search failed (HTTP ${response.status}).`);
     }
 
     const data = await response.json();
@@ -327,46 +154,112 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return {
       lat: Number(data[0].lat),
-
       lon: Number(data[0].lon),
-
       display: data[0].display_name,
     };
   }
 
   /* =====================================================
-       ROUTING
+       ROUTING - FLASK + OPENROUTESERVICE PYTHON SDK
     ====================================================== */
 
   async function getRoutes(from, to) {
-    /*
-     * OSRM route service.
-     *
-     * alternatives=true requests
-     * alternative routes.
-     */
+  
+    console.log("Coordinates being sent to Flask:", {
+      start: { lat: from.lat, lng: from.lon },
+      end: { lat: to.lat, lng: to.lon }
+    });
 
-    const url =
-      "https://router.project-osrm.org/route/v1/driving/" +
-      `${from.lon},${from.lat};${to.lon},${to.lat}` +
-      "?overview=full" +
-      "&geometries=geojson" +
-      "&steps=true" +
-      "&alternatives=true";
+    const response = await fetch("/viewer/live_traffic_map/api/routes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        start: {
+          lat: from.lat,
+          lng: from.lon,
+        },
+        end: {
+          lat: to.lat,
+          lng: to.lon,
+        },
+      }),
+    });
 
-    const response = await fetch(url);
+    // Read the response as text first so HTML error pages
+    // can be diagnosed instead of producing a generic JSON error.
+    const responseText = await response.text();
+
+    let data;
+
+    try {
+      data = JSON.parse(responseText);
+    } catch (error) {
+      console.error("Invalid routing response:", {
+        status: response.status,
+        url: response.url,
+        response: responseText.slice(0, 500),
+      });
+
+      throw new Error(
+        `Routing endpoint returned a non-JSON response ` +
+          `(HTTP ${response.status}). Check the Flask route and terminal.`,
+      );
+    }
 
     if (!response.ok) {
-      throw new Error("Routing service is unavailable.");
+      throw new Error(
+        data.error || `Routing request failed (HTTP ${response.status}).`,
+      );
     }
 
-    const data = await response.json();
-
-    if (data.code !== "Ok" || !data.routes) {
-      throw new Error("No route could be calculated.");
+    if (!data || !Array.isArray(data.routes) || data.routes.length === 0) {
+      throw new Error(
+        data?.error || "No routes were returned by the routing service.",
+      );
     }
 
-    return data.routes;
+    /*
+     * Validate and normalize the backend response.
+     * The Python handler returns GeoJSON geometry,
+     * distance in metres, and duration in seconds.
+     */
+
+    return data.routes.map(function (route, index) {
+      const distance =
+        route.distance != null
+          ? Number(route.distance)
+          : Number(route.distance_km) * 1000;
+
+      const duration =
+        route.duration != null
+          ? Number(route.duration)
+          : Number(route.duration_min) * 60;
+
+      if (
+        !route.geometry ||
+        route.geometry.type !== "LineString" ||
+        !Array.isArray(route.geometry.coordinates) ||
+        route.geometry.coordinates.length === 0 ||
+        !Number.isFinite(distance) ||
+        !Number.isFinite(duration)
+      ) {
+        console.error("Invalid route object:", route);
+
+        throw new Error(
+          `Route ${index + 1} contains invalid geometry or measurements.`,
+        );
+      }
+
+      return {
+        id: route.id ?? index,
+        geometry: route.geometry,
+        distance: distance,
+        duration: duration,
+      };
+    });
   }
 
   /* =====================================================
@@ -374,10 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ====================================================== */
 
   function displayMarkers(from, to) {
-    /*
-     * Remove old markers.
-     */
-
+    // Remove previous markers
     if (fromMarker) {
       map.removeLayer(fromMarker);
     }
@@ -386,45 +276,33 @@ document.addEventListener("DOMContentLoaded", function () {
       map.removeLayer(toMarker);
     }
 
-    /*
-     * FROM marker.
-     */
-
+    // Starting point marker
     fromMarker = L.marker([from.lat, from.lon], {
       icon: createMarkerIcon("from"),
     }).addTo(map);
 
-    fromMarker.bindPopup(
-      `
-                <div class="popup-title">
-                    Starting Point
-                </div>
+    fromMarker.bindPopup(`
+      <div class="popup-title">
+        Starting Point
+      </div>
+      <div class="popup-value">
+        ${escapeHTML(from.display)}
+      </div>
+    `);
 
-                <div class="popup-value">
-                    ${escapeHTML(from.display)}
-                </div>
-            `,
-    );
-
-    /*
-     * TO marker.
-     */
-
+    // Destination marker
     toMarker = L.marker([to.lat, to.lon], {
       icon: createMarkerIcon("to"),
     }).addTo(map);
 
-    toMarker.bindPopup(
-      `
-                <div class="popup-title">
-                    Destination
-                </div>
-
-                <div class="popup-value">
-                    ${escapeHTML(to.display)}
-                </div>
-            `,
-    );
+    toMarker.bindPopup(`
+      <div class="popup-title">
+        Destination
+      </div>
+      <div class="popup-value">
+        ${escapeHTML(to.display)}
+      </div>
+    `);
   }
 
   /* =====================================================
@@ -434,11 +312,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function createMarkerIcon(type) {
     return L.divIcon({
       className: "",
-
       html: `<div class="route-marker ${type}"></div>`,
-
       iconSize: [22, 22],
-
       iconAnchor: [11, 11],
     });
   }
@@ -448,10 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ====================================================== */
 
   function displayRoutes(routes) {
-    /*
-     * Remove previous route layers.
-     */
-
+    // Remove previous route layers
     routeLayers.forEach(function (layer) {
       map.removeLayer(layer);
     });
@@ -459,9 +331,8 @@ document.addEventListener("DOMContentLoaded", function () {
     routeLayers = [];
 
     /*
-     * Draw alternatives.
-     *
-     * First route = primary route.
+     * GeoJSON uses [longitude, latitude].
+     * Leaflet polylines use [latitude, longitude].
      */
 
     routes.forEach(function (route, index) {
@@ -471,20 +342,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const layer = L.polyline(coordinates, {
         color: index === 0 ? "#2563eb" : "#64748b",
-
         weight: index === 0 ? 8 : 5,
-
         opacity: index === 0 ? 0.95 : 0.48,
-
         lineCap: "round",
-
         lineJoin: "round",
       }).addTo(map);
 
-      /*
-       * Clicking route makes it primary.
-       */
-
+      // Clicking a route selects it
       layer.on("click", function () {
         selectRoute(index);
       });
@@ -492,6 +356,15 @@ document.addEventListener("DOMContentLoaded", function () {
       layer.bindTooltip(`Route ${index + 1}`, {
         sticky: true,
       });
+
+      // Show distance and duration on the route
+      layer.bindPopup(`
+        <strong>${index === 0 ? "Best Route" : `Alternative ${index}`}</strong>
+        <br>
+        Distance: ${escapeHTML(formatDistance(route.distance))}
+        <br>
+        Estimated time: ${escapeHTML(formatDuration(route.duration))}
+      `);
 
       routeLayers.push(layer);
     });
@@ -506,9 +379,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (index === selectedIndex) {
         layer.setStyle({
           color: "#2563eb",
-
           weight: 8,
-
           opacity: 0.95,
         });
 
@@ -516,29 +387,20 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         layer.setStyle({
           color: "#64748b",
-
           weight: 5,
-
           opacity: 0.48,
         });
       }
     });
 
-    /*
-     * Update route cards.
-     */
-
+    // Update route cards
     const cards = document.querySelectorAll(".route-option");
 
     cards.forEach(function (card, index) {
       card.classList.toggle("selected", index === selectedIndex);
     });
 
-    /*
-     * Scroll selected route
-     * into visibility.
-     */
-
+    // Scroll the selected route into visibility
     const selectedCard = document.querySelector(
       `.route-option[data-index="${selectedIndex}"]`,
     );
@@ -560,14 +422,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     routes.forEach(function (route, index) {
       const distance = formatDistance(route.distance);
-
       const duration = formatDuration(route.duration);
 
       /*
-       * Simulated traffic state.
-       *
-       * In your final project this can be
-       * replaced with your YOLO traffic data.
+       * These traffic labels are demonstration placeholders.
+       * They are not real-time traffic measurements.
        */
 
       const traffic = getTrafficForRoute(index, route);
@@ -583,50 +442,30 @@ document.addEventListener("DOMContentLoaded", function () {
       card.dataset.index = index;
 
       card.innerHTML = `
+        <div class="route-option-top">
+          <span class="route-name">
+            ${index === 0 ? "Best Route" : `Alternative ${index}`}
+          </span>
 
-                    <div class="route-option-top">
+          <span class="route-time">
+            ${escapeHTML(duration)}
+          </span>
+        </div>
 
-                        <span class="route-name">
-                            ${
-                              index === 0
-                                ? "Best Route"
-                                : `Alternative ${index}`
-                            }
-                        </span>
+        <div class="route-option-details">
+          <span class="route-dot"></span>
 
-                        <span class="route-time">
-                            ${duration}
-                        </span>
+          <span>${escapeHTML(distance)}</span>
 
-                    </div>
+          <span>
+            · ${Math.round(route.duration / 60)} min
+          </span>
 
-
-                    <div class="route-option-details">
-
-                        <span class="route-dot"></span>
-
-                        <span>
-                            ${distance}
-                        </span>
-
-                        <span>
-                            ·
-                            ${Math.round(route.duration / 60)} min
-                        </span>
-
-
-                        <span
-                            class="
-                                route-traffic
-                                ${traffic.className}
-                            "
-                        >
-                            ${traffic.label}
-                        </span>
-
-                    </div>
-
-                `;
+          <span class="route-traffic ${traffic.className}">
+            ${traffic.label}
+          </span>
+        </div>
+      `;
 
       card.addEventListener("click", function () {
         selectRoute(index);
@@ -644,20 +483,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getTrafficForRoute(index, route) {
     /*
-     * Demo logic.
+     * Demonstration logic only.
      *
-     * Later you can calculate this using:
-     *
-     * YOLO vehicle count
-     * average speed
-     * road occupancy
-     * congestion score
+     * Replace with actual congestion calculations
+     * using vehicle counts, average speed, road occupancy,
+     * or a congestion score when your traffic data is ready.
      */
 
     if (index === 0) {
       return {
         label: "LOW TRAFFIC",
-
         className: "free",
       };
     }
@@ -665,14 +500,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (index === 1) {
       return {
         label: "MODERATE",
-
         className: "moderate",
       };
     }
 
     return {
       label: "HEAVY",
-
       className: "heavy",
     };
   }
@@ -695,7 +528,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       map.fitBounds(bounds, {
         paddingTopLeft: [380, 80],
-
         paddingBottomRight: [80, 80],
       });
     }
@@ -710,56 +542,35 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function clearRoutes() {
-    /*
-     * Remove route lines.
-     */
-
+    // Remove route lines
     routeLayers.forEach(function (layer) {
       map.removeLayer(layer);
     });
 
     routeLayers = [];
-
     currentRoutes = [];
 
-    /*
-     * Remove markers.
-     */
-
+    // Remove markers
     if (fromMarker) {
       map.removeLayer(fromMarker);
-
       fromMarker = null;
     }
 
     if (toMarker) {
       map.removeLayer(toMarker);
-
       toMarker = null;
     }
 
-    /*
-     * Reset fields.
-     */
-
+    // Reset fields
     fromInput.value = "";
-
     toInput.value = "";
 
-    /*
-     * Reset results.
-     */
-
+    // Reset results
     routeList.innerHTML = "";
-
     routeResults.hidden = true;
-
     routeStatus.hidden = true;
 
-    /*
-     * Return to city view.
-     */
-
+    // Return to city view
     map.setView([28.6139, 77.209], 12);
   }
 
@@ -770,7 +581,6 @@ document.addEventListener("DOMContentLoaded", function () {
   locateMeBtn.addEventListener("click", function () {
     if (!navigator.geolocation) {
       showStatus("Geolocation is not supported by this browser.", true);
-
       return;
     }
 
@@ -779,20 +589,15 @@ document.addEventListener("DOMContentLoaded", function () {
     navigator.geolocation.getCurrentPosition(
       function (position) {
         const lat = position.coords.latitude;
-
         const lon = position.coords.longitude;
 
         map.setView([lat, lon], 15);
 
         L.circleMarker([lat, lon], {
           radius: 8,
-
           color: "#2563eb",
-
           fillColor: "#60a5fa",
-
           fillOpacity: 0.9,
-
           weight: 3,
         })
           .addTo(map)
@@ -813,7 +618,6 @@ document.addEventListener("DOMContentLoaded", function () {
     ====================================================== */
 
   fromInput.addEventListener("keydown", handleEnter);
-
   toInput.addEventListener("keydown", handleEnter);
 
   function handleEnter(event) {
@@ -838,11 +642,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function showStatus(message, isError = false, isLoading = false) {
     routeStatus.hidden = false;
-
     routeStatus.textContent = message;
-
     routeStatus.classList.toggle("error", isError);
-
     routeStatus.classList.toggle("loading", isLoading);
   }
 
@@ -870,7 +671,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const hours = Math.floor(minutes / 60);
-
     const remaining = minutes % 60;
 
     if (remaining === 0) {
@@ -894,9 +694,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function escapeHTML(value) {
     const div = document.createElement("div");
-
     div.textContent = value ?? "";
-
     return div.innerHTML;
   }
 });

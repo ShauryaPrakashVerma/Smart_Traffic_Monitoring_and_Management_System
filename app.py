@@ -23,7 +23,7 @@ app = Flask(__name__)
 
 app.config.from_object(Config)
 
-# Initialize SQLAlchemy with the Flask app
+# initialize SQLAlchemy with the Flask app
 db.init_app(app)
 
 with app.app_context():
